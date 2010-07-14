@@ -360,39 +360,37 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 Подключить класс можно с помощью <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'buffer'</SPAN><SPAN class="sh_symbol">).</SPAN>Buffer</CODE>.</P>
 
 <P>При преобразовании между Буферами и строками JavaScript требуется явно указывать
-Converting between Buffers and JavaScript string objects requires an explicit encoding
-method.  Node supports 3 string encodings: UTF-8 (<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>), ASCII (<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>), and
-Binary (<CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>).</P>
+метод кодировки символов. Node поддерживает 3 кодировки для строк: UTF-8 (<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>), ASCII (<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>), и
+двоичную (<CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>).</P>
 
 <UL>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE> - for 7 bit ASCII data only.  This encoding method is very fast, and will
-strip the high bit if set.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> - Unicode characters.  Many web pages and other document formats use UTF-8.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE> - A legacy encoding. Used to store raw binary data in a string
-by only using the first 8 bits of every character. Don't use this.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE> - только для 7-битных ASCII-строк.  Этот метод кодировки очень быстрый, и
+будет очищать старший бит символа, если тот установлен.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> - Unicode-символы.  Многие веб-страницы и документы используют UTF-8.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE> - ранее использовавшийся способ. Хранит двоичные данные в строке
+используя первые 8 бит каждого символа. Не используйте эту кодировку.</P></LI>
 </UL>
 
 
 <H3 id="new-buffer-4">new Buffer(size)</H3>
 
-<P>Allocates a new buffer of <CODE class="sh_sourceCode">size</CODE> octets.</P>
+<P>Создаёт новый буфер размером <CODE class="sh_sourceCode">size</CODE> байт.</P>
 
 <H3 id="new-buffer-5">new Buffer(array)</H3>
 
-<P>Allocates a new buffer using an <CODE class="sh_sourceCode">array</CODE> of octets.</P>
+<P>Создаёт новый буфер, используя массив <CODE class="sh_sourceCode">array</CODE> байт.</P>
 
 <H3 id="new-buffer-6">new Buffer(str, encoding = 'utf8')</H3>
 
-<P>Allocates a new buffer containing the given <CODE class="sh_sourceCode">str</CODE>.</P>
+<P>Создаёт новый бууфер, содержащий строку <CODE class="sh_sourceCode">str</CODE> в кодировке <CODE class="sh_sourceCode">encoding</CODE>.</P>
 
 <H3 id="buffer-write-7">buffer.write(string, offset=0, encoding='utf8')</H3>
 
-<P>Writes <CODE class="sh_sourceCode">string</CODE> to the buffer at <CODE class="sh_sourceCode">offset</CODE> using the given encoding. Returns
-number of octets written.  If <CODE class="sh_sourceCode">buffer</CODE> did not contain enough space to fit
-the entire string it will write a partial amount of the string. In the case
-of <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> encoding, the method will not write partial characters.</P>
+<P>Записывает строку <CODE class="sh_sourceCode">string</CODE> в буфер начиная с позиции <CODE class="sh_sourceCode">offset</CODE> с использованием указанной кодировки. Возвращает
+количество записанных байт. Если <CODE class="sh_sourceCode">buffer</CODE> не имеет достаточно места для сохранения
+всей строки метод запишет только её часть. В случае если кодировка строки &mdash; <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, метод не будет записывать частичные символы.</P>
 
-<P>Example: write a utf8 string into a buffer, then print it</P>
+<P>Пример: записать utf8 строку в буфер, потом напечатать его</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 buf <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">new</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">Buffer</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">256</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
