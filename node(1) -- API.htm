@@ -574,126 +574,125 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Выполнить все обрабтчики события по порядку с указанными аргументами.</P>
 
-<H2 id="streams-22">Streams</H2>
+<H2 id="streams-22">Потоки</H2>
 
-<P>A stream is an abstract interface implemented by various objects in Node.
-For example a request to an HTTP server is a stream, as is stdout. Streams
-are readable, writable, or both. All streams are instances of <CODE class="sh_sourceCode">EventEmitter</CODE>.</P>
+<P>Поток - это абстрактный интерфейс, реализуемый многими объектами в Node.
+Например, запрос к HTTP-серверу это поток, также как stdout. Потоки
+могут быть с возможностью чтения, записи или и того и другого. Все потоки являются экземплярами <CODE class="sh_sourceCode">EventEmitter</CODE>.</P>
 
-<H2 id="readable-stream-23">Readable Stream</H2>
+<H2 id="readable-stream-23">Поток с возможностью чтения</H2>
 
-<P>A <STRONG>readable stream</STRONG> has the following methods, members, and events.</P>
+<P><STRONG>Поток с возможностью чтения</STRONG> имеет следующие методы, свойства и события.</P>
 
-<H3 id="event-data-24">Event: 'data'</H3>
+<H3 id="event-data-24">Событие: 'data'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>data<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>The <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> event emits either a <CODE class="sh_sourceCode">Buffer</CODE> (by default) or a string if
-<CODE class="sh_sourceCode"><SPAN class="sh_function">setEncoding</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> was used.</P>
+<P>Событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> передаёт обработчику либо <CODE class="sh_sourceCode">Buffer</CODE> (по умолчанию) лиюо строку если
+предварительно был вызван <CODE class="sh_sourceCode"><SPAN class="sh_function">setEncoding</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
-<H3 id="event-end-25">Event: 'end'</H3>
+<H3 id="event-end-25">Событие: 'end'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted when the stream has received an EOF (FIN in TCP terminology).
-Indicates that no more <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> events will happen. If the stream is also
-writable, it may be possible to continue writing.</P>
+<P>Генерируется когда поток получает символ конца файла EOF (FIN в терминологии TCP).
+Означает что событий <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> больше не предвидится. Если поток также
+имеет возможность записи, писать данные можно и дальше.</P>
 
-<H3 id="event-error-26">Event: 'error'</H3>
+<H3 id="event-error-26">Событие: 'error'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>exception<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted if there was an error receiving data.</P>
+<P>Генерируется если при приёме данных произошла ошибка.</P>
 
-<H3 id="event-close-27">Event: 'close'</H3>
+<H3 id="event-close-27">Событие: 'close'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted when the underlying file descriptor has be closed. Not all streams
-will emit this.  (For example, an incoming HTTP request will not emit
+<P>Генерируется когда соответствующий потоку файловый дескриптор закрывается. Не все потоки
+генерируют это событие. (Например, входящий HTTP запрос не генерирует
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'close'</SPAN></CODE>.)</P>
 
-<H3 id="event-fd-28">Event: 'fd'</H3>
+<H3 id="event-fd-28">Событие: 'fd'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>fd<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted when a file descriptor is received on the stream. Only UNIX streams
-support this functionality; all others will simply never emit this event.</P>
+<P>Генерируется когда поток получает файловый дескриптор. Только UNIX потоки
+поддерживают этот функционал; остальные никогда не генерируют это событие.</P>
 
 <H3 id="stream-setencoding-29">stream.setEncoding(encoding)</H3>
 
-<P>Makes the data event emit a string instead of a <CODE class="sh_sourceCode">Buffer</CODE>. <CODE class="sh_sourceCode">encoding</CODE> can be
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, or <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
+<P>Заставляет событие 'data' передавать обработчику строку вместо буфера. <CODE class="sh_sourceCode">encoding</CODE> может быть
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, или <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
 <H3 id="stream-pause-30">stream.pause()</H3>
 
-<P>Pauses the incoming <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> events.</P>
+<P>Прекращает поступление событий <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE>.</P>
 
 <H3 id="stream-resume-31">stream.resume()</H3>
 
-<P>Resumes the incoming <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> events after a <CODE class="sh_sourceCode"><SPAN class="sh_function">pause</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Возобновляет поступление событий <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> после <CODE class="sh_sourceCode"><SPAN class="sh_function">pause</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="stream-destroy-32">stream.destroy()</H3>
 
-<P>Closes the underlying file descriptor. Stream will not emit any more events.</P>
+<P>Закрывает соответствующий потоку файловый дескриптор. Поток больше не будет генерировать событий.</P>
 
-<H2 id="writable-stream-33">Writable Stream</H2>
+<H2 id="writable-stream-33">Поток с возможностью записи</H2>
 
-<P>A <STRONG>writable stream</STRONG> has the following methods, members, and events.</P>
+<P>У <STRONG>потока с возможностью записи</STRONG> есть следующие методы, свойства и события.</P>
 
-<H3 id="event-drain-34">Event: 'drain'</H3>
+<H3 id="event-drain-34">Событие: 'drain'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted after a <CODE class="sh_sourceCode"><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> method was called that returned <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> to
-indicate that it is safe to write again.</P>
+<P>Генерируется после вызова метода <CODE class="sh_sourceCode"><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> вернувшего <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> &mdash;
+сигнал о том что можно писать дальше.</P>
 
-<H3 id="event-error-35">Event: 'error'</H3>
+<H3 id="event-error-35">Событие: 'error'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>exception<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted on error with the exception <CODE class="sh_sourceCode">exception</CODE>.</P>
+<P>Генерируется при ошибке с исключением <CODE class="sh_sourceCode">exception</CODE>.</P>
 
-<H3 id="event-close-36">Event: 'close'</H3>
+<H3 id="event-close-36">Событие: 'close'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted when the underlying file descriptor has been closed.</P>
+<P>Генерируется когда закрывается соответствующий потоку дескриптор.</P>
 
 <H3 id="stream-write-37">stream.write(string, encoding, [fd])</H3>
 
-<P>Writes <CODE class="sh_sourceCode">string</CODE> with the given <CODE class="sh_sourceCode">encoding</CODE> to the stream.  Returns <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> if
-the string has been flushed to the kernel buffer.  Returns <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> to
-indicate that the kernel buffer is full, and the data will be sent out in
-the future. The <CODE class="sh_sourceCode"><SPAN class="sh_string">'drain'</SPAN></CODE> event will indicate when the kernel buffer is
-empty again. The <CODE class="sh_sourceCode">encoding</CODE> defaults to <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>.</P>
+<P>Записывает строку <CODE class="sh_sourceCode">string</CODE> в указанной кодировке <CODE class="sh_sourceCode">encoding</CODE> в поток. Возвращает <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> если
+строка попала в буфер ядра. Возвращает <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> если
+буфер ядра полон и данные будут отправлены позже. Когда данные будут отправлены и буфер ядра опустеет,
+будет сгенерировано событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'drain'</SPAN></CODE>.
+Кодировка по умолчанию принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>.</P>
 
-<P>If the optional <CODE class="sh_sourceCode">fd</CODE> parameter is specified, it is interpreted as an integral
-file descriptor to be sent over the stream. This is only supported for UNIX
-streams, and is silently ignored otherwise. When writing a file descriptor in
-this manner, closing the descriptor before the stream drains risks sending an
-invalid (closed) FD.</P>
+<P>Если указан необязательный параметр <CODE class="sh_sourceCode">fd</CODE>, он интерпретруется как файловый
+дескриптор для отправки в поток. Это поддерживается только в UNIX
+потоках, и просто игнорируется в другом окружении. Когда дескриптор пересылается таким образом,
+если он будет закрыт до события 'drain' потока, может быть отправлен повреждённый (закрытый) дескриптор.</P>
 
 <H3 id="stream-write-38">stream.write(buffer)</H3>
 
-<P>Same as the above except with a raw buffer.</P>
+<P>То же что выше, но с использованием буфера.</P>
 
 <H3 id="stream-end-39">stream.end()</H3>
 
-<P>Terminates the stream with EOF or FIN.</P>
+<P>Закрывает поток отправкой EOF или FIN.</P>
 
 <H3 id="stream-end-40">stream.end(string, encoding)</H3>
 
-<P>Sends <CODE class="sh_sourceCode">string</CODE> with the given <CODE class="sh_sourceCode">encoding</CODE> and terminates the stream with EOF
-or FIN. This is useful to reduce the number of packets sent.</P>
+<P>Посылает строку <CODE class="sh_sourceCode">string</CODE> в указанной кодировке <CODE class="sh_sourceCode">encoding</CODE> и закрывает поток отправкой EOF
+или FIN. Так можно уменьшить общее число отправленных пакетов.</P>
 
 <H3 id="stream-end-41">stream.end(buffer)</H3>
 
-<P>Same as above but with a <CODE class="sh_sourceCode">buffer</CODE>.</P>
+<P>То же что выше но с использованием буфера.</P>
 
 <H3 id="stream-destroy-42">stream.destroy()</H3>
 
-<P>Closes the underlying file descriptor. Stream will not emit any more events.</P>
+<P>Закрывает соответствующий потоку файловый дескриптор. Поток больше не будет генерировать событий.</P>
 
 <H2 id="global-objects-43">Global Objects</H2>
 
@@ -912,18 +911,18 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>In case of syntax error in <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>compile</CODE> exits node.</P>
 
-<P>See also: <CODE class="sh_sourceCode">Script</CODE></P>
+<P>См. также: <CODE class="sh_sourceCode">Script</CODE></P>
 
 <H3 id="process-cwd-61">process.cwd()</H3>
 
-<P>Returns the current working directory of the process.</P>
+<P>Возвращает текущую рабочую директорию процесса.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'Current directory: '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">cwd</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">());</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="process-env-62">process.env</H3>
 
-<P>An object containing the user environment. See environ(7).</P>
+<P>Объект, хранящий окружение пользователя. См. environ(7).</P>
 
 <H3 id="process-exit-63">process.exit(code)</H3>
 
@@ -1287,7 +1286,7 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 
 <H3 id="child-stdin-end-91">child.stdin.end()</H3>
 
-<P>Closes the child process's <CODE class="sh_sourceCode">stdin</CODE> stream.  This often causes the child process to terminate.</P>
+<P>Закрывает поток <CODE class="sh_sourceCode">stdin</CODE> дочернего процесса. Это часто приводит к завершению дочернего процесса.</P>
 
 <P>Пример:</P>
 
@@ -1303,8 +1302,8 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stdin<SPAN cl
 
 <H3 id="child_process-exec-92">child_process.exec(command, [options, ] callback)</H3>
 
-<P>High-level way to execute a command as a child process, buffer the
-output, and return it all in a callback.</P>
+<P>Высокоуровневый способ выполнить команду в качестве дочернего процесса, сохраняя весь её вывод, и
+передать его в callback.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys   <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     exec  <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>exec<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
