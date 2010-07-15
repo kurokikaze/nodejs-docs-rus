@@ -382,7 +382,7 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 
 <H3 id="new-buffer-6">new Buffer(str, encoding = 'utf8')</H3>
 
-<P>Создаёт новый бууфер, содержащий строку <CODE class="sh_sourceCode">str</CODE> в кодировке <CODE class="sh_sourceCode">encoding</CODE>.</P>
+<P>Создаёт новый буфер, содержащий строку <CODE class="sh_sourceCode">str</CODE> в кодировке <CODE class="sh_sourceCode">encoding</CODE>.</P>
 
 <H3 id="buffer-write-7">buffer.write(string, offset=0, encoding='utf8')</H3>
 
@@ -402,17 +402,17 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="buffer-tostring-8">buffer.toString(encoding, start, end)</H3>
 
-<P>Decodes and returns a string from buffer data encoded with <CODE class="sh_sourceCode">encoding</CODE>
-beginning at <CODE class="sh_sourceCode">start</CODE> and ending at <CODE class="sh_sourceCode">end</CODE>.</P>
+<P>Декодирует и возвращает строку из данных буфера, закодированных в кодировке <CODE class="sh_sourceCode">encoding</CODE>
+начиная с <CODE class="sh_sourceCode">start</CODE> и заканчивая позицией <CODE class="sh_sourceCode">end</CODE>.</P>
 
-<P>See <CODE class="sh_sourceCode">buffer<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> example, above.</P>
+<P>См. пример <CODE class="sh_sourceCode">buffer<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> выше.</P>
 
 <H3 id="buffer[index]-9">buffer[index]</H3>
 
-<P>Get and set the octet at <CODE class="sh_sourceCode">index</CODE>. The values refer to individual bytes,
-so the legal range is between <CODE class="sh_sourceCode"><SPAN class="sh_number">0x00</SPAN></CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_number">0xFF</SPAN></CODE> hex or <CODE class="sh_sourceCode"><SPAN class="sh_number">0</SPAN></CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_number">255</SPAN></CODE>.</P>
+<P>Получает или устанавливает байт на позиции <CODE class="sh_sourceCode">index</CODE>. Значения соответствуют индивидуальным байтам,
+соответственно значения могут быть от <CODE class="sh_sourceCode"><SPAN class="sh_number">0x00</SPAN></CODE> до <CODE class="sh_sourceCode"><SPAN class="sh_number">0xFF</SPAN></CODE> в шестнадцатеричной системе и от <CODE class="sh_sourceCode"><SPAN class="sh_number">0</SPAN></CODE> до <CODE class="sh_sourceCode"><SPAN class="sh_number">255</SPAN></CODE> в десятичной.</P>
 
-<P>Example: copy an ASCII string into a buffer, one byte at a time:</P>
+<P>Пример: скопировать ASCII строку в буфер, байт за байтом:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
   str <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"node.js"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -430,9 +430,9 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="buffer-bytelength-10">Buffer.byteLength(string, encoding)</H3>
 
-<P>Gives the actual byte length of a string.  This is not the same as
-<CODE class="sh_sourceCode"><SPAN class="sh_predef_func">String</SPAN><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">prototype</SPAN><SPAN class="sh_symbol">.</SPAN>length</CODE> since that returns the number of <EM>characters</EM> in a
-string.</P>
+<P>Возвращает количество байт в строке. Это не то же самое что
+<CODE class="sh_sourceCode"><SPAN class="sh_predef_func">String</SPAN><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">prototype</SPAN><SPAN class="sh_symbol">.</SPAN>length</CODE> т.к. этот метод возвращает число <EM>символов</EM> в
+строке.</P>
 
 <P>Пример:</P>
 
@@ -442,14 +442,14 @@ string.</P>
 console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>str <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">": "</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> str<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>length <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">" characters, "</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN>
   Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">byteLength</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>str<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'utf8'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">" bytes"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
-<SPAN class="sh_comment"><SPAN class="sh_comment">// ½ + ¼ = ¾: 9 characters, 12 bytes</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// ½ + ¼ = ¾: 9 символов, 12 байт</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="buffer-length-11">buffer.length</H3>
 
-<P>The size of the buffer in bytes.  Note that this is not necessarily the size
-of the contents. <CODE class="sh_sourceCode">length</CODE> refers to the amount of memory allocated for the
-buffer object.  It does not change when the contents of the buffer are changed.</P>
+<P>Размер буфера в байтах. Заметьте, что это значение не всегда соответствует размеру
+содержимого. <CODE class="sh_sourceCode">length</CODE> возвращает объем памяти, зарезервированный
+для объекта буфера. Это значение не изменяется при изменении содержимого буфера.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
   buf <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">new</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">Buffer</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">1234</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -464,10 +464,10 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="buffer-copy-12">buffer.copy(targetBuffer, targetStart, sourceStart, sourceEnd)</H3>
 
-<P>Does a memcpy() between buffers.</P>
+<P>Копрует данные между буферами с помощью <CODE class="sh_sourceCode">memcpy()</CODE>.</P>
 
-<P>Example: build two Buffers, then copy <CODE class="sh_sourceCode">buf1</CODE> from byte 16 through byte 19
-into <CODE class="sh_sourceCode">buf2</CODE>, starting at the 8th byte in <CODE class="sh_sourceCode">buf2</CODE>.</P>
+<P>Пример: создать два буфера, потом скопировать <CODE class="sh_sourceCode">buf1</CODE> с байта 16 по байт 19
+в <CODE class="sh_sourceCode">buf2</CODE>, начиная с 8-го байта в <CODE class="sh_sourceCode">buf2</CODE>.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
   buf1 <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">new</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">Buffer</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">26</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
@@ -487,14 +487,14 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="buffer-slice-13">buffer.slice(start, end)</H3>
 
-<P>Returns a new buffer which references the
-same memory as the old, but offset and cropped by the <CODE class="sh_sourceCode">start</CODE> and <CODE class="sh_sourceCode">end</CODE>
-indexes.</P>
+<P>Возвращает новый буфер, указывающий на ту же область памяти
+что предыдущий, но начиная с <CODE class="sh_sourceCode">start</CODE> и заканчивая <CODE class="sh_sourceCode">end</CODE>
+байтами.</P>
 
-<P><STRONG>Modifying the new buffer slice will modify memory in the original buffer!</STRONG></P>
+<P><STRONG>Изменение содержимого нового буфера затронет содержимое старого!</STRONG></P>
 
-<P>Example: build a Buffer with the ASCII alphabet, take a slice, then modify one byte
-from the original Buffer.</P>
+<P>Пример: построить буфер с ASCII-алфавитом, вырезать часть в новый буфер,
+затем изменить 1 часть в оригинальном буфере.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
   buf1 <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">new</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">Buffer</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">26</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN> buf2<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
