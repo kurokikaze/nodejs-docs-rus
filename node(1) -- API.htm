@@ -515,42 +515,41 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="eventemitter-14">EventEmitter</H2>
 
-<P>Many objects in Node emit events: a TCP server emits an event each time
-there is a stream, a child process emits an event when it exits. All
-objects which emit events are instances of <CODE class="sh_sourceCode">events<SPAN class="sh_symbol">.</SPAN>EventEmitter</CODE>.</P>
+<P>Множество объектов в Node генерируют события: TCP-сервер генерирует событие
+при каждом получении потока данных, дочерний процесс генерирует событие при выходе. Все
+объекты, генерирующие события, являются экземплярами <CODE class="sh_sourceCode">events<SPAN class="sh_symbol">.</SPAN>EventEmitter</CODE>.</P>
 
-<P>Events are represented by a camel-cased string. Here are some examples:
+<P>События представлены строками в стиле camel-case. Вот несколько примеров:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'stream'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'messageBegin'</SPAN></CODE>.</P>
 
-<P>Functions can be then be attached to objects, to be executed when an event
-is emitted. These functions are called <EM>listeners</EM>.</P>
+<P>К объектам могут быть присоединены функции, которые будут выполняться при
+генерации события. Эти функции называются <EM>обработчиками</EM> (<EM>listeners</EM>).</P>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'events'</SPAN><SPAN class="sh_symbol">).</SPAN>EventEmitter</CODE> to access the <CODE class="sh_sourceCode">EventEmitter</CODE> class.</P>
 
-<P>All EventEmitters emit the event <CODE class="sh_sourceCode"><SPAN class="sh_string">'newListener'</SPAN></CODE> when new listeners are
-added.</P>
+<P>Все EventEmitter'ы генерируют событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'newListener'</SPAN></CODE> когда к ним добавляются новые обработчики.</P>
 
-<P>When an EventEmitter experiences an error, the typical action is to emit an
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE> event.  Error events are special--if there is no handler for them
-they will print a stack trace and exit the program.</P>
+<P>Когда EventEmitter сталкивается с ошибкой, типичное поведение - сгенерировать событие
+ошибки <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>.  События ошибки особенные &mdash; если им не назначен обработчик
+они выдают на экран stack trace и завершают программу.</P>
 
-<H3 id="event-newlistener-15">Event: 'newListener'</H3>
+<H3 id="event-newlistener-15">Событие: 'newListener'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>event<SPAN class="sh_symbol">,</SPAN> listener<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>This event is made any time someone adds a new listener.</P>
+<P>Это событие вызывается каждый раз при добавлении обработчика события.</P>
 
-<H3 id="event-error-16">Event: 'error'</H3>
+<H3 id="event-error-16">Событие: 'error'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>exception<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>If an error was encountered, then this event is emitted. This event is
-special - when there are no listeners to receive the error Node will
-terminate execution and display the exception's stack trace.</P>
+<P>Если произошла ошибка, генерируется это событие. Оно отличается от
+других - если ему не назначено ни одного обработчика Node прекратит выполнение
+скрипта и напечатает stack trace как для необработанного исключения.</P>
 
 <H3 id="emitter-addlistener-17">emitter.addListener(event, listener)</H3>
 
-<P>Adds a listener to the end of the listeners array for the specified event.</P>
+<P>Добавляет обработчик в конец массива обработчиков для указанного события.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">addListener</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'stream'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>stream<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'someone connected!'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -559,21 +558,21 @@ terminate execution and display the exception's stack trace.</P>
 
 <H3 id="emitter-removelistener-18">emitter.removeListener(event, listener)</H3>
 
-<P>Remove a listener from the listener array for the specified event.
-<STRONG>Caution</STRONG>: changes array indices in the listener array behind the listener.</P>
+<P>УДаляет обработчик из массива обработчиков для указанного события.
+<STRONG>Внимание</STRONG>: изменяет индексы в массиве обработчиков после указанного обработчика.</P>
 
 <H3 id="emitter-removealllisteners-19">emitter.removeAllListeners(event)</H3>
 
-<P>Removes all listeners from the listener array for the specified event.</P>
+<P>Удаляет все обработчики из массива обработчиков для указанного события.</P>
 
 <H3 id="emitter-listeners-20">emitter.listeners(event)</H3>
 
-<P>Returns an array of listeners for the specified event. This array can be
-manipulated, e.g. to remove listeners.</P>
+<P>Возвращает массив обработчиков для указанного события. Этот массив может быть
+использован, например, для удаления обработчиков.</P>
 
 <H3 id="emitter-emit-21">emitter.emit(event, arg1, arg2, ...)</H3>
 
-<P>Execute each of the listeners in order with the supplied arguments.</P>
+<P>Выполнить все обрабтчики события по порядку с указанными аргументами.</P>
 
 <H2 id="streams-22">Streams</H2>
 
