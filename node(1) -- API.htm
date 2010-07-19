@@ -1144,9 +1144,9 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Генерируется, когда неперехваченное исключение достигает . If a
-listener is added for this exception, the default action (which is to print
-a stack trace and exit) will not occur.</P>
+<P>Генерируется, когда неперехваченное исключение достигает цикла обработки событий. Если
+этому событию назначен обработчик, стандартное действие (печать стека
+и выход) производиться не будет.</P>
 
 <P>Пример обработки события <CODE class="sh_sourceCode">uncaughtException</CODE>:</P>
 
@@ -1184,8 +1184,7 @@ process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>An easy way to send the <CODE class="sh_sourceCode">SIGINT</CODE> signal is with <CODE class="sh_sourceCode">Control<SPAN class="sh_symbol">-</SPAN>C</CODE> in most terminal
-programs.</P>
+<P>Простой способ отправки сигнала <CODE class="sh_sourceCode">SIGINT</CODE>: <CODE class="sh_sourceCode">Control<SPAN class="sh_symbol">-</SPAN>C</CODE> в большинстве терминальных программ.</P>
 
 <H3 id="process-stdout-55">process.stdout</H3>
 
@@ -1305,11 +1304,11 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">exit</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">1</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>The shell that executed node should see the exit code as 1.</P>
+<P>Оболочка, с помощью которой был запущен скрипт в node, должна получить код ошибки 1.</P>
 
 <H3 id="process-getgid-64">process.getgid(), process.setgid(id)</H3>
 
-<P>Gets/sets the group identity of the process. (See setgid(2).)  This is the numerical group id, not the group name.</P>
+<P>Получает/устанавливает групповой индикатор процесса. (См. setgid(2).)  Это чсловое значение id группы, а не её имя.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'Current gid: '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">getgid</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">());</SPAN></SPAN>
 <SPAN class="sh_keyword"><SPAN class="sh_keyword">try</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
@@ -1323,7 +1322,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-getuid-65">process.getuid(), process.setuid(id)</H3>
 
-<P>Gets/sets the user identity of the process. (See setuid(2).)  This is the numerical userid, not the username.</P>
+<P>Получает/устанавливает пользователя-владельца процесса. (См. setuid(2).)  Это числовой идентификатор, а не имя пользователя.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'Current uid: '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">getuid</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">());</SPAN></SPAN>
 <SPAN class="sh_keyword"><SPAN class="sh_keyword">try</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
@@ -1344,23 +1343,22 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-installprefix-67">process.installPrefix</H3>
 
-<P>A compiled-in property that exposes <CODE class="sh_sourceCode">NODE_PREFIX</CODE>.</P>
+<P>Заданное при компиляции свойство, хранящее директорию, в которую устанавливали node: <CODE class="sh_sourceCode">NODE_PREFIX</CODE>.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'Prefix: '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>installPrefix<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="process-kill-68">process.kill(pid, signal)</H3>
 
-<P>Send a signal to a process. <CODE class="sh_sourceCode">pid</CODE> is the process id and <CODE class="sh_sourceCode">signal</CODE> is the
-string describing the signal to send.  Signal names are strings like
-'SIGINT' or 'SIGUSR1'.  If omitted, the signal will be 'SIGINT'.
-See kill(2) for more information.</P>
+<P>Отправляет сигнал процессу. <CODE class="sh_sourceCode">pid</CODE> это идентификатор процесса, <CODE class="sh_sourceCode">signal</CODE> &mdash; строка, обозначающая отправляемый сигнал.  Имена сигналов это строки вроде
+'SIGINT' или 'SIGUSR1'.  Если имя сигнала пропущено, отправлен будет сигнал 'SIGINT'.
+См. kill(2) для дальнейшей информации.</P>
 
-<P>Note that just because the name of this function is <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>kill</CODE>, it is
-really just a signal sender, like the <CODE class="sh_sourceCode">kill</CODE> system call.  The signal sent
-may do something other than kill the target process.</P>
+<P>Заметьте, что хотя функция и называется <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>kill</CODE>, на самом
+деле она просто отправляет сигнал, как и системная команда <CODE class="sh_sourceCode">kill</CODE>.  Отправляемый сигнал
+может не только завершать целевой процесс.</P>
 
-<P>Example of sending a signal to yourself:</P>
+<P>Пример процесса, отправляющего сигнал самому себе:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">addListener</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'SIGHUP'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">()</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'Got SIGHUP signal.'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -1376,28 +1374,28 @@ process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-pid-69">process.pid</H3>
 
-<P>The PID of the process.</P>
+<P>Идентификатор процесса (PID).</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'This process is pid '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>pid<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="process-platform-70">process.platform</H3>
 
-<P>What platform you're running on. <CODE class="sh_sourceCode"><SPAN class="sh_string">'linux2'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'darwin'</SPAN></CODE>, etc.</P>
+<P>Платформа, на которой выполняется node. <CODE class="sh_sourceCode"><SPAN class="sh_string">'linux2'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'darwin'</SPAN></CODE>, и т.д.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'This platform is '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>platform<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="process-memoryusage-71">process.memoryUsage()</H3>
 
-<P>Returns an object describing the memory usage of the Node process.</P>
+<P>Возврщает объект, описывающий потребление памяти процессом Node.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
 console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>sys<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">inspect</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">memoryUsage</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">()));</SPAN></SPAN>
 </CODE></PRE>
 
-<P>This will generate:</P>
+<P>В результате получим:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> rss<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">4935680</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> vsize<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">41893888</SPAN></SPAN>
@@ -1406,13 +1404,12 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P><CODE class="sh_sourceCode">heapTotal</CODE> and <CODE class="sh_sourceCode">heapUsed</CODE> refer to V8's memory usage.</P>
+<P><CODE class="sh_sourceCode">heapTotal</CODE> и <CODE class="sh_sourceCode">heapUsed</CODE> относятся к потреблению памяти движком V8.</P>
 
 <H3 id="process-nexttick-72">process.nextTick(callback)</H3>
 
-<P>On the next loop around the event loop call this callback.
-This is <EM>not</EM> a simple alias to <CODE class="sh_sourceCode"><SPAN class="sh_function">setTimeout</SPAN><SPAN class="sh_symbol">(</SPAN>fn<SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_number">0</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>, it's much more
-efficient.</P>
+<P>На следующей итерации цикла обработки событий запустить указанный обработчик.
+Это <EM>не</EM> простой alias для <CODE class="sh_sourceCode"><SPAN class="sh_function">setTimeout</SPAN><SPAN class="sh_symbol">(</SPAN>fn<SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_number">0</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>, это намного более эффективный метод.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">nextTick</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">()</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'nextTick callback'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -1421,9 +1418,8 @@ efficient.</P>
 
 <H3 id="process-umask-73">process.umask(mask)</H3>
 
-<P>Sets or read the process's file mode creation mask. Child processes inherit
-the mask from the parent process. Returns the old mask if <CODE class="sh_sourceCode">mask</CODE> argument is
-given, otherwise returns the current mask.</P>
+<P>Задаёт или возвращает маску создания файлов процессом. Дочерние процессы
+наследуют эту маску от родительского. Если задан аргумент <CODE class="sh_sourceCode">mask</CODE> возвращает старую маску, иначе &mdash; возвращает текущую.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> oldmask<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> newmask <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">0644</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 
