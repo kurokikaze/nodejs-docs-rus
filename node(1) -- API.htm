@@ -2257,116 +2257,104 @@ Node разбирает HTTP-сообщение на заголовки и те�
 <CODE class="sh_sourceCode">options</CODE> принимает те же значения, что объект параметров для
 сервера <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Server</CODE>.</P>
 
-<P>The <CODE class="sh_sourceCode">requestListener</CODE> is a function which is automatically
-added to the <CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE> event.</P>
+<P>Функция <CODE class="sh_sourceCode">requestListener</CODE> автоматически добавляется к событию
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE> сервера.</P>
 
-<H3 id="event-request-157">Event: 'request'</H3>
+<H3 id="event-request-157">Событие: 'request'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">,</SPAN> response<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{}</SPAN></CODE></P>
 
-<P>Emitted each time there is request. Note that there may be multiple requests
-per connection (in the case of keep-alive connections).</P>
+<P>Генерируется каждый раз при получении запроса. Заметьте, что в течении одного соединения
+может происходить несколько запросов (в случае keep-alive соединения).</P>
 
-<H3 id="event-upgrade-158">Event: 'upgrade'</H3>
+<H3 id="event-upgrade-158">Событие: 'upgrade'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">,</SPAN> socket<SPAN class="sh_symbol">,</SPAN> head<SPAN class="sh_symbol">)</SPAN></CODE></P>
 
-<P>Emitted each time a client requests a http upgrade. If this event isn't
-listened for, then clients requesting an upgrade will have their connections
-closed.</P>
+<P>Генерируется каждый раз когда клиент запрашивает апгрейд соединения до защищённого (см. RFC 2817).
+Если это событие никак не обрабатывается соединение для которого запрошен апгрейд будет закрыто.</P>
 
 <UL>
-<LI><CODE class="sh_sourceCode">request</CODE> is the arguments for the http request, as it is in the request event.</LI>
-<LI><CODE class="sh_sourceCode">socket</CODE> is the network socket between the server and client.</LI>
-<LI><CODE class="sh_sourceCode">head</CODE> is an instance of Buffer, the first packet of the upgraded stream, this may be empty.</LI>
+<LI><CODE class="sh_sourceCode">request</CODE> &mdash; аргументы для HTTP запроса, как в событии 'request'.</LI>
+<LI><CODE class="sh_sourceCode">socket</CODE> &mdash; сетевой сокет между сервером и клиентом.</LI>
+<LI><CODE class="sh_sourceCode">head</CODE> &mdash; экземпляр Buffer, первый пакет защищенного потока, может быть пустым.</LI>
 </UL>
 
+<P>После генерации этого события, у объекта server не будет обработчика события <CODE class="sh_sourceCode">data</CODE>, и программисту нужно назначить его заново чтобы обрабатывать данные, получаемые этим соединением.</P>
 
-<P>After this event is emitted, the request's socket will not have a <CODE class="sh_sourceCode">data</CODE>
-event listener, meaning you will need to bind to it in order to handle data
-sent to the server on that socket.</P>
-
-<H3 id="event-clienterror-159">Event: 'clientError'</H3>
+<H3 id="event-clienterror-159">Событие: 'clientError'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>exception<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{}</SPAN></CODE></P>
 
-<P>If a client connection emits an 'error' event - it will forwarded here.</P>
+<P>Если соединение с клиентом генерирует событие 'error' &mdash; оно поднимается сюда.</P>
 
 <H3 id="server-listen-160">server.listen(port, hostname=null, callback=null)</H3>
 
-<P>Begin accepting connections on the specified port and hostname.  If the
-hostname is omitted, the server will accept connections directed to any
-IPv4 address (<CODE class="sh_sourceCode">INADDR_ANY</CODE>).</P>
+<P>Начинает приём соединений на указанном порту и имени хоста. Если имя хоста не указано, сервер будет принимать соединения на любой IPv4-адрес машины (<CODE class="sh_sourceCode">INADDR_ANY</CODE>).</P>
 
-<P>To listen to a unix socket, supply a filename instead of port and hostname.</P>
+<P>Чтобы слушать unix-сокет, передайте имя файла вместо порта и имени хоста.</P>
 
-<P>This function is asynchronous. The last parameter <CODE class="sh_sourceCode">callback</CODE> will be called
-when the server has been bound to the port.</P>
+<P>Эта функция асинхронна. Функция, переданная последним параметром <CODE class="sh_sourceCode">callback</CODE> будет вызвана
+когда сервер будет повешен на порт.</P>
 
 <H3 id="server-listen-161">server.listen(path, callback=null)</H3>
 
-<P>Start a UNIX socket server listening for connections on the given <CODE class="sh_sourceCode">path</CODE>.</P>
+<P>Начинает слушать unix-сокет с заданным путём <CODE class="sh_sourceCode">path</CODE>.</P>
 
-<P>This function is asynchronous. The last parameter <CODE class="sh_sourceCode">callback</CODE> will be called
-when the server has been bound.</P>
+<P>Эта функция асинхронна. Функция, переданная последним параметром <CODE class="sh_sourceCode">callback</CODE> будет вызвана
+когда сервер будет повешен на порт.</P>
 
 <H3 id="server-setsecure-162">server.setSecure(credentials)</H3>
 
-<P>Enables HTTPS support for the server, with the crypto module credentials specifying the private key and certificate of the server, and optionally the CA certificates for use in client authentication.</P>
+<P>Включает поддержку HTTPS для сервера, с параметрами для криптографического модуля: private-ключом и сертификатом сервера; также можно передать CA-сертификат для аутентификации клиентов.</P>
 
-<P>If the credentials hold one or more CA certificates, then the server will request for the client to submit a client certificate as part of the HTTPS connection handshake. The validity and content of this can be accessed via verifyPeer() and getPeerCertificate() from the server's request.connection.</P>
+<P>Если в параметрах указан один или несколько CA-сертификатов, сервер запросит у клиента его сертификат при установке HTTPS-соединения. Достоверность и содержимое сертификата могут быть проверены с помощью методов verifyPeer() and getPeerCertificate() объекта request.connection сервера.</P>
 
 <H3 id="server-close-163">server.close()</H3>
 
-<P>Stops the server from accepting new connections.</P>
+<P>Прекращает приём новых соедиений сервером.</P>
 
 <H2 id="http-serverrequest-164">http.ServerRequest</H2>
 
-<P>This object is created internally by a HTTP server--not by
-the user--and passed as the first argument to a <CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE> listener.</P>
+<P>Этот объект создаётся автоматически HTTP-сервером (не пользователем) и передаётся первым аргументом обработчику события <CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE>.</P>
 
-<P>This is an EventEmitter with the following events:</P>
+<P>Это EventEmitter со следующими событиями:</P>
 
-<H3 id="event-data-165">Event: 'data'</H3>
+<H3 id="event-data-165">Событие: 'data'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>chunk<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted when a piece of the message body is received.</P>
+<P>Генерируется при получении части тела сообщения.</P>
 
-<P>Example: A chunk of the body is given as the single
-argument. The transfer-encoding has been decoded.  The
-body chunk is a string.  The body encoding is set with
-<CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">setBodyEncoding</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Пример: Часть тела сообщения передаётся как единственный
+аргумент. Сообщение уже раскодировано из transfer-encoding. Часть тела представлена в виде строки. Кодировка тела сообщения задаётся <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">setBodyEncoding</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
-<H3 id="event-end-166">Event: 'end'</H3>
+<H3 id="event-end-166">Событие: 'end'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted exactly once for each message. No arguments.  After
-emitted no other events will be emitted on the request.</P>
+<P>Генерится строго один раз для каждого сообщения. Нет аргументов. После этого события запрос не будет генерировать другие.</P>
 
 <H3 id="request-method-167">request.method</H3>
 
-<P>The request method as a string. Read only. Example:
+<P>Метод запроса в виде строки. Только для чтения. Пример:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'GET'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'DELETE'</SPAN></CODE>.</P>
 
 <H3 id="request-url-168">request.url</H3>
 
-<P>Request URL string. This contains only the URL that is
-present in the actual HTTP request. If the request is:</P>
+<P>Строка с URL запроса. Здесь содержится URL в том виде, в котором он задан в самом HTTP-запросе. Если запрос выглядит так:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_normal"><SPAN class="sh_normal">GET </SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">/</SPAN></SPAN>status<SPAN class="sh_symbol"><SPAN class="sh_symbol">?</SPAN></SPAN>name<SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN>ryan <SPAN class="sh_normal"><SPAN class="sh_normal">HTTP</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">/</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">1.1</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">\</SPAN></SPAN>r<SPAN class="sh_symbol"><SPAN class="sh_symbol">\</SPAN></SPAN>n
 Accept<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_normal"><SPAN class="sh_normal">text</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">/</SPAN></SPAN>plain<SPAN class="sh_symbol"><SPAN class="sh_symbol">\</SPAN></SPAN>r<SPAN class="sh_symbol"><SPAN class="sh_symbol">\</SPAN></SPAN>n
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">\</SPAN></SPAN>r<SPAN class="sh_symbol"><SPAN class="sh_symbol">\</SPAN></SPAN>n
 </CODE></PRE>
 
-<P>Then <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>url</CODE> will be:</P>
+<P>Тогда значением <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>url</CODE> будет:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN>
 </CODE></PRE>
 
-<P>If you would like to parse the URL into its parts, you can use
-<CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">).</SPAN><SPAN class="sh_function">parse</SPAN><SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">.</SPAN>url<SPAN class="sh_symbol">)</SPAN></CODE>.  Example:</P>
+<P>Если вы хотите разделить URL на составные части, вы можете использовать <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">).</SPAN><SPAN class="sh_function">parse</SPAN><SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">.</SPAN>url<SPAN class="sh_symbol">)</SPAN></CODE>. Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'url'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">parse</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> href<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN>
@@ -2376,9 +2364,9 @@ Accept<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN clas
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>If you would like to extract the params from the query string,
-you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'querystring'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE> function, or pass
-<CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> as the second argument to <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE>.  Example:</P>
+<P>Если вам нужно извлечь параметры из строки запроса, можно использовать функцию
+you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'querystring'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE> , или передать
+<CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> в качестве второго аргумента <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE>.  Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'url'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">parse</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">true</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> href<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN>
@@ -2390,47 +2378,43 @@ you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</S
 
 <H3 id="request-headers-169">request.headers</H3>
 
-<P>Read only.</P>
+<P>Заголовки запроса. Только для чтения.</P>
 
 <H3 id="request-httpversion-170">request.httpVersion</H3>
 
-<P>The HTTP protocol version as a string. Read only. Examples:
+<P>Версия протокола HTTP в виде строки. Только чтение. Пример:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
-Also <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> is the first integer and
-<CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> is the second.</P>
+Также <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> это первое число и
+<CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> &mdash; второе.</P>
 
 <H3 id="request-setencoding-171">request.setEncoding(encoding='binary')</H3>
 
-<P>Set the encoding for the request body. Either <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> or <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>. Defaults
-to <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
+<P>Задаёт кодировку тела запроса. Либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>. По умолчанию принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
 <H3 id="request-pause-172">request.pause()</H3>
 
-<P>Pauses request from emitting events.  Useful to throttle back an upload.</P>
+<P>Прекращает генерирование событий запросом. Можно использовать для ускорения закачки файла.</P>
 
 <H3 id="request-resume-173">request.resume()</H3>
 
-<P>Resumes a paused request.</P>
+<P>Возобновляет генерирование событий запросом</P>
 
 <H3 id="request-connection-174">request.connection</H3>
 
-<P>The <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE> object assocated with the connection.</P>
+<P>Объект соединения, экземпляр <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE></P>
 
-<P>With HTTPS support, use request.connection.verifyPeer() and
-request.connection.getPeerCertificate() to obtain the client's
-authentication details.</P>
+<P>Если включена поддержка HTTPS, используйте request.connection.verifyPeer() и
+request.connection.getPeerCertificate() чтобы получить сведения об аутентификации клиента.</P>
 
 <H2 id="http-serverresponse-175">http.ServerResponse</H2>
 
-<P>This object is created internally by a HTTP server--not by the user. It is
-passed as the second parameter to the <CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE> event. It is a writable stream.</P>
+<P>Этот объект создаётся внутри HTTP-сервера &mdash; не пользователем. Он передаётся
+вторым параметром в обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE> и является потоком с возможностью записи.</P>
 
 <H3 id="response-writehead-176">response.writeHead(statusCode[, reasonPhrase] , headers)</H3>
 
-<P>Sends a response header to the request. The status code is a 3-digit HTTP
-status code, like <CODE class="sh_sourceCode"><SPAN class="sh_number">404</SPAN></CODE>. The last argument, <CODE class="sh_sourceCode">headers</CODE>, are the response headers.
-Optionally one can give a human-readable <CODE class="sh_sourceCode">reasonPhrase</CODE> as the second
-argument.</P>
+<P>Отправляет заголовки ответа клиенту. <CODE class="sh_sourceCode"><SPAN class="sh_string">statusCode</SPAN></CODE> это три цифры кода статуса HTTP, например <CODE class="sh_sourceCode"><SPAN class="sh_number">404</SPAN></CODE>. Последний аргумент, <CODE class="sh_sourceCode">headers</CODE>, это заголовки ответа.
+Также вторым аргументом можно передать фразу <CODE class="sh_sourceCode">reasonPhrase</CODE> в качестве второго аргумента.</P>
 
 <P>Пример:</P>
 
@@ -2441,34 +2425,22 @@ response<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN cla
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>This method must only be called once on a message and it must
-be called before <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> is called.</P>
+<P>Этот метод должен быть вызван только однажды для каждого сообщения и должен быть вызван до <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="response-write-177">response.write(chunk, encoding)</H3>
 
-<P>This method must be called after <CODE class="sh_sourceCode">writeHead</CODE> was
-called. It sends a chunk of the response body. This method may
-be called multiple times to provide successive parts of the body.</P>
+<P>Этот метод должен вызываться после <CODE class="sh_sourceCode">writeHead</CODE>. Он отправляет часть тела ответа. Метод может быть вызван несколько раз для отправки последующих частей тела ответа.</P>
 
-<P>If <CODE class="sh_sourceCode">chunk</CODE> is a string, the second parameter
-specifies how to encode it into a byte stream. By default the
-<CODE class="sh_sourceCode">encoding</CODE> is <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>.</P>
+<P>Если <CODE class="sh_sourceCode">chunk</CODE> это строка, второй параметр указывает в какой кодировке отправлять её в поток. По умолчанию <CODE class="sh_sourceCode">encoding</CODE> принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>.</P>
 
-<P><STRONG>Note</STRONG>: This is the raw HTTP body and has nothing to do with
-higher-level multi-part body encodings that may be used.</P>
+<P><STRONG>Замечание</STRONG>: Это необработанное тело HTTP-ответа и не имеет отношения к более высокоуровневым вещам вроде multi-part encoding, которые тоже могут использоваться.</P>
 
-<P>The first time <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> is called, it will send the buffered
-header information and the first body to the client. The second time
-<CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> is called, Node assumes you're going to be streaming
-data, and sends that separately. That is, the response is buffered up to the
-first chunk of body.</P>
+<P>После первого вызова <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> клиенту будет отправлены заголовки и первая часть тела сообщения. После второго вызова <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> Node предполагает что вы начинаете потоковую передачу данных и отправляет часть тела отдельно. Таким образом, данные буферизуются только до первой части тела ответа.</P>
 
 <H3 id="response-end-178">response.end()</H3>
 
-<P>This method signals to the server that all of the response headers and body
-has been sent; that server should consider this message complete.
-The method, <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, MUST be called on each
-response.</P>
+<P>Этот метод отправляет серверу сигнал что все заголовки и тело ответа отправлены; сервер должен считать это сообщение законченным.
+Метод <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> ДОЛЖЕН быть вызван при каждом ответе.</P>
 
 <H2 id="http-client-179">http.Client</H2>
 
@@ -2503,7 +2475,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 isn't being listened for, clients receiving an upgrade header will have their
 connections closed.</P>
 
-<P>See the description of the <CODE class="sh_sourceCode">upgrade</CODE> event for <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Server</CODE> for further details.</P>
+<P>См. описание события <CODE class="sh_sourceCode">upgrade</CODE> для <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Server</CODE>.</P>
 
 <H3 id="http-createclient-181">http.createClient(port, host, secure, credentials)</H3>
 
