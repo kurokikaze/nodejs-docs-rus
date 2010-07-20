@@ -1700,14 +1700,14 @@ child <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN clas
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Script <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">binding</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'evals'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Script<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 </CODE></PRE>
 
-<P>New JavaScript code can be compiled and run immediately or compiled, saved, and run later.</P>
+<P>Новый JavaScript-код может быть скомпилирован и сразу запущен либо скомпилирован, сохранён, и запущен позже.</P>
 
 <H3 id="script-runinthiscontext-94">Script.runInThisContext(code, filename)</H3>
 
-<P>Similar to <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>compile</CODE>.  <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> compiles <CODE class="sh_sourceCode">code</CODE> as if it were loaded from <CODE class="sh_sourceCode">filename</CODE>,
-runs it and returns the result. Running code does not have access to local scope. <CODE class="sh_sourceCode">filename</CODE> is optional.</P>
+<P>Действует почти как <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>compile</CODE>.  <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> комплирует код <CODE class="sh_sourceCode">code</CODE> как если бы он был загружен из файла <CODE class="sh_sourceCode">filename</CODE>,
+запускает его и возвращает результат. Запускаемый код не получает доступа к локальной области видимости. Параметр <CODE class="sh_sourceCode">filename</CODE> &mdash; необязательный.</P>
 
-<P>Example of using <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">eval</SPAN></CODE> to run the same code:</P>
+<P>Пример использования <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">eval</SPAN></CODE> для запуска одного и того же кода:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> localVar <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">123</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
     usingscript<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> evaled<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1725,21 +1725,19 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_comment"><SPAN class="sh_comment">// localVar: 1, evaled: 1</SPAN></SPAN>
 </CODE></PRE>
 
-<P><CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> does not have access to the local scope, so <CODE class="sh_sourceCode">localVar</CODE> is unchanged.
-<CODE class="sh_sourceCode"><SPAN class="sh_predef_func">eval</SPAN></CODE> does have access to the local scope, so <CODE class="sh_sourceCode">localVar</CODE> is changed.</P>
+<P><CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> не имеет доступа к локальной области видимости, поэтому переменная <CODE class="sh_sourceCode">localVar</CODE> остаётся неизменной.
+<CODE class="sh_sourceCode"><SPAN class="sh_predef_func">eval</SPAN></CODE> имеет доступ к локальной области видимости, поэтому <CODE class="sh_sourceCode">localVar</CODE> изменяется.</P>
 
-<P>In case of syntax error in <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> emits the syntax error to stderr
-and throws.an exception.</P>
+<P>В случае обнаружения синтаксической ошибки в коде <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> выводит текст ошибки в stderr и генерирует исключение.</P>
 
 <H3 id="script-runinnewcontext-95">Script.runInNewContext(code, sandbox, filename)</H3>
 
-<P><CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> compiles <CODE class="sh_sourceCode">code</CODE> to run in <CODE class="sh_sourceCode">sandbox</CODE> as if it were loaded from <CODE class="sh_sourceCode">filename</CODE>,
-then runs it and returns the result. Running code does not have access to local scope and
-the object <CODE class="sh_sourceCode">sandbox</CODE> will be used as the global object for <CODE class="sh_sourceCode">code</CODE>.
-<CODE class="sh_sourceCode">sandbox</CODE> and <CODE class="sh_sourceCode">filename</CODE> are optional.</P>
+<P><CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> компилирует переданный код <CODE class="sh_sourceCode">code</CODE> для запуска в контексте <CODE class="sh_sourceCode">sandbox</CODE> как если бы код был загружен из файла <CODE class="sh_sourceCode">filename</CODE>,
+потом выполняет его и возвращает результат. Запущенный код не имеет доступа к локальной области видимости и
+объект <CODE class="sh_sourceCode">sandbox</CODE> будет использован в качестве глобального объекта для кода <CODE class="sh_sourceCode">code</CODE>. Параметры <CODE class="sh_sourceCode">sandbox</CODE> и <CODE class="sh_sourceCode">filename</CODE> необязательны.</P>
 
-<P>Example: compile and execute code that increments a global variable and sets a new one.
-These globals are contained in the sandbox.</P>
+<P>Пример: скомпилировать и выполнить код, увеличивающий глобальную переменную и создающий новую.
+Эти переменные содержатся в sandbox-объекте.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     Script <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">binding</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'evals'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Script<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1755,32 +1753,27 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_comment"><SPAN class="sh_comment">// { animal: 'cat', count: 3, name: 'kitty' }</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Note that running untrusted code is a tricky business requiring great care.  To prevent accidental
-global variable leakage, <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> is quite useful, but safely running untrusted code
-requires a separate process.</P>
+<P>Заметьте, что запуск стороннего кода &mdash; операция, требующая особого внимания. <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> очень полезен для предотвращения случайных утечек глобальных переменных, но по настоящему безопасное выполнение стороннего кода требует отдельного процесса.</P>
 
-<P>In case of syntax error in <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> emits the syntax error to stderr
-and throws an exception.</P>
+<P>При обнаружении синтаксической ошибки в <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> выводит текст ошибки в stderr и генерирует исключение.</P>
 
 <H3 id="new-script-96">new Script(code, filename)</H3>
 
-<P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">new</SPAN> Script</CODE> compiles <CODE class="sh_sourceCode">code</CODE> as if it were loaded from <CODE class="sh_sourceCode">filename</CODE>,
-but does not run it. Instead, it returns a <CODE class="sh_sourceCode">Script</CODE> object representing this compiled code.
-This script can be run later many times using methods below.
-The returned script is not bound to any global object.
-It is bound before each run, just for that run. <CODE class="sh_sourceCode">filename</CODE> is optional.</P>
+<P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">new</SPAN> Script</CODE> компилирует переданный код <CODE class="sh_sourceCode">code</CODE> как если бы он был загружен из файла <CODE class="sh_sourceCode">filename</CODE>,
+но не запускает его. Вместо этого он возвращает объект <CODE class="sh_sourceCode">Script</CODE> представляющий скомпилированный код.
+После этот скрипт может быть многократно выполнен следующими методами.
+Возвращаемый скрипт не привязан ни к какому глобальному объекту.
+Он привязывается перед каждым запуском, только для этого запуска. <CODE class="sh_sourceCode">filename</CODE> is optional.</P>
 
-<P>In case of syntax error in <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_keyword">new</SPAN> Script</CODE> emits the syntax error to stderr
-and throws an exception.</P>
+<P>В случае обнаружения синтаксической ошибки в коде <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_keyword">new</SPAN> Script</CODE> выводит текст ошибки в stderr и генерирует исключение.</P>
 
 <H3 id="script-runinthiscontext-97">script.runInThisContext()</H3>
 
-<P>Similar to <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> (note capital 'S'), but now being a method of a precompiled Script object.
-<CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> runs the code of <CODE class="sh_sourceCode">script</CODE> and returns the result.
-Running code does not have access to local scope, but does have access to the <CODE class="sh_sourceCode">global</CODE> object
-(v8: in actual context).</P>
+<P>Похоже на <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> (обратите внимание на заглавную 'S'), но теперь это метод предварительно скомпилированного объекта Script.
+<CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> запускает код в объекте <CODE class="sh_sourceCode">script</CODE> и возвращает результат.
+У запускаемого кода нет доступа к локальной области видимости, но есть доступ к глобальному объекту <CODE class="sh_sourceCode">global</CODE> (v8: in actual context).</P>
 
-<P>Example of using <CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> to compile code once and run it multiple times:</P>
+<P>Пример использования <CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInThisContext</CODE> чтобы скомпилировать код однажды и запустить несколько раз:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Script <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">binding</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'evals'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Script<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
     scriptObj<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> i<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -1800,12 +1793,12 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="script-runinnewcontext-98">script.runInNewContext(sandbox)</H3>
 
-<P>Similar to <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> (note capital 'S'), but now being a method of a precompiled Script object.
-<CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> runs the code of <CODE class="sh_sourceCode">script</CODE> with <CODE class="sh_sourceCode">sandbox</CODE> as the global object and returns the result.
-Running code does not have access to local scope. <CODE class="sh_sourceCode">sandbox</CODE> is optional.</P>
+<P>Как и в <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> (note capital 'S'), но теперь это метод заранее созданного объекта Script.
+<CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> запускает код, содержащийся в объекте <CODE class="sh_sourceCode">script</CODE> с объектом <CODE class="sh_sourceCode">sandbox</CODE> в качестве глобального и возвращает результат.
+Запускаемый код не имеет доступа к локальной области видимости. Переменная <CODE class="sh_sourceCode">sandbox</CODE> необязательна.</P>
 
-<P>Example: compile code that increments a global variable and sets one, then execute this code multiple times.
-These globals are contained in the sandbox.</P>
+<P>Пример: скомпилировать и выполнить код, увеличивающий глобальную переменную и создающий новую.
+Эти переменные содержатся в sandbox-объекте.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     Script <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">binding</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'evals'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Script<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1827,11 +1820,9 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_comment"><SPAN class="sh_comment">// { animal: 'cat', count: 12, name: 'kitty' }</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Note that running untrusted code is a tricky business requiring great care.  To prevent accidental
-global variable leakage, <CODE class="sh_sourceCode">script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> is quite useful, but safely running untrusted code
-requires a separate process.</P>
+<P>Заметьте, что запуск стороннего кода &mdash; операция, требующая особого внимания. <CODE class="sh_sourceCode">Script<SPAN class="sh_symbol">.</SPAN>runInNewContext</CODE> очень полезен для предотвращения случайных утечек глобальных переменных, но по настоящему безопасное выполнение стороннего кода требует отдельного процесса.</P>
 
-<H2 id="file-system-99">File System</H2>
+<H2 id="file-system-99">Файловая система</H2>
 
 <P>File I/O is provided by simple wrappers around standard POSIX functions.  To
 use this module do <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'fs'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>. All the methods have asynchronous and
@@ -3309,7 +3300,7 @@ string will not be in the parsed object. Examples are shown for the URL</P>
 </UL>
 
 
-<P>The following methods are provided by the URL module:</P>
+<P>Модуль URL предоставляет следующие методы:</P>
 
 <H3 id="url-parse-281">url.parse(urlStr, parseQueryString=false)</H3>
 
@@ -3454,7 +3445,7 @@ TCP sockets.</P>
 <P>By starting a REPL from a Unix socket-based server instead of stdin, you can
 connect to a long-running node process without restarting it.</P>
 
-<H3 id="repl-features-291">REPL Features</H3>
+<H3 id="repl-features-291">Возможности REPL</H3>
 
 <P>Inside the REPL, Control+D will exit.  Multi-line expressions can be input.</P>
 
