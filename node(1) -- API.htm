@@ -1418,8 +1418,8 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-umask-73">process.umask(mask)</H3>
 
-<P>Задаёт ии возвращает маску создания файлов процессом. Дочерние процессы
-наследуют эту маску от родительского. Если задан аргумент <CODE class="sh_sourceCode">mask</CODE> возвращает старую маску, иначе &mdash; возвращает текущую.</P>
+<P>Задаёт или возвращает маску создания файлов процессом. Дочерние процессы
+наследуют эту маску от процесса-родителя. Если задан аргумент <CODE class="sh_sourceCode">mask</CODE> возвращает старую маску, иначе &mdash; возвращает текущую.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> oldmask<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> newmask <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">0644</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 
@@ -1430,7 +1430,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="sys-74">sys</H2>
 
-<P>Эти функции &mdash; часть модуля <CODE class="sh_sourceCode"><SPAN class="sh_string">'sys'</SPAN></CODE>. Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'sys'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы их использовать.</P>
+<P>Эти функции &mdash; часть модуля <CODE class="sh_sourceCode"><SPAN class="sh_string">'sys'</SPAN></CODE>. Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'sys'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить к ним доступ.</P>
 
 <H3 id="sys-print-75">sys.print(string)</H3>
 
