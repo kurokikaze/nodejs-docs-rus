@@ -1504,40 +1504,33 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="child-processes-85">Child Processes</H2>
 
-<P>Node provides a tri-directional <CODE class="sh_sourceCode"><SPAN class="sh_function">popen</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">3</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> facility through the <CODE class="sh_sourceCode">ChildProcess</CODE>
-class.</P>
+<P>Node предоставляет tri-directional <CODE class="sh_sourceCode"><SPAN class="sh_function">popen</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">3</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> в классе <CODE class="sh_sourceCode">ChildProcess</CODE>.</P>
 
-<P>It is possible to stream data through the child's <CODE class="sh_sourceCode">stdin</CODE>, <CODE class="sh_sourceCode">stdout</CODE>, and
-<CODE class="sh_sourceCode">stderr</CODE> in a fully non-blocking way.</P>
+<P>С дочерним потоком можно обмениваться данными через <CODE class="sh_sourceCode">stdin</CODE>, <CODE class="sh_sourceCode">stdout</CODE>, и <CODE class="sh_sourceCode">stderr</CODE> в полностью неблокирующем стиле.</P>
 
-<P>To create a child process use <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'child_process'</SPAN><SPAN class="sh_symbol">).</SPAN><SPAN class="sh_function">spawn</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Для создания дочернего процесса используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'child_process'</SPAN><SPAN class="sh_symbol">).</SPAN><SPAN class="sh_function">spawn</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
-<P>Child processes always have three streams associated with them. <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdin</CODE>,
-<CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdout</CODE>, and <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stderr</CODE>.</P>
+<P>С дочерним процессом всегда ассоциированы три потока. <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdin</CODE>,
+<CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdout</CODE>, и <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stderr</CODE>.</P>
 
-<P><CODE class="sh_sourceCode">ChildProcess</CODE> is an EventEmitter.</P>
+<P><CODE class="sh_sourceCode">ChildProcess</CODE> &mdash; экземпляр EventEmitter.</P>
 
-<H3 id="event-exit-86">Event:  'exit'</H3>
+<H3 id="event-exit-86">Событие:  'exit'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>code<SPAN class="sh_symbol">,</SPAN> signal<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{}</SPAN></CODE></P>
 
-<P>This event is emitted after the child process ends. If the process terminated
-normally, <CODE class="sh_sourceCode">code</CODE> is the final exit code of the process, otherwise <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>. If
-the process terminated due to receipt of a signal, <CODE class="sh_sourceCode">signal</CODE> is the string name
-of the signal, otherwise <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>.</P>
+<P>Это событие генерируется при завершении дочернего процесса. Если процесс завершён нормально, в <CODE class="sh_sourceCode">code</CODE> передаётся код завершения процесса, иначе передаётся <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>. Если процесс завершился от принятия сигнала, <CODE class="sh_sourceCode">signal</CODE> &mdash; это строка, содержащая имя сигнала, либо <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>.</P>
 
-<P>After this event is emitted, the <CODE class="sh_sourceCode"><SPAN class="sh_string">'output'</SPAN></CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE> callbacks will no
-longer be made.</P>
+<P>После генерации события 'exit' события <CODE class="sh_sourceCode"><SPAN class="sh_string">'output'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE> больше не будут генерироваться.</P>
 
 <P>See <CODE class="sh_sourceCode"><SPAN class="sh_function">waitpid</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="child_process-spawn-87">child_process.spawn(command, args, env)</H3>
 
-<P>Launches a new process with the given <CODE class="sh_sourceCode">command</CODE>, command line arguments, and
-environment variables.  If omitted, <CODE class="sh_sourceCode">args</CODE> defaults to an empty Array, and <CODE class="sh_sourceCode">env</CODE>
-defaults to <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>env</CODE>.</P>
+<P>Запускает новый процесс с указанной командой <CODE class="sh_sourceCode">command</CODE>, аргументами командной строки и
+переменными окружения. Если аргументы пропущены <CODE class="sh_sourceCode">args</CODE> будет пустым массивом, а <CODE class="sh_sourceCode">env</CODE> будет копией <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>env</CODE>.</P>
 
-<P>Example of running <CODE class="sh_sourceCode">ls <SPAN class="sh_symbol">-</SPAN><SPAN class="sh_normal">lh </SPAN><SPAN class="sh_symbol">/</SPAN>usr</CODE>, capturing <CODE class="sh_sourceCode">stdout</CODE>, <CODE class="sh_sourceCode">stderr</CODE>, and the exit code:</P>
+<P>Пример запуска <CODE class="sh_sourceCode">ls <SPAN class="sh_symbol">-</SPAN><SPAN class="sh_normal">lh </SPAN><SPAN class="sh_symbol">/</SPAN>usr</CODE>, чтения <CODE class="sh_sourceCode">stdout</CODE>, <CODE class="sh_sourceCode">stderr</CODE>, и получения кода завершения:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys   <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1556,7 +1549,7 @@ ls<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Example of checking for failed exec:</P>
+<P>Пример проверки запуска приложения:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
     child <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">spawn</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'bad_command'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -1568,12 +1561,12 @@ child<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stderr<SPAN 
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>See also: <CODE class="sh_sourceCode">child_process<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">exec</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></P>
+<P>См. также: <CODE class="sh_sourceCode">child_process<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">exec</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></P>
 
 <H3 id="child-kill-88">child.kill(signal)</H3>
 
-<P>Send a signal to the child process. If no argument is given, the process will
-be sent <CODE class="sh_sourceCode"><SPAN class="sh_string">'SIGTERM'</SPAN></CODE>. See <CODE class="sh_sourceCode"><SPAN class="sh_function">signal</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">7</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> for a list of available signals.</P>
+<P>Отправляет сигнал дочернему процессу. Если аргументы не переданы, процессу будет
+отправлен сигнал <CODE class="sh_sourceCode"><SPAN class="sh_string">'SIGTERM'</SPAN></CODE>. См. <CODE class="sh_sourceCode"><SPAN class="sh_function">signal</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">7</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> для списка возможных имён сигналов.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
     grep  <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">spawn</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'grep'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">[</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'ssh'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">]);</SPAN></SPAN>
@@ -1586,14 +1579,14 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">kill</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'SIGHUP'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Note that while the function is called <CODE class="sh_sourceCode">kill</CODE>, the signal delivered to the child
-process may not actually kill it.  <CODE class="sh_sourceCode">kill</CODE> really just sends a signal to a process.</P>
+<P>Заметьте, что хотя фунцкия называется <CODE class="sh_sourceCode">kill</CODE>, сигнал отправляемый дочернему процессу
+не обязательно его завершит. Метод <CODE class="sh_sourceCode">kill</CODE> просто отправляет сигналы.</P>
 
-<P>See <CODE class="sh_sourceCode"><SPAN class="sh_function">kill</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE></P>
+<P>См. <CODE class="sh_sourceCode"><SPAN class="sh_function">kill</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE></P>
 
 <H3 id="child-pid-89">child.pid</H3>
 
-<P>The PID of the child process.</P>
+<P>Идентификатор дочернего процесса.</P>
 
 <P>Пример:</P>
 
@@ -1606,11 +1599,11 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stdin<SPAN cl
 
 <H3 id="child-stdin-write-90">child.stdin.write(data, encoding)</H3>
 
-<P>Write data to the child process's <CODE class="sh_sourceCode">stdin</CODE>. The second argument is optional and
-specifies the encoding: possible values are <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, and
+<P>Пишет данные в стандартный поток ввода (<CODE class="sh_sourceCode">stdin</CODE>) дочернего процесса. Второй аргумент необязательный
+и указывает кодировку: его возможные значения <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, и
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
-<P>Example: A very elaborate way to run 'ps ax | grep ssh'</P>
+<P>Пример: достаточно сложный способ выполнить 'ps ax | grep ssh'</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys   <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1682,12 +1675,11 @@ child <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN clas
   <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>The callback gets the arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>error<SPAN class="sh_symbol">,</SPAN> stdout<SPAN class="sh_symbol">,</SPAN> stderr<SPAN class="sh_symbol">)</SPAN></CODE>. On success, <CODE class="sh_sourceCode">error</CODE>
-will be <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>.  On error, <CODE class="sh_sourceCode">error</CODE> will be an instance of <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE> and <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>code</CODE>
-will be the exit code of the child process, and <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>signal</CODE> will be set to the
-signal that terminated the process.</P>
+<P>Функция-callback получает аргументы <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>error<SPAN class="sh_symbol">,</SPAN> stdout<SPAN class="sh_symbol">,</SPAN> stderr<SPAN class="sh_symbol">)</SPAN></CODE>. При удачном выполнении, в <CODE class="sh_sourceCode">error</CODE>
+будет <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>.  При ошибке, <CODE class="sh_sourceCode">error</CODE> будет экземпляром <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE>, <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>code</CODE>
+будет кодом завершения дочернего процесса, и в <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>signal</CODE> будет содержаться имя сигнала, завершившего процесс.</P>
 
-<P>There is a second optional argument to specify several options. The default options are</P>
+<P>Вторым аргументом могут быть переданы параметры. По умолчанию они будут такими</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> encoding<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'utf8'</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> timeout<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">0</SPAN></SPAN>
@@ -1696,15 +1688,14 @@ signal that terminated the process.</P>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>If <CODE class="sh_sourceCode">timeout</CODE> is greater than 0, then it will kill the child process
-if it runs longer than <CODE class="sh_sourceCode">timeout</CODE> milliseconds. The child process is killed with
-<CODE class="sh_sourceCode">killSignal</CODE> (default: <CODE class="sh_sourceCode"><SPAN class="sh_string">'SIGKILL'</SPAN></CODE>). <CODE class="sh_sourceCode">maxBuffer</CODE> specifies the largest
-amount of data allowed on stdout or stderr - if this value is exceeded then
-the child process is killed.</P>
+<P>Если <CODE class="sh_sourceCode">timeout</CODE> больше 0, процесс будет завершён если он
+выполняется дольше чем <CODE class="sh_sourceCode">timeout</CODE> миллисекунд. Дочерний процесс завершается с помощью
+сигнала <CODE class="sh_sourceCode">killSignal</CODE> (default: <CODE class="sh_sourceCode"><SPAN class="sh_string">'SIGKILL'</SPAN></CODE>). В <CODE class="sh_sourceCode">maxBuffer</CODE> указывается максимальный объём данных
+разрешённый на stdout или stderr - если этот объём будет превышен, дочерний процесс будет завершён.</P>
 
 <H2 id="script-93">Script</H2>
 
-<P><CODE class="sh_sourceCode">Script</CODE> class compiles and runs JavaScript code. You can access this class with:</P>
+<P>Модуль <CODE class="sh_sourceCode">Script</CODE> отвечает за компиляцию и запуск JavaScript-кода. Вы можете получить доступ к модулю таким образом:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Script <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> process<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">binding</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'evals'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Script<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 </CODE></PRE>
@@ -1942,7 +1933,7 @@ the entire process until they complete--halting all connections.</P>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>See the <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE> section below for more information.</P>
+<P>См. <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE> section below for more information.</P>
 
 <H3 id="fs-statsync-107">fs.statSync(path), fs.lstatSync(path), fs.fstatSync(fd)</H3>
 
@@ -1950,11 +1941,11 @@ the entire process until they complete--halting all connections.</P>
 
 <H3 id="fs-link-108">fs.link(srcpath, dstpath, callback)</H3>
 
-<P>Asynchronous link(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронный link(2). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-linksync-109">fs.linkSync(dstpath, srcpath)</H3>
 
-<P>Synchronous link(2).</P>
+<P>Синхронный link(2).</P>
 
 <H3 id="fs-symlink-110">fs.symlink(linkdata, path, callback)</H3>
 
