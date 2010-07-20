@@ -1418,7 +1418,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-umask-73">process.umask(mask)</H3>
 
-<P>Задаёт или возвращает маску создания файлов процессом. Дочерние процессы
+<P>Задаёт ии возвращает маску создания файлов процессом. Дочерние процессы
 наследуют эту маску от родительского. Если задан аргумент <CODE class="sh_sourceCode">mask</CODE> возвращает старую маску, иначе &mdash; возвращает текущую.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> oldmask<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> newmask <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">0644</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -1430,45 +1430,41 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="sys-74">sys</H2>
 
-<P>These functions are in the module <CODE class="sh_sourceCode"><SPAN class="sh_string">'sys'</SPAN></CODE>. Use <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'sys'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> to access
-them.</P>
+<P>Эти функции &mdash; часть модуля <CODE class="sh_sourceCode"><SPAN class="sh_string">'sys'</SPAN></CODE>. Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'sys'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы их использовать.</P>
 
 <H3 id="sys-print-75">sys.print(string)</H3>
 
-<P>Like <CODE class="sh_sourceCode">console<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">log</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> but without the trailing newline.</P>
+<P>То же что <CODE class="sh_sourceCode">console<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">log</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> но без перевода строки.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">print</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'String with no newline'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="sys-debug-76">sys.debug(string)</H3>
 
-<P>A synchronous output function. Will block the process and
-output <CODE class="sh_sourceCode">string</CODE> immediately to <CODE class="sh_sourceCode">stderr</CODE>.</P>
+<P>Синхронный вывод. Заблокирует процесс и выведет строку <CODE class="sh_sourceCode">string</CODE> в поток <CODE class="sh_sourceCode">stderr</CODE> немедленно.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">debug</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'message on stderr'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="sys-log-77">sys.log(string)</H3>
 
-<P>Output with timestamp on <CODE class="sh_sourceCode">stdout</CODE>.</P>
+<P>Выводит строку с меткой времени в <CODE class="sh_sourceCode">stdout</CODE>.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'Timestmaped message.'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="sys-inspect-78">sys.inspect(object, showHidden, depth)</H3>
 
-<P>Return a string representation of <CODE class="sh_sourceCode">object</CODE>, which is useful for debugging.</P>
+<P>Возвращает объект <CODE class="sh_sourceCode">object</CODE> в виде строки, очень удобно для отладки.</P>
 
-<P>If <CODE class="sh_sourceCode">showHidden</CODE> is <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, then the object's non-enumerable properties will be
-shown too.</P>
+<P>Если <CODE class="sh_sourceCode">showHidden</CODE> имеет значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, non-numerable свойства тоже будут показаны.</P>
 
-<P>If <CODE class="sh_sourceCode">depth</CODE> is provided, it tells <CODE class="sh_sourceCode">inspect</CODE> how many times to recurse while
-formatting the object. This is useful for inspecting large complicated objects.</P>
+<P>Если передан параметр <CODE class="sh_sourceCode">depth</CODE>, он сообщает <CODE class="sh_sourceCode">inspect</CODE> на какую глубину просмотреть объект прежде чем выдавать результат. Это полезно для больших сложных объектов.</P>
 
-<P>The default is to only recurse twice.  To make it recurse indefinitely, pass
-in <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE> for <CODE class="sh_sourceCode">depth</CODE>.</P>
+<P>По умолчанию принята глубина просмотра 2.  Чтобы просмотреть объект на неограниченную глубину, передайте
+<CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE> в качестве значения <CODE class="sh_sourceCode">depth</CODE>.</P>
 
-<P>Example of inspecting all properties of the <CODE class="sh_sourceCode">sys</CODE> object:</P>
+<P>Пример просмотра всех свойств объекта <CODE class="sh_sourceCode">sys</CODE>:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
