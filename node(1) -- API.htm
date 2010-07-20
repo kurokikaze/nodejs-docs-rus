@@ -1484,23 +1484,23 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="settimeout-81">setTimeout(callback, delay, [arg, ...])</H3>
 
-<P>To schedule execution of <CODE class="sh_sourceCode">callback</CODE> after <CODE class="sh_sourceCode">delay</CODE> milliseconds. Returns a
-<CODE class="sh_sourceCode">timeoutId</CODE> for possible use with <CODE class="sh_sourceCode"><SPAN class="sh_function">clearTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Позволяет выполнить переданный <CODE class="sh_sourceCode">callback</CODE> после <CODE class="sh_sourceCode">delay</CODE> миллисекунд. Возвращает ID таймаута &mdash;
+<CODE class="sh_sourceCode">timeoutId</CODE> для последующего использования с <CODE class="sh_sourceCode"><SPAN class="sh_function">clearTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="cleartimeout-82">clearTimeout(timeoutId)</H3>
 
-<P>Prevents a timeout from triggering.</P>
+<P>Отменяет установленный таймаут.</P>
 
 <H3 id="setinterval-83">setInterval(callback, delay, [arg, ...])</H3>
 
-<P>To schedule the repeated execution of <CODE class="sh_sourceCode">callback</CODE> every <CODE class="sh_sourceCode">delay</CODE> milliseconds.
-Returns a <CODE class="sh_sourceCode">intervalId</CODE> for possible use with <CODE class="sh_sourceCode"><SPAN class="sh_function">clearInterval</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Позволяет выполнять переданный <CODE class="sh_sourceCode">callback</CODE> каждые <CODE class="sh_sourceCode">delay</CODE> миллисекунд.
+Возвращает ID интервала &mdash; <CODE class="sh_sourceCode">intervalId</CODE> для использования с <CODE class="sh_sourceCode"><SPAN class="sh_function">clearInterval</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
-<P>Optionally, you can also pass arguments to the callback.</P>
+<P>Кроме того, можно передавать аргументы callback'у.</P>
 
 <H3 id="clearinterval-84">clearInterval(intervalId)</H3>
 
-<P>Stops a interval from triggering.</P>
+<P>Прекращает действие интервального таймера.</P>
 
 <H2 id="child-processes-85">Child Processes</H2>
 
