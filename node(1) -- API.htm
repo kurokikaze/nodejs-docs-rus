@@ -2200,15 +2200,15 @@ has been written.</P>
 
 <H2 id="http-151">HTTP</H2>
 
-<P>To use the HTTP server and client one must <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'http'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Для использования клиента и сервера HTTP необходимо подключить соответствующий модуль с помощью <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'http'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
-<P>The HTTP interfaces in Node are designed to support many features
-of the protocol which have been traditionally difficult to use.
-In particular, large, possibly chunk-encoded, messages. The interface is
-careful to never buffer entire requests or responses--the
-user is able to stream data.</P>
+<P>Интерфейс HTTP спроектирован в Node таким образом чтобы поддерживать
+многие возможности протокола, которые традиционно было довольно сложно использовать.
+В частности, большие сообщения с возможной chunk-encoding. Интерфейс никогда
+не сохраняет в буфере целиком запрос или ответ, давая пользователю возможность 
+принимать и отправлять данные в потоковом режиме.</P>
 
-<P>HTTP message headers are represented by an object like this:</P>
+<P>Заголовки сообщения HTTP представлены примерно таким объектом:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'content-length'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'123'</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'content-type'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'text/plain'</SPAN></SPAN>
@@ -2217,47 +2217,45 @@ user is able to stream data.</P>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Keys are lowercased. Values are not modified.</P>
+<P>Ключи приводятся к нижнему регистру. Значения не изменяются.</P>
 
-<P>In order to support the full spectrum of possible HTTP applications, Node's
-HTTP API is very low-level. It deals with stream handling and message
-parsing only. It parses a message into headers and body but it does not
-parse the actual headers or the body.</P>
+<P>Для поддержки всего спектра возможных применений HTTP, соответствующее API в
+Node довольно низкоуровневое. Оно основано на потоках и передаче сообщений.
+Node разбирает HTTP-сообщение на заголовки и тело, остальное должен сделать программист.</P>
 
-<P>HTTPS is supported if OpenSSL is available on the underlying platform.</P>
+<P>HTTPS поддерживается если на целевой платформе доступен OpenSSL.</P>
 
 <H2 id="http-server-152">http.Server</H2>
 
-<P>This is an EventEmitter with the following events:</P>
+<P>Это EventEmitter со следующими событиями:</P>
 
-<H3 id="event-request-153">Event: 'request'</H3>
+<H3 id="event-request-153">Событие: 'request'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">,</SPAN> response<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P> <CODE class="sh_sourceCode">request</CODE> is an instance of <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerRequest</CODE> and <CODE class="sh_sourceCode">response</CODE> is
- an instance of <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerResponse</CODE></P>
+<P>Объект <CODE class="sh_sourceCode">request</CODE> &mdash; экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerRequest</CODE>, объект <CODE class="sh_sourceCode">response</CODE> &mdash;
+ экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerResponse</CODE></P>
 
-<H3 id="event-connection-154">Event: 'connection'</H3>
+<H3 id="event-connection-154">Событие: 'connection'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>stream<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P> When a new TCP stream is established. <CODE class="sh_sourceCode">stream</CODE> is an object of type
- <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE>. Usually users will not want to access this event. The
- <CODE class="sh_sourceCode">stream</CODE> can also be accessed at <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>connection</CODE>.</P>
+<P> Генерируется при установке нового HTTP-соединения. <CODE class="sh_sourceCode">stream</CODE> &mdash; объект типа
+ <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE>. Обычно пользователи не используют это событие. Объект потока <CODE class="sh_sourceCode">stream</CODE> также можно найти в свойстве объекта запроса <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>connection</CODE>.</P>
 
-<H3 id="event-close-155">Event: 'close'</H3>
+<H3 id="event-close-155">Событие: 'close'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>errno<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P> Emitted when the server closes.</P>
+<P> Генерируется при завершении работы сервера.</P>
 
 <H3 id="http-createserver-156">http.createServer(requestListener, [options])</H3>
 
-<P>Returns a new web server object.</P>
+<P>Возвращает новый объект web-сервера.</P>
 
-<P>The <CODE class="sh_sourceCode">options</CODE> argument is optional. The
-<CODE class="sh_sourceCode">options</CODE> argument accepts the same values as the
-options argument for <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Server</CODE>.</P>
+<P>Аргумент <CODE class="sh_sourceCode">options</CODE> необязателен. Аргумент
+<CODE class="sh_sourceCode">options</CODE> принимает те же значения, что объект параметров для
+сервера <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Server</CODE>.</P>
 
 <P>The <CODE class="sh_sourceCode">requestListener</CODE> is a function which is automatically
 added to the <CODE class="sh_sourceCode"><SPAN class="sh_string">'request'</SPAN></CODE> event.</P>
