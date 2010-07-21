@@ -1418,7 +1418,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-umask-73">process.umask(mask)</H3>
 
-<P>Задаёт или возвращает маску создания файлов процессом. Дочерние процессы
+<P>Задаёт ии возвращает маску создания файлов процессом. Дочерние процессы
 наследуют эту маску от процесса-родителя. Если задан аргумент <CODE class="sh_sourceCode">mask</CODE> возвращает старую маску, иначе &mdash; возвращает текущую.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> oldmask<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> newmask <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">0644</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -2444,13 +2444,10 @@ response<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN cla
 
 <H2 id="http-client-179">http.Client</H2>
 
-<P>An HTTP client is constructed with a server address as its
-argument, the returned handle is then used to issue one or more
-requests.  Depending on the server connected to, the client might
-pipeline the requests or reestablish the stream after each
-stream. <EM>Currently the implementation does not pipeline requests.</EM></P>
+<P>HTTP-клиент создаётся принимая адрес сервера в качестве аргумента,
+возвращаемый идентификатор используется для отправки одного или нескольких запросов. В зависимости от того, к какому серверу совершено подключение клиент может использовать pipeline (несколько запросов за соединение) либо пересоздавать поток после каждого запроса. <em>Текущая версия не использует pipeline</em>.</P>
 
-<P>Example of connecting to <CODE class="sh_sourceCode">google<SPAN class="sh_symbol">.</SPAN>com</CODE>:</P>
+<P>Пример подключения к <CODE class="sh_sourceCode">google<SPAN class="sh_symbol">.</SPAN>com</CODE>:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> http <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'http'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 <SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> google <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> http<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">createClient</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">80</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'www.google.com'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -2471,66 +2468,50 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">,</SPAN> socket<SPAN class="sh_symbol">,</SPAN> head<SPAN class="sh_symbol">)</SPAN></CODE></P>
 
-<P>Emitted each time a server responds to a request with an upgrade. If this event
-isn't being listened for, clients receiving an upgrade header will have their
-connections closed.</P>
+<P>Генерируется каждый раз когда сервер отвечает на запрос предложением улучшить соединение до безопасного. Если это событие не обрабатывается, клиент при получении заголовка upgrade будет закрывать соединение.</P>
 
 <P>См. описание события <CODE class="sh_sourceCode">upgrade</CODE> для <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Server</CODE>.</P>
 
 <H3 id="http-createclient-181">http.createClient(port, host, secure, credentials)</H3>
 
-<P>Constructs a new HTTP client. <CODE class="sh_sourceCode">port</CODE> and
-<CODE class="sh_sourceCode">host</CODE> refer to the server to be connected to. A
-stream is not established until a request is issued.</P>
+<P>Создаёт новый HTTP клиент. <CODE class="sh_sourceCode">port</CODE> и
+<CODE class="sh_sourceCode">host</CODE> относятся к серверу, к которому производится подключение. Поток не создаётся до отправки запроса.</P>
 
-<P><CODE class="sh_sourceCode">secure</CODE> is an optional boolean flag to enable https support and <CODE class="sh_sourceCode">credentials</CODE> is an optional credentials object from the crypto module, which may hold the client's private key, certificate, and a list of trusted CA certificates.</P>
+<P><CODE class="sh_sourceCode">secure</CODE> &mdash; дополнительный двоичный флаг для включения поддержки https и<CODE class="sh_sourceCode">credentials</CODE> &mdash; необязательный объект параметров для crypto-модуля, хранящий private-ключ клиента, сертификат и список доверенных CA сертификатов.</P>
 
-<P>If the connection is secure, but no explicit CA certificates are passed in the credentials, then node.js will default to the publicly trusted list of CA certificates, as given in http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
+<P>Если соединение зашифровано но в объекте параметров не переданы сертификаты CA, node.js будет использовать публично доступный список CA, как он представлен в http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
 
 <H3 id="client-request-182">client.request([method], path, [request_headers])</H3>
 
-<P>Issues a request; if necessary establishes stream. Returns a <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientRequest</CODE> instance.</P>
+<P>Отправляет запрос; при необходимости инициирует соединение. Возврашает экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientRequest</CODE>.</P>
 
-<P><CODE class="sh_sourceCode">method</CODE> is optional and defaults to 'GET' if omitted.</P>
+<P><CODE class="sh_sourceCode">method</CODE> &mdash; необязательный параметр, по умолчанию принимает значение 'GET'.</P>
 
-<P><CODE class="sh_sourceCode">request_headers</CODE> is optional.
-Additional request headers might be added internally
-by Node. Returns a <CODE class="sh_sourceCode">ClientRequest</CODE> object.</P>
+<P><CODE class="sh_sourceCode">request_headers</CODE> необязательный параметр.
+Дополнительные заголовки запроса могут быть добавлены внутри Node. Возвращает объект <CODE class="sh_sourceCode">ClientRequest</CODE>.</P>
 
-<P>Do remember to include the <CODE class="sh_sourceCode">Content<SPAN class="sh_symbol">-</SPAN>Length</CODE> header if you
-plan on sending a body. If you plan on streaming the body, perhaps
-set <CODE class="sh_sourceCode">Transfer<SPAN class="sh_symbol">-</SPAN>Encoding<SPAN class="sh_symbol">:</SPAN> chunked</CODE>.</P>
+<P>Не забудьте включить заголовок <CODE class="sh_sourceCode">Content<SPAN class="sh_symbol">-</SPAN>Length</CODE> если планируете отправить тело запроса. Если вы хотите отправить тело запроса потоком, поставьте <CODE class="sh_sourceCode">Transfer<SPAN class="sh_symbol">-</SPAN>Encoding<SPAN class="sh_symbol">:</SPAN> chunked</CODE>.</P>
 
-<P><EM>NOTE</EM>: the request is not complete. This method only sends the header of
-the request. One needs to call <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> to finalize the request and
-retrieve the response.  (This sounds convoluted but it provides a chance for
-the user to stream a body to the server with <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.)</P>
+<P><EM>ВНМАНИЕ</EM>: запрос ещё не закончен. Этот метод только отсылает заголовки серверу. Необходимо вызвать <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> чтобы отправить запрос целиком и получить ответ.  (Это звучит сложно, но позволяет пользователю передавать тело запроса в потоковом режиме с помощью <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.)</P>
 
 <H3 id="client-verifypeer-183">client.verifyPeer()</H3>
 
-<P>Returns true or false depending on the validity of the server's certificate in the context of the defined or default list of trusted CA certificates.</P>
+<P>Возвращает true или false в зависимости от подлинности сертификата сервера соответственно списку доверенных сертификатов CA (переданному явно или используемому по умолчанию).</P>
 
 <H3 id="client-getpeercertificate-184">client.getPeerCertificate()</H3>
 
-<P>Returns a JSON structure detailing the server's certificate, containing a dictionary with keys for the certificate 'subject', 'issuer', 'valid_from' and 'valid_to'</P>
+<P>Возвращает JSON с деталями сертификата сервера, содержит поля 'subject', 'issuer', 'valid_from' и 'valid_to'</P>
 
 <H2 id="http-clientrequest-185">http.ClientRequest</H2>
 
-<P>This object is created internally and returned from the <CODE class="sh_sourceCode"><SPAN class="sh_function">request</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> method
-of a <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Client</CODE>. It represents an <EM>in-progress</EM> request whose header has
-already been sent.</P>
+<P>Объект создаётся внутри Node и возвращается методом <CODE class="sh_sourceCode"><SPAN class="sh_function">request</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>
+объекта <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Client</CODE>. Он представляет собой <EM>незаконченный</EM> запрос, заголовки которого уже отправлены.</P>
 
-<P>To get the response, add a listener for <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> to the request object.
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> will be emitted from the request object when the response
-headers have been received.  The <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> event is executed with one
-argument which is an instance of <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientResponse</CODE>.</P>
+<P>Чтобы получить ответ, добавьте обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> объекта запроса.
+Событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> будет сгенерировано объектом запроса при получении заголовков ответа. Обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> выполняется с одним аргументом &mdash; экземпляром <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientResponse</CODE>.</P>
 
-<P>During the <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> event, one can add listeners to the
-response object; particularly to listen for the <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> event. Note that
-the <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> event is called before any part of the response body is received,
-so there is no need to worry about racing to catch the first part of the
-body. As long as a listener for <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> is added during the <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE>
-event, the entire body will be caught.</P>
+<P>Во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> можно добавлять обработчики к объекту ответа; в частности, чтобы получать части тела ответа надо добавить обработчик событию <SPAN class="sh_string">'data'</SPAN></CODE>. Заметьте что обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> вызывается до того как будут получены части тела ответа, поэтому не надо беспокоиться что первая часть тела будет пропущена.
+Если обработчик <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> добавляется во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> всё тело ответа будет получено наверняка.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_comment"><SPAN class="sh_comment">// Good</SPAN></SPAN>
 request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">addListener</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'response'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>response<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
@@ -2549,97 +2530,81 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>This is a writable stream.</P>
+<P>Это поток с возможностью записи.</P>
 
-<P>This is an <CODE class="sh_sourceCode">EventEmitter</CODE> with the following events:</P>
+<P>Это экземпляр <CODE class="sh_sourceCode">EventEmitter</CODE> со следующими событиями:</P>
 
-<H3 id="event-response-186">Event 'response'</H3>
+<H3 id="event-response-186">Событие: 'response'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>response<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Emitted when a response is received to this request. This event is emitted only once. The
-<CODE class="sh_sourceCode">response</CODE> argument will be an instance of <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientResponse</CODE>.</P>
+<P>Генерируется когда на запрос приходит ответ. Это событие генерируется только один раз. Аргументом обработчика
+<CODE class="sh_sourceCode">response</CODE> будет экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientResponse</CODE>.</P>
 
 <H3 id="request-write-187">request.write(chunk, encoding='ascii')</H3>
 
-<P>Sends a chunk of the body.  By calling this method
-many times, the user can stream a request body to a
-server--in that case it is suggested to use the
-<CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_string">'Transfer-Encoding'</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'chunked'</SPAN><SPAN class="sh_symbol">]</SPAN></CODE> header line when
-creating the request.</P>
+<P>Отправляет часть тела запроса. Вызывая этот метод несколько раз, пользователь может отправлять тело ответа серверу в потоковом режиме &mdash; в таком случае предпочтительно добавлять в заголовки <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_string">'Transfer-Encoding'</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'chunked'</SPAN><SPAN class="sh_symbol">]</SPAN></CODE> при создании запроса.</P>
 
-<P>The <CODE class="sh_sourceCode">chunk</CODE> argument should be an array of integers
-or a string.</P>
+<P>Аргумент <CODE class="sh_sourceCode">chunk</CODE> должен быть массивом чисел или строкой.</P>
 
-<P>The <CODE class="sh_sourceCode">encoding</CODE> argument is optional and only
-applies when <CODE class="sh_sourceCode">chunk</CODE> is a string. The encoding
-argument should be either <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> or
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>. By default the body uses ASCII encoding,
-as it is faster.</P>
+<P>Аргумент <CODE class="sh_sourceCode">encoding</CODE> необязателен и имеет значение только если <CODE class="sh_sourceCode">chunk</CODE> это строка. Аргумент encoding должен принимать значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> или
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>. По умолчанию используется кодировка ASCII как более быстрая для обработки.</P>
 
 <H3 id="request-end-188">request.end()</H3>
 
-<P>Finishes sending the request. If any parts of the body are
-unsent, it will flush them to the stream. If the request is
-chunked, this will send the terminating <CODE class="sh_sourceCode"><SPAN class="sh_string">'0</SPAN><SPAN class="sh_specialchar">\r\n\r\n</SPAN><SPAN class="sh_string">'</SPAN></CODE>.</P>
+<P>Завершает отправку запроса. Если какие то части тела запроса ещё не были отправлены, они отправляются. Если запрос разбит на части, будет послана завершающая последовательность <CODE class="sh_sourceCode"><SPAN class="sh_string">'0</SPAN><SPAN class="sh_specialchar">\r\n\r\n</SPAN><SPAN class="sh_string">'</SPAN></CODE>.</P>
 
 <H2 id="http-clientresponse-189">http.ClientResponse</H2>
 
-<P>This object is created when making a request with <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Client</CODE>. It is
-passed to the <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> event of the request object.</P>
+<P>Этот объект создаётся при создании запроса с помощью <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Client</CODE>. Он передаётся обработчику события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> объекта запроса.</P>
 
-<P>The response implements the <STRONG>readable stream</STRONG> interface.</P>
+<P>Объект ответа &mdash; поток с возможностью чтения.</P>
 
-<H3 id="event-data-190">Event: 'data'</H3>
+<H3 id="event-data-190">Событие: 'data'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>chunk<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{}</SPAN></CODE></P>
 
-<P>Emitted when a piece of the message body is received.</P>
+<P>Генерируется при получении части тела сообщения.</P>
 
-<PRE class="sh_sourceCode"><CODE class="sh_sourceCode">Example<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> A chunk of the body is given as the single
-argument<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN> The transfer<SPAN class="sh_symbol"><SPAN class="sh_symbol">-</SPAN></SPAN>encoding has been decoded<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>  The
-body chunk a <SPAN class="sh_predef_func"><SPAN class="sh_predef_func">String</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>  The body encoding is set <SPAN class="sh_keyword"><SPAN class="sh_keyword">with</SPAN></SPAN>
-`response<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">setBodyEncoding</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">()</SPAN></SPAN>`<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>
-</CODE></PRE>
+<P>Часть тела сообщения передаётся обработчику в качестве единственного аргумента. Строка уже преобразована из кодировки с помощью которой осуществлялась передача. Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела сообщения задаётся response.setBodyEncoding().</P>
 
-<H3 id="event-end-191">Event: 'end'</H3>
+<H3 id="event-end-191">Событие: 'end'</H3>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{}</SPAN></CODE></P>
 
-<P>Emitted exactly once for each message. No arguments. After
-emitted no other events will be emitted on the response.</P>
+<P>Генерируется только однажды для каждого сообщения. Обработчик вызывается без аргументов. После этого сообщение не будет генерировать никаких событий.</P>
 
 <H3 id="response-statuscode-192">response.statusCode</H3>
 
-<P>The 3-digit HTTP response status code. E.G. <CODE class="sh_sourceCode"><SPAN class="sh_number">404</SPAN></CODE>.</P>
+<P>Код статуса HTTP из трёх цифр, например <CODE class="sh_sourceCode"><SPAN class="sh_number">404</SPAN></CODE>.</P>
 
 <H3 id="response-httpversion-193">response.httpVersion</H3>
 
-<P>The HTTP version of the connected-to server. Probably either
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE> or <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
-Also <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> is the first integer and
-<CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> is the second.</P>
+<P>Версия HTTP для текущего соединения. Скорее всего либо 
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
+Также <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> &mdash; первая цифра версии,
+<CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> &mdash; вторая.</P>
 
 <H3 id="response-headers-194">response.headers</H3>
 
-<P>The response headers.</P>
+<P>Заголовки ответа.</P>
 
 <H3 id="response-setencoding-195">response.setEncoding(encoding)</H3>
 
-<P>Set the encoding for the response body. Either <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> or <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.
-Defaults to <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
+<P>Задаёт кодировку тела ответа. Может принимать значения <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.
+По умолчанию используется <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
 <H3 id="response-pause-196">response.pause()</H3>
 
-<P>Pauses response from emitting events.  Useful to throttle back a download.</P>
+<P>Приостанавливает генерацию событий ответом. Можно использовать для ускорения закачки файла.</P>
 
 <H3 id="response-resume-197">response.resume()</H3>
 
-<P>Resumes a paused response.</P>
+<P>Возобновляет генерацию событий ответом.</P>
 
 <H3 id="response-client-198">response.client</H3>
 
-<P>A reference to the <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Client</CODE> that this response belongs to.</P>
+<P>Ссылка на <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>Client</CODE> которому принадлежит ответ.</P>
 
 <H2 id="net-server-199">net.Server</H2>
 
