@@ -2818,11 +2818,11 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 <P>Включает/выключает функционал keep-alive , и дополнительно позволяет установить начальную задержку после которой будет отправлен первый пакет проверки соединения при неактивности.
 Значение <CODE class="sh_sourceCode">initialDelay</CODE> (в миллисекундах) означает интервал между последним отправленным пакетом и первой проверкой соединения. Установка initialDelay в 0 оставит в силе предыдущее значение.</P>
 
-<H2 id="crypto-232">Crypto</H2>
+<H2 id="crypto-232">Криптографический модуль</H2>
 
-<P>Use <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'crypto'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> to access this module.</P>
+<P>Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'crypto'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить доступ к функциям модуля.</P>
 
-<P>The crypto module requires OpenSSL to be available on the underlying platform. It offers a way of encapsulating secure credentials to be used as part of a secure HTTPS net or http connection.</P>
+<P>Криптографический модуль требует для своей работы наличие OpenSSL. Он предоставляет возможность использовать аутентификацию в HTTPS и HTTP-соединениях.</P>
 
 <P>It also offers a set of wrappers for OpenSSL's hash, hmac, cipher, decipher, sign and verify methods.</P>
 
@@ -2922,14 +2922,13 @@ http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.tx
 
 <P>Verifies the signed data by using the <CODE class="sh_sourceCode">public_key</CODE> which is a string containing the PEM encoded public key, and <CODE class="sh_sourceCode">signature</CODE>, which is the previously calculates signature for the data, in the <CODE class="sh_sourceCode">signature_format</CODE> which can be 'binary', 'hex' or 'base64'.</P>
 
-<P>Returns true or false depending on the validity of the signature for the data and public key.</P>
+<P>Возвращает true или false в зависимости от действительности подписи и публичногно ключа.</P>
 
 <H2 id="dns-252">DNS</H2>
 
-<P>Use <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'dns'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> to access this module.</P>
+<P>Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'dns'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить доступ к модулю.</P>
 
-<P>Here is an example which resolves <CODE class="sh_sourceCode"><SPAN class="sh_string">'www.google.com'</SPAN></CODE> then reverse
-resolves the IP addresses which are returned.</P>
+<P>Пример, преобразующий в IP-адрес хост <CODE class="sh_sourceCode"><SPAN class="sh_string">'www.google.com'</SPAN></CODE> и преобразовывающий обратно полученные адреса.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> dns <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'dns'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
@@ -3530,6 +3529,7 @@ provided for the ease of users.</P>
 
 <P>For the moment, that is all the documentation on addons. Please see
 <A href="http://github.com/ry/node_postgres">http://github.com/ry/node_postgres</A> for a real example.</P>
+<p>Оригинальная документация: <a href="http://nodejs.org">nodejs.org</a>. Перевод: <a href="http://nodejs.ru">Nodejs.ru</a> и <a href="http://wordpress.com">Механический мир</a>.</p>
 </DIV>
 </DIV>
 <SCRIPT type="text/javascript" src="./node(1) -- API_files/jquery.js"></SCRIPT>
