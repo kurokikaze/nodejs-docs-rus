@@ -2953,18 +2953,11 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <H3 id="dns-resolve-253">dns.resolve(domain, rrtype = 'A', callback)</H3>
 
-<P>Resolves a domain (e.g. <CODE class="sh_sourceCode"><SPAN class="sh_string">'google.com'</SPAN></CODE>) into an array of the record types
-specified by rrtype. Valid rrtypes are <CODE class="sh_sourceCode">A</CODE> (IPV4 addresses), <CODE class="sh_sourceCode">AAAA</CODE> (IPV6
-addresses), <CODE class="sh_sourceCode">MX</CODE> (mail exchange records), <CODE class="sh_sourceCode">TXT</CODE> (text records), <CODE class="sh_sourceCode">SRV</CODE> (SRV
-records), and <CODE class="sh_sourceCode">PTR</CODE> (used for reverse IP lookups).</P>
+<P>разрешает домен (например <CODE class="sh_sourceCode"><SPAN class="sh_string">'google.com'</SPAN></CODE>) в массив записей типа, указанного в rrtype. Допустимые значени rrtypes: <CODE class="sh_sourceCode">A</CODE> (адреса IPV4), <CODE class="sh_sourceCode">AAAA</CODE> (адреса IPV6), <CODE class="sh_sourceCode">MX</CODE> (записи mail exchange), <CODE class="sh_sourceCode">TXT</CODE> (текстовые записи), <CODE class="sh_sourceCode">SRV</CODE> (записи SRV), и <CODE class="sh_sourceCode">PTR</CODE> (используются для запросов домена по IP).</P>
 
-<P>The callback has arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> addresses<SPAN class="sh_symbol">)</SPAN></CODE>.  The type of each item
-in <CODE class="sh_sourceCode">addresses</CODE> is determined by the record type, and described in the
-documentation for the corresponding lookup methods below.</P>
+<P>Обработчик принимает аргументы <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> addresses<SPAN class="sh_symbol">)</SPAN></CODE>.  Тип каждого элемента <CODE class="sh_sourceCode">addresses</CODE> определяется типом записи, и описан в документации по соответствующим методам запроса ниже.</P>
 
-<P>On error, <CODE class="sh_sourceCode">err</CODE> would be an instanceof <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE> object, where <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>errno</CODE> is
-one of the error codes listed below and <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>message</CODE> is a string describing
-the error in English.</P>
+<P>При ошибке <CODE class="sh_sourceCode">err</CODE> будет экземпляром объекта <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE>, где <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>errno</CODE> &mdash; один из кодов ошибки перечисленных ниже и <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>message</CODE> строка, содержащая описание ошибки на английском.</P>
 
 <H3 id="dns-resolve4-254">dns.resolve4(domain, callback)</H3>
 
