@@ -3007,52 +3007,51 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <H2 id="assert-260">Assert</H2>
 
-<P>This module is used for writing unit tests for your applications, you can
-access it with <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'assert'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Этот модуль используется для написания юнит-тестов для Ваших приложений, вы можете использовать его вызвав <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'assert'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="assert-fail-261">assert.fail(actual, expected, message, operator)</H3>
 
-<P>Tests if <CODE class="sh_sourceCode">actual</CODE> is equal to <CODE class="sh_sourceCode">expected</CODE> using the operator provided.</P>
+<P>Проверяет что <CODE class="sh_sourceCode">actual</CODE> соответствует <CODE class="sh_sourceCode">expected</CODE> используя указанный оператор.</P>
 
 <H3 id="assert-ok-262">assert.ok(value, message)</H3>
 
-<P>Tests if value is a <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> value, it is equivalent to <CODE class="sh_sourceCode">assert<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">equal</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_keyword">true</SPAN><SPAN class="sh_symbol">,</SPAN> value<SPAN class="sh_symbol">,</SPAN> message<SPAN class="sh_symbol">);</SPAN></CODE></P>
+<P>Проверяет что значение value равно <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, то же самое что <CODE class="sh_sourceCode">assert<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">equal</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_keyword">true</SPAN><SPAN class="sh_symbol">,</SPAN> value<SPAN class="sh_symbol">,</SPAN> message<SPAN class="sh_symbol">);</SPAN></CODE></P>
 
 <H3 id="assert-equal-263">assert.equal(actual, expected, message)</H3>
 
-<P>Tests shallow, coercive equality with the equal comparison operator ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">==</SPAN></CODE> ).</P>
+<P>Неглубокая проверка на равенство с использованием соответствующего оператора ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">==</SPAN></CODE> ).</P>
 
 <H3 id="assert-notequal-264">assert.notEqual(actual, expected, message)</H3>
 
-<P>Tests shallow, coercive non-equality with the not equal comparison operator ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">!=</SPAN></CODE> ).</P>
+<P>Неглубокая проверка на неравенство с использованием соответствующего оператора (<CODE class="sh_sourceCode"><SPAN class="sh_symbol">!=</SPAN></CODE> ).</P>
 
 <H3 id="assert-deepequal-265">assert.deepEqual(actual, expected, message)</H3>
 
-<P>Tests for deep equality.</P>
+<P>Глубокая проверка на равенство.</P>
 
 <H3 id="assert-notdeepequal-266">assert.notDeepEqual(actual, expected, message)</H3>
 
-<P>Tests for any deep inequality.</P>
+<P>Глубокая проверка на неравенство.</P>
 
 <H3 id="assert-strictequal-267">assert.strictEqual(actual, expected, message)</H3>
 
-<P>Tests strict equality, as determined by the strict equality operator ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">===</SPAN></CODE> )</P>
+<P>Проверка на строгое равенство, с использованием соответствующего оператора ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">===</SPAN></CODE> )</P>
 
 <H3 id="assert-notstrictequal-268">assert.notStrictEqual(actual, expected, message)</H3>
 
-<P>Tests strict non-equality, as determined by the strict not equal operator ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">!==</SPAN></CODE> )</P>
+<P>Проверка на строгое неравенство, с использованием соответствующего оператора ( <CODE class="sh_sourceCode"><SPAN class="sh_symbol">!==</SPAN></CODE> )</P>
 
 <H3 id="assert-throws-269">assert.throws(block, error, message)</H3>
 
-<P>Expects <CODE class="sh_sourceCode">block</CODE> to throw an error.</P>
+<P>Ожидает что блок кода <CODE class="sh_sourceCode">block</CODE> вызовет ошибку.</P>
 
 <H3 id="assert-doesnotthrow-270">assert.doesNotThrow(block, error, message)</H3>
 
-<P>Expects <CODE class="sh_sourceCode">block</CODE> not to throw an error.</P>
+<P>Ожидает что блок кода <CODE class="sh_sourceCode">block</CODE> не вызовет ошибки.</P>
 
 <H3 id="assert-iferror-271">assert.ifError(value)</H3>
 
-<P>Tests if value is not a false value, throws if it is a true value. Useful when testing the first argument, <CODE class="sh_sourceCode">error</CODE> in callbacks.</P>
+<P>Проверяет что value имеет значение false, бросает исключение встретив true. Удобно для проверки первого аргумента функций-обработчиков, <CODE class="sh_sourceCode">error</CODE>.</P>
 
 <H2 id="path-272">Path</H2>
 
