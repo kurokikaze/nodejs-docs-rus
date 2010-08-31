@@ -2996,22 +2996,21 @@ attribute (e.g. <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPA
 
 <H3 id="dns-reverse-259">dns.reverse(ip, callback)</H3>
 
-<P>Reverse resolves an ip address to an array of domain names.</P>
+<P>Обратно разрешает IP-адрес в массив доменных имён.</P>
 
-<P>The callback has arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> domains<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Аргументы обработчика: <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> domains<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
-<P>If there an an error, <CODE class="sh_sourceCode">err</CODE> will be non-null and an instanceof the Error
-object.</P>
+<P>Если произошла ошибка, <CODE class="sh_sourceCode">err</CODE> будет ненулевым экземпляром объекта Error.</P>
 
-<P>Each DNS query can return an error code.</P>
+<P>Каждый запрос к DNS может вернуть код ошибки.</P>
 
 <UL>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>TEMPFAIL</CODE>: timeout, SERVFAIL or similar.</LI>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>PROTOCOL</CODE>: got garbled reply.</LI>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NXDOMAIN</CODE>: domain does not exists.</LI>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NODATA</CODE>: domain exists but no data of reqd type.</LI>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NOMEM</CODE>: out of memory while processing.</LI>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>BADQUERY</CODE>: the query is malformed.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>TEMPFAIL</CODE>: таймаут, SERVFAIL или похожее.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>PROTOCOL</CODE>: получен повреждённый ответ.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NXDOMAIN</CODE>: домен не существует.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NODATA</CODE>: домен сущестувет но нет данных требуемого типа.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NOMEM</CODE>: при обработке закончилась память.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>BADQUERY</CODE>: запрос неверно сформирован.</LI>
 </UL>
 
 
