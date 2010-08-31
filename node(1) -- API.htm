@@ -3055,12 +3055,11 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <H2 id="path-272">Path</H2>
 
-<P>This module contains utilities for dealing with file paths.  Use
-<CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'path'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> to use it.  It provides the following methods:</P>
+<P>Этот модуль содержит средства для работы с путями. Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'path'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить к нему доступ.  Модуль предоставляет следующие методы:</P>
 
 <H3 id="path-join-273">path.join(/<EM> path1, path2, ... </EM>/)</H3>
 
-<P>Join all arguments together and resolve the resulting path.  Example:</P>
+<P>Соединяет все аргументы и обрабатывает получившийся путь.  Например:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'path'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">join</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">...</SPAN></SPAN>   <SPAN class="sh_string"><SPAN class="sh_string">'/foo'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'baz/asdf'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'quux'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'..'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
@@ -3069,50 +3068,49 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <H3 id="path-normalizearray-274">path.normalizeArray(arr)</H3>
 
-<P>Normalize an array of path parts, taking care of <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> parts.  Example:</P>
+<P>Нормализует массив частей пути, обрабатывая <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE>. Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">normalizeArray</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">([</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">''</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
   <SPAN class="sh_string"><SPAN class="sh_string">'foo'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'baz'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'asdf'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'quux'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'..'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">])</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">[</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">''</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'foo'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'baz'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'asdf'</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">]</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="path-normalize-275">path.normalize(p)</H3>
 
-<P>Normalize a string path, taking care of <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> parts.  Example:</P>
+<P>Нормализует строку пути, обрабатывая <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE>.  Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">normalize</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/foo/bar/baz/asdf/quux/..'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'/foo/bar/baz/asdf'</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="path-dirname-276">path.dirname(p)</H3>
 
-<P>Return the directory name of a path.  Similar to the Unix <CODE class="sh_sourceCode">dirname</CODE> command.  Example:</P>
+<P>Возвращает имя директории для пути. Действует как Unix-команда <CODE class="sh_sourceCode">dirname</CODE>.  Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">dirname</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/foo/bar/baz/asdf/quux'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'/foo/bar/baz/asdf'</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="path-basename-277">path.basename(p, ext)</H3>
 
-<P>Return the last portion of a path.  Similar to the Unix <CODE class="sh_sourceCode">basename</CODE> command.  Example:</P>
+<P>Возвращает последнюю часть пути.  Действует как Unix-команда <CODE class="sh_sourceCode">basename</CODE>.  Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">basename</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/foo/bar/baz/asdf/quux.html'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'quux.html'</SPAN></SPAN>
 
 path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">basename</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/foo/bar/baz/asdf/quux.html'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'.html'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'quux'</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="path-extname-278">path.extname(p)</H3>
 
-<P>Return the extension of the path.  Everything after the last '.' in the last portion
-of the path.  If there is no '.' in the last portion of the path or the only '.' is
-the first character, then it returns an empty string.  Examples:</P>
+<P>Возвращает расширение пути.  Учитывается всё после последней '.' в последней части
+пути.  Если в последней части нет '.' или '.' единственный символ, возвращает пустую строку.  Примеры:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">extname</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'index.html'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
 <SPAN class="sh_comment"><SPAN class="sh_comment">// returns </SPAN></SPAN>
@@ -3125,7 +3123,7 @@ path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 
 <H3 id="path-exists-279">path.exists(p, callback)</H3>
 
-<P>Test whether or not the given path exists.  Then, call the <CODE class="sh_sourceCode">callback</CODE> argument with either true or false.  Example:</P>
+<P>Проверяет, существует ли данный путь.  Вызывает переданный обработчик с аргументом true или false. Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">exists</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/etc/passwd'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>exists<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   sys<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">debug</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>exists <SPAN class="sh_symbol"><SPAN class="sh_symbol">?</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"it's there"</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"no passwd!"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
