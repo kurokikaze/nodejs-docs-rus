@@ -2961,26 +2961,24 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <H3 id="dns-resolve4-254">dns.resolve4(domain, callback)</H3>
 
-<P>The same as <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, but only for IPv4 queries (<CODE class="sh_sourceCode">A</CODE> records).
-<CODE class="sh_sourceCode">addresses</CODE> is an array of IPv4 addresses (e.g.<BR>
+<P>То же что <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, но только для IPv4 адресов (записи типа <CODE class="sh_sourceCode">A</CODE>).
+<CODE class="sh_sourceCode">addresses</CODE> это массив IPv4 адре (например <BR>
 <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_string">'74.125.79.104'</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'74.125.79.105'</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'74.125.79.106'</SPAN><SPAN class="sh_symbol">]</SPAN></CODE>).</P>
 
 <H3 id="dns-resolve6-255">dns.resolve6(domain, callback)</H3>
 
-<P>The same as <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve4</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> except for IPv6 queries (an <CODE class="sh_sourceCode">AAAA</CODE> query).</P>
+<P>То же что <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve4</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> но только для IPv6 адресов (записи типа <CODE class="sh_sourceCode">AAAA</CODE>).</P>
 
 <H3 id="dns-resolvemx-256">dns.resolveMx(domain, callback)</H3>
 
-<P>The same as <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, but only for mail exchange queries (<CODE class="sh_sourceCode">MX</CODE> records).</P>
+<P>То же что <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, но только для MX-записей.</P>
 
-<P><CODE class="sh_sourceCode">addresses</CODE> is an array of MX records, each with a priority and an exchange
-attribute (e.g. <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'priority'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">10</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'exchange'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_string">'mx.example.com'</SPAN><SPAN class="sh_cbracket">}</SPAN><SPAN class="sh_symbol">,...]</SPAN></CODE>).</P>
+<P><CODE class="sh_sourceCode">addresses</CODE> это массив MX записей, каждая с атрибутами priority и exchange (например <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'priority'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">10</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'exchange'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_string">'mx.example.com'</SPAN><SPAN class="sh_cbracket">}</SPAN><SPAN class="sh_symbol">,...]</SPAN></CODE>).</P>
 
 <H3 id="dns-resolvetxt-257">dns.resolveTxt(domain, callback)</H3>
 
-<P>The same as <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, but only for text queries (<CODE class="sh_sourceCode">TXT</CODE> records).
-<CODE class="sh_sourceCode">addresses</CODE> is an array of the text records available for <CODE class="sh_sourceCode">domain</CODE> (e.g.,
-<CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_string">'v=spf1 ip4:0.0.0.0 ~all'</SPAN><SPAN class="sh_symbol">]</SPAN></CODE>).</P>
+<P>То же что <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, но только для текстовых записей (тип записи <CODE class="sh_sourceCode">TXT</CODE>).
+<CODE class="sh_sourceCode">addresses</CODE> это массив текстовых записей, доступных для домена <CODE class="sh_sourceCode">domain</CODE> (например <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_string">'v=spf1 ip4:0.0.0.0 ~all'</SPAN><SPAN class="sh_symbol">]</SPAN></CODE>).</P>
 
 <H3 id="dns-resolvesrv-258">dns.resolveSrv(domain, callback)</H3>
 
