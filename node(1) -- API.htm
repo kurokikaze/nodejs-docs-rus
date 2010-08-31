@@ -1843,7 +1843,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Here is the synchronous version:</P>
+<P>Вот пример синхронной версии:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> fs <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'fs'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
@@ -1851,8 +1851,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'successfully deleted /tmp/hello'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>With the asynchronous methods there is no guaranteed ordering. So the
-following is prone to error:</P>
+<P>Асинхронные методы не гарантируют порядок выполнения операций. Следующий код может сработать неправильно:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">rename</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/tmp/hello'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'/tmp/world'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   <SPAN class="sh_keyword"><SPAN class="sh_keyword">if</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">throw</SPAN></SPAN> err<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -1864,8 +1863,8 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>It could be that <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>stat</CODE> is executed before <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>rename</CODE>.
-The correct way to do this is to chain the callbacks.</P>
+<P>Вполне возможно что <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>stat</CODE> выполнится до <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>rename</CODE>.
+Правильный способ сделать то же самое: выполнение этих методов по цепочке.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">rename</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/tmp/hello'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'/tmp/world'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   <SPAN class="sh_keyword"><SPAN class="sh_keyword">if</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">throw</SPAN></SPAN> err<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -2822,9 +2821,9 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'crypto'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить доступ к функциям модуля.</P>
 
-<P>Криптографический модуль требует для своей работы наличие OpenSSL. Он предоставляет возможность использовать аутентификацию в HTTPS и HTTP-соединениях.</P>
+<P>Криптографический модуль требует для своей работы наличия OpenSSL. Он предоставляет возможность использовать аутентификацию в HTTPS и HTTP-соединениях.</P>
 
-<P>It also offers a set of wrappers for OpenSSL's hash, hmac, cipher, decipher, sign and verify methods.</P>
+<P>Модуль также предоставляет набор врапперов для некоторых методов OpenSSL: hash, hmac, cipher, decipher, sign и verify.</P>
 
 <H3 id="crypto-createcredentials-233">crypto.createCredentials(details)</H3>
 
@@ -2992,10 +2991,8 @@ attribute (e.g. <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPA
 
 <H3 id="dns-resolvesrv-258">dns.resolveSrv(domain, callback)</H3>
 
-<P>The same as <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, but only for service records (<CODE class="sh_sourceCode">SRV</CODE> records).
-<CODE class="sh_sourceCode">addresses</CODE> is an array of the SRV records available for <CODE class="sh_sourceCode">domain</CODE>. Properties
-of SRV records are priority, weight, port, and name (e.g.,
-<CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'priority'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">10</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'weight'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">5</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'port'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">21223</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'name'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_string">'service.example.com'</SPAN><SPAN class="sh_cbracket">}</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_symbol">...]</SPAN></CODE>).</P>
+<P>То же, что <CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">resolve</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, но только для service records (записей <CODE class="sh_sourceCode">SRV</CODE>).
+<CODE class="sh_sourceCode">addresses</CODE> это массив SRV записей, доступных для домена <CODE class="sh_sourceCode">domain</CODE>. Свойства SRV записей: <CODE class="sh_sourceCode">'priority'</CODE>, <CODE class="sh_sourceCode">'weight'</CODE>, <CODE class="sh_sourceCode">'port'</CODE>, и <CODE class="sh_sourceCode">'name'</CODE> (например, <CODE class="sh_sourceCode"><SPAN class="sh_symbol">[</SPAN><SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'priority'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">10</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'weight'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">5</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'port'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">21223</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_string">'name'</SPAN><SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_string">'service.example.com'</SPAN><SPAN class="sh_cbracket">}</SPAN><SPAN class="sh_symbol">,</SPAN> <SPAN class="sh_symbol">...]</SPAN></CODE>).</P>
 
 <H3 id="dns-reverse-259">dns.reverse(ip, callback)</H3>
 
@@ -3529,6 +3526,7 @@ provided for the ease of users.</P>
 
 <P>For the moment, that is all the documentation on addons. Please see
 <A href="http://github.com/ry/node_postgres">http://github.com/ry/node_postgres</A> for a real example.</P>
+
 <p>Оригинальная документация: <a href="http://nodejs.org">nodejs.org</a>. Перевод: <a href="http://nodejs.ru">Nodejs.ru</a> и <a href="http://wordpress.com">Механический мир</a>.</p>
 </DIV>
 </DIV>
