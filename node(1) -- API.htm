@@ -993,6 +993,10 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>Генерируется когда поток получает файловый дескриптор. Только UNIX потоки
 поддерживают этот функционал; остальные никогда не генерируют это событие.</P>
 
+<H3 id="stream-setencoding-29">stream.readable</H3>
+
+<P>Двоичный параметр, по умолчанию принимает значение true, но переключаемый в false после возникновения ошибки, закрытия потока (событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'end'</SPAN></CODE>) или вызова destroy().</P>
+
 <H3 id="stream-setencoding-29">stream.setEncoding(encoding)</H3>
 
 <P>Заставляет событие 'data' передавать обработчику строку вместо буфера. <CODE class="sh_sourceCode">encoding</CODE> может быть
