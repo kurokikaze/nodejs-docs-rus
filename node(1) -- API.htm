@@ -1507,7 +1507,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Прекращает действие интервального таймера.</P>
 
-<H2 id="child-processes-85">Child Processes</H2>
+<H2 id="child-processes-85">Дочерние процессы</H2>
 
 <P>Node предоставляет tri-directional <CODE class="sh_sourceCode"><SPAN class="sh_function">popen</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">3</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> в классе <CODE class="sh_sourceCode">ChildProcess</CODE>.</P>
 
@@ -2176,19 +2176,17 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="writestream-write-148">writeStream.write(data, encoding='utf8')</H3>
 
-<P>Returns <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> if the data was flushed to the kernel, and <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> if it was
-queued up for being written later. A <CODE class="sh_sourceCode"><SPAN class="sh_string">'drain'</SPAN></CODE> will fire after all queued data
-has been written.</P>
+<P>Возвращает <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> если данные были переданы ядру, и <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> если они были поставлены в очередь на запись. После записи всех данных в очереди будет сгенерировано событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'drain'</SPAN></CODE>.</P>
 
-<P>The second optional parameter specifies the encoding of for the string.</P>
+<P>Второй необязательный параметр указывает кодировку строки.</P>
 
 <H3 id="writestream-end-149">writeStream.end()</H3>
 
-<P>Closes the stream right after all queued <CODE class="sh_sourceCode"><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> calls have finished.</P>
+<P>Закрывает поток после того как все отложенные вызовы <CODE class="sh_sourceCode"><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> завершатся.</P>
 
 <H3 id="writestream-destroy-150">writeStream.destroy()</H3>
 
-<P>Allows to close the stream regardless of its current state.</P>
+<P>Позволяет закрыть поток независимо от его текущего состояния.</P>
 
 <H2 id="http-151">HTTP</H2>
 
