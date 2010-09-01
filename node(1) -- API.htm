@@ -296,8 +296,8 @@
 
 <DIV id="toc">
 	<DIV id="toctitle">Node v0.1.100</DIV>
-	<NOSCRIPT></NOSCRIPT>
-<UL>
+	<NOSCRIPT>Для чтения документации в Вашем браузере должен быть включен JavaScript</NOSCRIPT>
+<!--<UL>
     <LI><A href="#name-0">Название</A></LI>
     <LI><A href="#synopsis-1">Краткое описание</A></LI>
     <LI><A href="#standard-modules-2">Стандартные модули</A></LI>
@@ -670,7 +670,8 @@
     </LI>
     <LI><A href="#modules-292">Модули</A></LI>
     <LI><A href="#addons-293">Дополнения</A></LI>
-</UL></DIV>
+</UL>--></DIV>
+
 <DIV id="man">
 <DIV id="man-content">
 <H1 class="man-title">node(1)</H1>
@@ -1579,7 +1580,7 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
   console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child process terminated due to receipt of signal '</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN>signal<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
-<SPAN class="sh_comment"><SPAN class="sh_comment">// send SIGHUP to process</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// отправить процессу сигнал SIGHUP</SPAN></SPAN>
 grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">kill</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'SIGHUP'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
@@ -2033,26 +2034,26 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="fs-read-130">fs.read(fd, buffer, offset, length, position, callback)</H3>
 
-<P>Read data from the file specified by <CODE class="sh_sourceCode">fd</CODE>.</P>
+<P>читает данные из файла, указанного дескриптором <CODE class="sh_sourceCode">fd</CODE>.</P>
 
-<P><CODE class="sh_sourceCode">buffer</CODE> is the buffer that the data will be written to.</P>
+<P><CODE class="sh_sourceCode">buffer</CODE> это буфер, в который будут помещены прочитанные данные.</P>
 
-<P><CODE class="sh_sourceCode">offset</CODE> is offset within the buffer where writing will start.</P>
+<P><CODE class="sh_sourceCode">offset</CODE> это смещение внутри буфера с которого начнётся запись.</P>
 
-<P><CODE class="sh_sourceCode">length</CODE> is an integer specifying the number of bytes to read.</P>
+<P><CODE class="sh_sourceCode">length</CODE> это число байт для чтения.</P>
 
-<P><CODE class="sh_sourceCode">position</CODE> is an integer specifying where to begin reading from in the file.
-If <CODE class="sh_sourceCode">position</CODE> is <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>, data will be read from the current file position.</P>
+<P><CODE class="sh_sourceCode">position</CODE> это число означающее позицию, с которой начнётся чтение файла.
+Если <CODE class="sh_sourceCode">position</CODE> принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>, данные будут прочитаны с текущей позиции.</P>
 
-<P>The callback is given the two arguments, <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> bytesRead<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Функция-обработчик принимает два аргумента, <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> bytesRead<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="fs-readsync-131">fs.readSync(fd, buffer, offset, length, position)</H3>
 
-<P>Synchronous version of <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>read</CODE>. Returns the number of <CODE class="sh_sourceCode">bytesRead</CODE>.</P>
+<P>Синхронная версия <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>read</CODE>. Возвращает количество прочитанных байт.</P>
 
 <H3 id="fs-readfile-132">fs.readFile(filename, [encoding,] callback)</H3>
 
-<P>Asynchronously reads the entire contents of a file. Example:</P>
+<P>Асинхронно загружает в память содержимое файла. Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">readFile</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/etc/passwd'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> data<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   <SPAN class="sh_keyword"><SPAN class="sh_keyword">if</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">throw</SPAN></SPAN> err<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -2060,21 +2061,19 @@ If <CODE class="sh_sourceCode">position</CODE> is <CODE class="sh_sourceCode"><S
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>The callback is passed two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> data<SPAN class="sh_symbol">)</SPAN></CODE>, where <CODE class="sh_sourceCode">data</CODE> is the
-contents of the file.</P>
+<P>Обработчику передаются два аргумента: <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> data<SPAN class="sh_symbol">)</SPAN></CODE>, где <CODE class="sh_sourceCode">data</CODE> это содержимое файла.</P>
 
-<P>If no encoding is specified, then the raw buffer is returned.</P>
+<P>Если кодировка не указана, возвращается буфер.</P>
 
 <H3 id="fs-readfilesync-133">fs.readFileSync(filename [, encoding])</H3>
 
-<P>Synchronous version of <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>readFile</CODE>. Returns the contents of the <CODE class="sh_sourceCode">filename</CODE>.</P>
+<P>Синхронная версия <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>readFile</CODE>. Возвращает соджержимое файла <CODE class="sh_sourceCode">filename</CODE>.</P>
 
-<P>If <CODE class="sh_sourceCode">encoding</CODE> is specified then this function returns a string. Otherwise it
-returns a buffer.</P>
+<P>Если указана кодировка <CODE class="sh_sourceCode">encoding</CODE> функция возвращает строку. Иначе &mdash; возвращает буфер.</P>
 
 <H3 id="fs-writefile-134">fs.writeFile(filename, data, encoding='utf8', callback)</H3>
 
-<P>Asynchronously writes data to a file. Example:</P>
+<P>Асинхронно записывает данные в файл. Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">writeFile</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'message.txt'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'Hello Node'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   <SPAN class="sh_keyword"><SPAN class="sh_keyword">if</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">throw</SPAN></SPAN> err<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -2084,19 +2083,15 @@ returns a buffer.</P>
 
 <H3 id="fs-writefilesync-135">fs.writeFileSync(filename, data, encoding='utf8')</H3>
 
-<P>The synchronous version of <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>writeFile</CODE>.</P>
+<P>Синхронная версия <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>writeFile</CODE>.</P>
 
 <H3 id="fs-watchfile-136">fs.watchFile(filename, [options,] listener)</H3>
 
-<P>Watch for changes on <CODE class="sh_sourceCode">filename</CODE>. The callback <CODE class="sh_sourceCode">listener</CODE> will be called each
-time the file changes.</P>
+<P>Наблюдает за изменениями файла <CODE class="sh_sourceCode">filename</CODE>. Обработчик <CODE class="sh_sourceCode">listener</CODE> вызывается каждый раз при изменении содержимого файла.</P>
 
-<P>The second argument is optional. The <CODE class="sh_sourceCode">options</CODE> if provided should be an object
-containing two members a boolean, <CODE class="sh_sourceCode">persistent</CODE>, and <CODE class="sh_sourceCode">interval</CODE>, a polling
-value in milliseconds. The default is <CODE class="sh_sourceCode"><SPAN class="sh_cbracket">{</SPAN>persistent<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_keyword">true</SPAN><SPAN class="sh_symbol">,</SPAN> interval<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">0</SPAN><SPAN class="sh_cbracket">}</SPAN></CODE>.</P>
+<P>Второй аргумент необязателен. Объект <CODE class="sh_sourceCode">options</CODE> если он передан должен содержать два свойства: двоичное <CODE class="sh_sourceCode">persistent</CODE>, и <CODE class="sh_sourceCode">interval</CODE>, задержку между проверками файла в миллисекундах. Значение по умолчанию: <CODE class="sh_sourceCode"><SPAN class="sh_cbracket">{</SPAN>persistent<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_keyword">true</SPAN><SPAN class="sh_symbol">,</SPAN> interval<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">0</SPAN><SPAN class="sh_cbracket">}</SPAN></CODE>.</P>
 
-<P>The <CODE class="sh_sourceCode">listener</CODE> gets two arguments the current stat object and the previous
-stat object:</P>
+<P>Обработчик <CODE class="sh_sourceCode">listener</CODE> принимает два аргумента: текущий объект stat и предыдущий объект stat:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">watchFile</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>f<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>curr<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> prev<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'the current mtime is: '</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">+</SPAN></SPAN> curr<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>mtime<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -2104,15 +2099,15 @@ stat object:</P>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>These stat objects are instances of <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stat</CODE>.</P>
+<P>Эти объекты - экземпляры <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stat</CODE>.</P>
 
 <H3 id="fs-unwatchfile-137">fs.unwatchFile(filename)</H3>
 
-<P>Stop watching for changes on <CODE class="sh_sourceCode">filename</CODE>.</P>
+<P>Прекращает обрабатывать изменения файла <CODE class="sh_sourceCode">filename</CODE>.</P>
 
 <H2 id="fs-stats-138">fs.Stats</H2>
 
-<P>Objects returned from <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">stat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> and <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">lstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> are of this type.</P>
+<P>Объекты, возвращаемые <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">stat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> и <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">lstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> являются экземплярами этого класса.</P>
 
 <UL>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isFile</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
@@ -2127,13 +2122,13 @@ stat object:</P>
 
 <H2 id="fs-readstream-139">fs.ReadStream</H2>
 
-<P><CODE class="sh_sourceCode">ReadStream</CODE> is a readable stream.</P>
+<P><CODE class="sh_sourceCode">ReadStream</CODE> это поток с возможностью чтения.</P>
 
 <H3 id="fs-createreadstream-140">fs.createReadStream(path, [options])</H3>
 
-<P>Returns a new ReadStream object.</P>
+<P>Возвращает новый объект ReadStream.</P>
 
-<P><CODE class="sh_sourceCode">options</CODE> is an object with the following defaults:</P>
+<P><CODE class="sh_sourceCode">options</CODE> это объект со следующими полями по умолчанию:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'flags'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'r'</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'encoding'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'binary'</SPAN></SPAN>
@@ -2144,31 +2139,29 @@ stat object:</P>
 
 <H3 id="readstream-readable-141">readStream.readable</H3>
 
-<P>A boolean that is <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> by default, but turns <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> after an <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>
-occured, the stream came to an <CODE class="sh_sourceCode"><SPAN class="sh_string">'end'</SPAN></CODE>, or <CODE class="sh_sourceCode"><SPAN class="sh_function">destroy</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> was called.</P>
+<P>Двоичное свойство, принимающее значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> по умолчанию, но переключаемое в <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> после события ошибки <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>
+, закрытия потока (событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'end'</SPAN></CODE>), или вызова <CODE class="sh_sourceCode"><SPAN class="sh_function">destroy</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="readstream-pause-142">readStream.pause()</H3>
 
-<P>Stops the stream from reading further data. No <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> event will be fired
-until the stream is resumed.</P>
+<P>Прекращает чтение данных потоком. События <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> не будут происходить пока поток не будет разблокирован.</P>
 
 <H3 id="readstream-resume-143">readStream.resume()</H3>
 
-<P>Resumes the stream. Together with <CODE class="sh_sourceCode"><SPAN class="sh_function">pause</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> this useful to throttle reading.</P>
+<P>Разблокирует поток. Вместе с <CODE class="sh_sourceCode"><SPAN class="sh_function">pause</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> может использоваться для контроля чтения.</P>
 
 <H3 id="readstream-destroy-144">readStream.destroy()</H3>
 
-<P>Allows to close the stream before the <CODE class="sh_sourceCode"><SPAN class="sh_string">'end'</SPAN></CODE> is reached. No more events other
-than <CODE class="sh_sourceCode"><SPAN class="sh_string">'close'</SPAN></CODE> will be fired after this method has been called.</P>
+<P>Позволяет закрыть поток не дожидаясь события <CODE class="sh_sourceCode"><SPAN class="sh_string">'end'</SPAN></CODE>. Никакие события кроме <CODE class="sh_sourceCode"><SPAN class="sh_string">'close'</SPAN></CODE> не будут происходить после вызова этого метода.</P>
 
 <H2 id="fs-writestream-145">fs.WriteStream</H2>
 
-<P><CODE class="sh_sourceCode">WriteStream</CODE> is a writable stream.</P>
+<P><CODE class="sh_sourceCode">WriteStream</CODE> это поток с возможностью записи.</P>
 
 <H3 id="fs-createwritestream-146">fs.createWriteStream(path, [options])</H3>
 
-<P>Returns a new WriteStream object.
-<CODE class="sh_sourceCode">options</CODE> is an object with the following defaults:</P>
+<P>Возвращает новый объект WriteStream.
+<CODE class="sh_sourceCode">options</CODE> это объект со следующими свойствами по умолчанию:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'flags'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'w'</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'encoding'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'binary'</SPAN></SPAN>
@@ -2178,8 +2171,8 @@ than <CODE class="sh_sourceCode"><SPAN class="sh_string">'close'</SPAN></CODE> w
 
 <H3 id="writestream-writeable-147">writeStream.writeable</H3>
 
-<P>A boolean that is <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> by default, but turns <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> after an <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>
-occurred or <CODE class="sh_sourceCode"><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> / <CODE class="sh_sourceCode"><SPAN class="sh_function">destroy</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> was called.</P>
+<P>Двоичное свойство, по умолчанию установленное в <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> , но принимающее значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> после события <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>
+или вызова <CODE class="sh_sourceCode"><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> / <CODE class="sh_sourceCode"><SPAN class="sh_function">destroy</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="writestream-write-148">writeStream.write(data, encoding='utf8')</H3>
 
