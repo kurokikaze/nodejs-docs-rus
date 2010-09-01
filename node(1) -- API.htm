@@ -3194,66 +3194,63 @@ path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 
 <H2 id="query-string-284">Query String</H2>
 
-<P>This module provides utilities for dealing with query strings.  It provides the following methods:</P>
+<P>Этот модуль предоставляет инструменты для работы со строкой запроса.  Он предоставляет следующите методы:</P>
 
 <H3 id="querystring-stringify-285">querystring.stringify(obj, sep='&amp;', eq='=', munge=true)</H3>
 
-<P>Serialize an object to a query string.  Optionally override the default separator and assignment characters.
-Example:</P>
+<P>Сериализует объект в строку запроса.  Можно менять символы разделителя и присваивания.
+Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">stringify</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// вернёт</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'foo=bar'</SPAN></SPAN>
 
 querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">stringify</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> baz<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bob'</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">';'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">':'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// вернёт</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'foo:bar;baz:bob'</SPAN></SPAN>
 </CODE></PRE>
 
-<P>By default, this function will perform PHP/Rails-style parameter mungeing for arrays and objects used as
-values within <CODE class="sh_sourceCode">obj</CODE>.
-Example:</P>
+<P>По умолчанию, эта функция будет преобразовывать параметры для массивов и объектов в стиле PHP/Rails.
+Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">stringify</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'baz'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'boz'</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// вернёт</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'foo=boz'</SPAN></SPAN>
 
 querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">stringify</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>bar<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'baz'</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// вернёт</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'foo[bar]=baz'</SPAN></SPAN>
 </CODE></PRE>
 
-<P>If you wish to disable the array mungeing (e.g. when generating parameters for a Java servlet), you
-can set the <CODE class="sh_sourceCode">munge</CODE> argument to <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE>.
-Example:</P>
+<P>Если Вы хотите избежать такого преобразования параметров (например, генерируя параметры для Java сервлета), вы можете передать в аргументе <CODE class="sh_sourceCode">munge</CODE> значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE>.
+Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">stringify</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'bar'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'baz'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> foo<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'boz'</SPAN></SPAN><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'&amp;'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'='</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">false</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_string"><SPAN class="sh_string">'foo=bar&amp;foo=baz&amp;foo=boz'</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Note that when <CODE class="sh_sourceCode">munge</CODE> is <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE>, parameter names with object values will still be munged.</P>
+<P>Заметьте что когда <CODE class="sh_sourceCode">munge</CODE> выставлено в <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE>, имена параметров для объектов всё равно будут преобразованы.</P>
 
 <H3 id="querystring-parse-286">querystring.parse(str, sep='&amp;', eq='=')</H3>
 
-<P>Deserialize a query string to an object.  Optionally override the default separator and assignment characters.</P>
+<P>Десериализует строку запроса в объект. Можно задавать собственные символы разделителя и присваивания.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">parse</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'a=b&amp;b=c'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
-<SPAN class="sh_comment"><SPAN class="sh_comment">// returns</SPAN></SPAN>
+<SPAN class="sh_comment"><SPAN class="sh_comment">// возвращает</SPAN></SPAN>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'a'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'b'</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'b'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'c'</SPAN></SPAN>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
-
-<P>This function can parse both munged and unmunged query strings (see <CODE class="sh_sourceCode">stringify</CODE> for details).</P>
+<P>Эта функция может разбирать также преобразованные строки запроса (см. <CODE class="sh_sourceCode">stringify</CODE>)</P>
 
 <H3 id="querystring-escape-287">querystring.escape</H3>
 
-<P>The escape function used by <CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol">.</SPAN>stringify</CODE>, provided so that it could be overridden if necessary.</P>
+<P>Функция экранирования, используемая в <CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol">.</SPAN>stringify</CODE>, предоставляется для того чтобы проще было заменить её собственной.</P>
 
 <H3 id="querystring-unescape-288">querystring.unescape</H3>
 
-<P>The unescape function used by <CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol">.</SPAN>parse</CODE>, provided so that it could be overridden if necessary.</P>
+<P>Функция декодирования, используемая <CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol">.</SPAN>parse</CODE>, предоставляется для того чтобы проще было заменить её собственной.</P>
 
 <H2 id="repl-289">REPL</H2>
 
