@@ -3132,30 +3132,30 @@ path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 
 <H2 id="url-280">URL</H2>
 
-<P>This module has utilities for URL resolution and parsing.
-Call <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> to use it.</P>
+<P>В это модуле собраны инструменты для разрешения и разбора URL.
+Вызовите <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы его использовать.</P>
 
-<P>Parsed URL objects have some or all of the following fields, depending on
-whether or not they exist in the URL string. Any parts that are not in the URL
-string will not be in the parsed object. Examples are shown for the URL</P>
+<P>Объекты разобранного URL имеют все либюо некоторые из перечисленных полей, в зависимости от их
+присутствия в строке URL. Части которых не было в URL не будут
+присутствовать в объекте. Примеры показаны для URL</P>
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_string">'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'</SPAN></CODE></P>
 
 <UL>
 <LI><P><CODE class="sh_sourceCode">href</CODE></P>
 
-<P>The full URL that was originally parsed. Example:
+<P>Полный URL который был разобран. Пример:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">protocol</CODE></P>
 
-<P>The request protocol.  Example: <CODE class="sh_sourceCode"><SPAN class="sh_string">'http:'</SPAN></CODE></P></LI>
+<P>Протокол запроса.  Пример: <CODE class="sh_sourceCode"><SPAN class="sh_string">'http:'</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">host</CODE></P>
 
-<P>The full host portion of the URL, including port and authentication information. Example:
+<P>Полный host, включая порт и информацию аутентификации. Пример:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'user:pass@host.com:8080'</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">auth</CODE></P>
 
-<P>The authentication information portion of a URL.  Example: <CODE class="sh_sourceCode"><SPAN class="sh_string">'user:pass'</SPAN></CODE></P></LI>
+<P>Информация для аутентификации.  Example: <CODE class="sh_sourceCode"><SPAN class="sh_string">'user:pass'</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">hostname</CODE></P>
 
 <P>Just the hostname portion of the host.  Example: <CODE class="sh_sourceCode"><SPAN class="sh_string">'host.com'</SPAN></CODE></P></LI>
@@ -3182,16 +3182,15 @@ string will not be in the parsed object. Examples are shown for the URL</P>
 
 <H3 id="url-parse-281">url.parse(urlStr, parseQueryString=false)</H3>
 
-<P>Take a URL string, and return an object.  Pass <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> as the second argument to also parse
-the query string using the <CODE class="sh_sourceCode">querystring</CODE> module.</P>
+<P>Получает строку URL и возвращает объект. Передайте <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> вторым аргументом чтобы одновременно разобрать строку запроса модулем <CODE class="sh_sourceCode">querystring</CODE>.</P>
 
 <H3 id="url-format-282">url.format(urlObj)</H3>
 
-<P>Take a parsed URL object, and return a formatted URL string.</P>
+<P>Получает объект URL и возвращает отформатированный URL в виде строки.</P>
 
 <H3 id="url-resolve-283">url.resolve(from, to)</H3>
 
-<P>Take a base URL, and a href URL, and resolve them as a browser would for an anchor tag.</P>
+<P>Получает базовый URL и относительный URL, и разрешает их как это сделал бы браузер для гиперссылки.</P>
 
 <H2 id="query-string-284">Query String</H2>
 
