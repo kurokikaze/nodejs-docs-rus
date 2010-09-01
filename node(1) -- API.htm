@@ -1875,37 +1875,37 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>In busy processes, the programmer is <EM>strongly encouraged</EM> to use the
-asynchronous versions of these calls. The synchronous versions will block
-the entire process until they complete--halting all connections.</P>
+<P>В нагруженных процессах программисту <EM>строго рекомендуется</EM> использовать
+асинхронные версии вызовов. Синхронные версии будут блокировать весь процесс
+до своего завершения &mdash; предотвращая любые новые соединения.</P>
 
 <H3 id="fs-rename-100">fs.rename(path1, path2, callback)</H3>
 
-<P>Asynchronous rename(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронное переименование (rename(2)). Обработчику не передаётся аргументов кроме возможного исключения.</P>
 
 <H3 id="fs-renamesync-101">fs.renameSync(path1, path2)</H3>
 
-<P>Synchronous rename(2).</P>
+<P>Синхронный rename(2).</P>
 
 <H3 id="fs-truncate-102">fs.truncate(fd, len, callback)</H3>
 
-<P>Asynchronous ftruncate(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронный ftruncate(2). Обработчику не передаётся аргументов кроме возможного исключения.</P>
 
 <H3 id="fs-truncatesync-103">fs.truncateSync(fd, len)</H3>
 
-<P>Synchronous ftruncate(2).</P>
+<P>Синхронный ftruncate(2).</P>
 
 <H3 id="fs-chmod-104">fs.chmod(path, mode, callback)</H3>
 
-<P>Asynchronous chmod(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронное изменение прав доступа (chmod(2)). Обработчику не передаётся аргументов кроме возможного исключения.</P>
 
 <H3 id="fs-chmodsync-105">fs.chmodSync(path, mode)</H3>
 
-<P>Synchronous chmod(2).</P>
+<P>Синхронный chmod(2).</P>
 
 <H3 id="fs-stat-106">fs.stat(path, callback), fs.lstat(path, callback), fs.fstat(fd, callback)</H3>
 
-<P>Asynchronous stat(2), lstat(2) or fstat(2). The callback gets two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> stats<SPAN class="sh_symbol">)</SPAN></CODE> where <CODE class="sh_sourceCode">stats</CODE> is a <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE> object. It looks like this:</P>
+<P>Всинхронные stat(2), lstat(2) или fstat(2). Обработчик получает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> stats<SPAN class="sh_symbol">)</SPAN></CODE> где <CODE class="sh_sourceCode">stats</CODE> это объект <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE>. Он выглядит примерно так:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> dev<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">2049</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> ino<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">305352</SPAN></SPAN>
@@ -1923,11 +1923,11 @@ the entire process until they complete--halting all connections.</P>
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>См. <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE> section below for more information.</P>
+<P>См. секцию <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE> для дальнейшей информации.</P>
 
 <H3 id="fs-statsync-107">fs.statSync(path), fs.lstatSync(path), fs.fstatSync(fd)</H3>
 
-<P>Synchronous stat(2), lstat(2) or fstat(2). Returns an instance of <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE>.</P>
+<P>Синхронные stat(2), lstat(2) и fstat(2). Возвращают экземпляр <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE>.</P>
 
 <H3 id="fs-link-108">fs.link(srcpath, dstpath, callback)</H3>
 
@@ -1939,97 +1939,93 @@ the entire process until they complete--halting all connections.</P>
 
 <H3 id="fs-symlink-110">fs.symlink(linkdata, path, callback)</H3>
 
-<P>Asynchronous symlink(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронное создание ссылки (symlink(2)). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-symlinksync-111">fs.symlinkSync(linkdata, path)</H3>
 
-<P>Synchronous symlink(2).</P>
+<P>Синхронный symlink(2).</P>
 
 <H3 id="fs-readlink-112">fs.readlink(path, callback)</H3>
 
-<P>Asynchronous readlink(2). The callback gets two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> resolvedPath<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Асинхронноре разрешение ссылки (readlink(2)). Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> resolvedPath<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="fs-readlinksync-113">fs.readlinkSync(path)</H3>
 
-<P>Synchronous readlink(2). Returns the resolved path.</P>
+<P>Синхронный readlink(2). Возвращает полученный путь.</P>
 
 <H3 id="fs-realpath-114">fs.realpath(path, callback)</H3>
 
-<P>Asynchronous realpath(2).  The callback gets two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> resolvedPath<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Асинхронный realpath(2).  Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> resolvedPath<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="fs-realpathsync-115">fs.realpathSync(path)</H3>
 
-<P>Synchronous realpath(2). Returns the resolved path.</P>
+<P>Синхронный realpath(2). Возвращает полученный путь.</P>
 
 <H3 id="fs-unlink-116">fs.unlink(path, callback)</H3>
 
-<P>Asynchronous unlink(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронный unlink(2). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-unlinksync-117">fs.unlinkSync(path)</H3>
 
-<P>Synchronous unlink(2).</P>
+<P>Синхронный unlink(2).</P>
 
 <H3 id="fs-rmdir-118">fs.rmdir(path, callback)</H3>
 
-<P>Asynchronous rmdir(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронный rmdir(2). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-rmdirsync-119">fs.rmdirSync(path)</H3>
 
-<P>Synchronous rmdir(2).</P>
+<P>Синхронный rmdir(2).</P>
 
 <H3 id="fs-mkdir-120">fs.mkdir(path, mode, callback)</H3>
 
-<P>Asynchronous mkdir(2). No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронное создание директории (mkdir(2)). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-mkdirsync-121">fs.mkdirSync(path, mode)</H3>
 
-<P>Synchronous mkdir(2).</P>
+<P>Синхронный mkdir(2).</P>
 
 <H3 id="fs-readdir-122">fs.readdir(path, callback)</H3>
 
-<P>Asynchronous readdir(3).  Reads the contents of a directory.
-The callback gets two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> files<SPAN class="sh_symbol">)</SPAN></CODE> where <CODE class="sh_sourceCode">files</CODE> is an array of
-the names of the files in the directory excluding <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> and <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE>.</P>
+<P>Асинхронное чтение содержимого директории (readdir(3)).
+Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> files<SPAN class="sh_symbol">)</SPAN></CODE> где <CODE class="sh_sourceCode">files</CODE> это массив имён файлов в директории исключая <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE>.</P>
 
 <H3 id="fs-readdirsync-123">fs.readdirSync(path)</H3>
 
-<P>Synchronous readdir(3). Returns an array of filenames excluding <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> and
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE>.</P>
+<P>Синхронный readdir(3). Возвращает массив имён файлов исключая <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE>.</P>
 
 <H3 id="fs-close-124">fs.close(fd, callback)</H3>
 
-<P>Asynchronous close(2).  No arguments other than a possible exception are given to the completion callback.</P>
+<P>Асинхронный close(2). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-closesync-125">fs.closeSync(fd)</H3>
 
-<P>Synchronous close(2).</P>
+<P>Синхронный close(2).</P>
 
 <H3 id="fs-open-126">fs.open(path, flags, mode, callback)</H3>
 
-<P>Asynchronous file open. See open(2). Flags can be 'r', 'r+', 'w', 'w+', 'a',
-or 'a+'. The callback gets two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> fd<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>Асинхронное открытие файла. См. open(2). Флаги могут быть 'r', 'r+', 'w', 'w+', 'a',
+или 'a+'. Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> fd<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="fs-opensync-127">fs.openSync(path, flags, mode)</H3>
 
-<P>Synchronous open(2).</P>
+<P>Синхронное открытие файла (open(2)).</P>
 
 <H3 id="fs-write-128">fs.write(fd, buffer, offset, length, position, callback)</H3>
 
-<P>Write <CODE class="sh_sourceCode">buffer</CODE> to the file specified by <CODE class="sh_sourceCode">fd</CODE>.</P>
+<P>Записывает буфер <CODE class="sh_sourceCode">buffer</CODE> в файл указанный дескриптором <CODE class="sh_sourceCode">fd</CODE>.</P>
 
-<P><CODE class="sh_sourceCode">offset</CODE> and <CODE class="sh_sourceCode">length</CODE> determine the part of the buffer to be written.</P>
+<P>Сдвиг <CODE class="sh_sourceCode">offset</CODE> и длина <CODE class="sh_sourceCode">length</CODE> определяют часть буфера, которая будет записана.</P>
 
-<P><CODE class="sh_sourceCode">position</CODE> refers to the offset from the beginning of the file where this data
-should be written. If <CODE class="sh_sourceCode">position</CODE> is <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>, the data will be written at the
-current position.
-See pwrite(2).</P>
+<P>Позиция <CODE class="sh_sourceCode">position</CODE> задаёт смещение от начала файла куда должны быть записаны данные. Если <CODE class="sh_sourceCode">position</CODE> равна <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>, данные записываются с текущей позиции.
+См. pwrite(2).</P>
 
-<P>The callback will be given two arguments <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> written<SPAN class="sh_symbol">)</SPAN></CODE> where <CODE class="sh_sourceCode">written</CODE>
-specifies how many <EM>bytes</EM> were written.</P>
+<P>Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> written<SPAN class="sh_symbol">)</SPAN></CODE> где <CODE class="sh_sourceCode">written</CODE>
+указывает сколько <EM>байт</EM> было записано в файл.</P>
 
 <H3 id="fs-writesync-129">fs.writeSync(fd, data, position, encoding)</H3>
 
-<P>Synchronous version of <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>. Returns the number of bytes written.</P>
+<P>Синхронная версия <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>. Возвращает число записанных байт.</P>
 
 <H3 id="fs-read-130">fs.read(fd, buffer, offset, length, position, callback)</H3>
 
