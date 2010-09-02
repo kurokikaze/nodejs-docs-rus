@@ -289,6 +289,13 @@
 			margin: 0 0 10px -30px;
 			padding: 10px;
 		}
+    .editor-comment
+    {
+      font-size: xx-small;
+      font-weight: bold;
+      vertical-align: top;
+      color: red;
+    }
 	</STYLE>
 <LINK rel="stylesheet" href="api-files/sh_vim-dark.css" type="text/css">
 </HEAD><BODY>
@@ -336,7 +343,7 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 
 <H2 id="standard-modules-2">Стандартные модули</H2>
 
-<P>Вместе с Node поставляется несколько стандартных вкомпилированных модулей,
+<P>Вместе с Node поставляется несколько стандартных встроенных модулей,
 большинство из которых задокументированы ниже. Стандартный способ использования этих модулей &mdash;
 вызов   <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'name'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> и сохранение возвращаемого объекта в локальной
 переменной с именем, совпадающим с именем модуля.</P>
@@ -346,9 +353,9 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Также возможно расширение node другими модулями. См. <CODE class="sh_sourceCode"><SPAN class="sh_string">'Modules'</SPAN></CODE></P>
+<P>Также возможно расширение Node другими модулями. См. <CODE class="sh_sourceCode"><SPAN class="sh_string">'Модули'</SPAN></CODE></P>
 
-<H2 id="buffers-3">Буферы</H2>
+<H2 id="buffers-3">Буферы (Buffers)</H2>
 
 <P>Чистый JavaScript поддерживает Unicode, но в нём нет средств для работы с двоичными данными.
 При работе с TCP или файловой системой часто необходимо работать именно с потоками двоичных данных.
@@ -356,25 +363,25 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 
 <P>Бинарные данные хранятся в экземплярах класса <CODE class="sh_sourceCode">Buffer</CODE>. <CODE class="sh_sourceCode">Buffer</CODE> похож на
 массив целых чисел, но ему соответствует область памяти, выделенная вне стандартной
-кучи V8. Размер <CODE class="sh_sourceCode">Buffer</CODE> нельзя менять.
+кучи V8. Размер <CODE class="sh_sourceCode">Buffer</CODE> невозможно изменить.
 Подключить класс можно с помощью <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'buffer'</SPAN><SPAN class="sh_symbol">).</SPAN>Buffer</CODE>.</P>
 
-<P>При преобразовании между Буферами и строками JavaScript требуется явно указывать
+<P>При преобразовании между буферами и строками JavaScript требуется явно указывать
 метод кодировки символов. Node поддерживает 3 кодировки для строк: UTF-8 (<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>), ASCII (<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>), и
 двоичную (<CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>).</P>
 
 <UL>
 <LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE> - только для 7-битных ASCII-строк.  Этот метод кодировки очень быстрый, и
-будет очищать старший бит символа, если тот установлен.</P></LI>
+будет сбрасывать старший бит символа, если тот установлен.</P></LI>
 <LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> - Unicode-символы.  Многие веб-страницы и документы используют UTF-8.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE> - ранее использовавшийся способ. Хранит двоичные данные в строке
-используя первые 8 бит каждого символа. Не используйте эту кодировку.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE> - устаревший способ. Хранит двоичные данные в строке
+используя первые <SPAN class="editor-comment">младшие или старшие?</SPAN> 8 бит каждого символа. Не используйте эту кодировку.</P></LI>
 </UL>
 
 
 <H3 id="new-buffer-4">new Buffer(size)</H3>
 
-<P>Создаёт новый буфер размером <CODE class="sh_sourceCode">size</CODE> байт.</P>
+<P>Создаёт новый буфер размера <CODE class="sh_sourceCode">size</CODE> байт.</P>
 
 <H3 id="new-buffer-5">new Buffer(array)</H3>
 
@@ -386,11 +393,14 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 
 <H3 id="buffer-write-7">buffer.write(string, offset=0, encoding='utf8')</H3>
 
-<P>Записывает строку <CODE class="sh_sourceCode">string</CODE> в буфер начиная с позиции <CODE class="sh_sourceCode">offset</CODE> с использованием указанной кодировки. Возвращает
+<P>Записывает строку <CODE class="sh_sourceCode">string</CODE> в буфер по смещению
+<CODE class="sh_sourceCode">offset</CODE> от его начала
+<SPAN class="editor-comment">иначе неясно, относится ли смещение к строке или к буферу</SPAN>
+с использованием указанной кодировки. Возвращает
 количество записанных байт. Если <CODE class="sh_sourceCode">buffer</CODE> не имеет достаточно места для сохранения
 всей строки метод запишет только её часть. В случае если кодировка строки &mdash; <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, метод не будет записывать частичные символы.</P>
 
-<P>Пример: записать utf8 строку в буфер, потом напечатать его</P>
+<P>Пример: записать utf8 строку в буфер, потом напечатать его.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 buf <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">new</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">Buffer</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">256</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -410,9 +420,9 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <H3 id="buffer[index]-9">buffer[index]</H3>
 
 <P>Получает или устанавливает байт на позиции <CODE class="sh_sourceCode">index</CODE>. Значения соответствуют индивидуальным байтам,
-соответственно значения могут быть от <CODE class="sh_sourceCode"><SPAN class="sh_number">0x00</SPAN></CODE> до <CODE class="sh_sourceCode"><SPAN class="sh_number">0xFF</SPAN></CODE> в шестнадцатеричной системе и от <CODE class="sh_sourceCode"><SPAN class="sh_number">0</SPAN></CODE> до <CODE class="sh_sourceCode"><SPAN class="sh_number">255</SPAN></CODE> в десятичной.</P>
+и могут лежать в пределах от <CODE class="sh_sourceCode"><SPAN class="sh_number">0x00</SPAN></CODE> до <CODE class="sh_sourceCode"><SPAN class="sh_number">0xFF</SPAN></CODE> в шестнадцатиричной записи и от <CODE class="sh_sourceCode"><SPAN class="sh_number">0</SPAN></CODE> до <CODE class="sh_sourceCode"><SPAN class="sh_number">255</SPAN></CODE> в десятичной.</P>
 
-<P>Пример: скопировать ASCII строку в буфер, байт за байтом:</P>
+<P>Пример: скопировать ASCII строку в буфер, байт за байтом.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> Buffer <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'buffer'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>Buffer<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
   str <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"node.js"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -431,7 +441,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <H3 id="buffer-bytelength-10">Buffer.byteLength(string, encoding)</H3>
 
 <P>Возвращает количество байт в строке. Это не то же самое что
-<CODE class="sh_sourceCode"><SPAN class="sh_predef_func">String</SPAN><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">prototype</SPAN><SPAN class="sh_symbol">.</SPAN>length</CODE> т.к. этот метод возвращает число <EM>символов</EM> в
+<CODE class="sh_sourceCode"><SPAN class="sh_predef_func">String</SPAN><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">prototype</SPAN><SPAN class="sh_symbol">.</SPAN>length</CODE>, так как последний метод возвращает число <EM>символов</EM> в
 строке.</P>
 
 <P>Пример:</P>
@@ -464,7 +474,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="buffer-copy-12">buffer.copy(targetBuffer, targetStart, sourceStart, sourceEnd)</H3>
 
-<P>Копрует данные между буферами с помощью <CODE class="sh_sourceCode">memcpy()</CODE>.</P>
+<P>Копирует данные между буферами с помощью <CODE class="sh_sourceCode">memcpy()</CODE>.</P>
 
 <P>Пример: создать два буфера, потом скопировать <CODE class="sh_sourceCode">buf1</CODE> с байта 16 по байт 19
 в <CODE class="sh_sourceCode">buf2</CODE>, начиная с 8-го байта в <CODE class="sh_sourceCode">buf2</CODE>.</P>
@@ -487,11 +497,12 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="buffer-slice-13">buffer.slice(start, end)</H3>
 
-<P>Возвращает новый буфер, указывающий на ту же область памяти
-что предыдущий, но начиная с <CODE class="sh_sourceCode">start</CODE> и заканчивая <CODE class="sh_sourceCode">end</CODE>
-байтами.</P>
+<P>Возвращает новый буфер, разделяющий часть массива данных 
+между смещениями <CODE class="sh_sourceCode">start</CODE> (включительно)
+и <CODE class="sh_sourceCode">end</CODE> (исключительно)
+, с исходным буфером.</P>
 
-<P><STRONG>Изменение содержимого нового буфера затронет содержимое старого!</STRONG></P>
+<P><STRONG>Изменение содержимого нового буфера затронет содержимое исходного!</STRONG></P>
 
 <P>Пример: построить буфер с ASCII-алфавитом, вырезать часть в новый буфер,
 затем изменить 1 часть в оригинальном буфере.</P>
@@ -513,7 +524,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <SPAN class="sh_comment"><SPAN class="sh_comment">// !bc</SPAN></SPAN>
 </CODE></PRE>
 
-<H2 id="eventemitter-14">EventEmitter</H2>
+<H2 id="eventemitter-14">Источник событий (EventEmitter)</H2>
 
 <P>Множество объектов в Node генерируют события: TCP-сервер генерирует событие
 при каждом получении потока данных, дочерний процесс генерирует событие при выходе. Все
@@ -525,13 +536,17 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>К объектам могут быть присоединены функции, которые будут выполняться при
 генерации события. Эти функции называются <EM>обработчиками</EM> (<EM>listeners</EM>).</P>
 
-<P><CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'events'</SPAN><SPAN class="sh_symbol">).</SPAN>EventEmitter</CODE> to access the <CODE class="sh_sourceCode">EventEmitter</CODE> class.</P>
+<P>Класс <CODE class="sh_sourceCode">EventEmitter</CODE> находится в модуле
+<SPAN class="sh_string">'events'</SPAN>: 
+<CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'events'</SPAN><SPAN class="sh_symbol">).</SPAN>EventEmitter</CODE>.</P>
 
-<P>Все EventEmitter'ы генерируют событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'newListener'</SPAN></CODE> когда к ним добавляются новые обработчики.</P>
+<P>Все источники событий генерируют событие
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'newListener'</SPAN></CODE>, когда к ним добавляются новые обработчики.</P>
 
-<P>Когда EventEmitter сталкивается с ошибкой, типичное поведение - сгенерировать событие
-ошибки <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>.  События ошибки особенные &mdash; если им не назначен обработчик
-они выдают на экран stack trace и завершают программу.</P>
+<P>Когда источник событий сталкивается с ошибкой, типичное поведение &mdash; сгенерировать событие
+ошибки <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>.
+События ошибки &mdash; особенные: если им не назначен обработчик,
+они печатают на экран текущий стек (stack trace) и завершают программу.</P>
 
 <H3 id="event-newlistener-15">Событие: 'newListener'</H3>
 
@@ -544,12 +559,13 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>exception<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
 <P>Если произошла ошибка, генерируется это событие. Оно отличается от
-других - если ему не назначено ни одного обработчика Node прекратит выполнение
-скрипта и напечатает stack trace как для необработанного исключения.</P>
+других &mdash; если ему не назначено ни одного обработчика,
+Node напечатает текущий стек и прекратит выполнение скрипта, как если бы
+произошло исключение.</P>
 
 <H3 id="emitter-addlistener-17">emitter.addListener(event, listener)</H3>
 
-<P>Добавляет обработчик в конец массива обработчиков для указанного события.</P>
+<P>Добавляет обработчик в конец массива обработчиков указанного события.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">addListener</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'stream'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>stream<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'someone connected!'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -558,16 +574,17 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="emitter-removelistener-18">emitter.removeListener(event, listener)</H3>
 
-<P>УДаляет обработчик из массива обработчиков для указанного события.
-<STRONG>Внимание</STRONG>: изменяет индексы в массиве обработчиков после указанного обработчика.</P>
+<P>Удаляет обработчик из массива обработчиков указанного события.
+<STRONG>Внимание</STRONG>: изменяет индексы обработчиков, находящихся в массиве
+после указанного обработчика.</P>
 
 <H3 id="emitter-removealllisteners-19">emitter.removeAllListeners(event)</H3>
 
-<P>Удаляет все обработчики из массива обработчиков для указанного события.</P>
+<P>Удаляет все обработчики из массива обработчиков указанного события.</P>
 
 <H3 id="emitter-listeners-20">emitter.listeners(event)</H3>
 
-<P>Возвращает массив обработчиков для указанного события. Этот массив может быть
+<P>Возвращает массив обработчиков указанного события. Этот массив может быть
 использован, например, для удаления обработчиков.</P>
 
 <H3 id="emitter-emit-21">emitter.emit(event, arg1, arg2, ...)</H3>
@@ -576,7 +593,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="streams-22">Потоки</H2>
 
-<P>Поток - это абстрактный интерфейс, реализуемый многими объектами в Node.
+<P>Поток &mdash; это абстрактный интерфейс, реализуемый многими объектами в Node.
 Например, запрос к HTTP-серверу это поток, также как stdout. Потоки
 могут быть с возможностью чтения, записи или и того и другого. Все потоки являются экземплярами <CODE class="sh_sourceCode">EventEmitter</CODE>.</P>
 
