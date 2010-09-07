@@ -2177,7 +2177,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>chunk<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{}</SPAN></CODE></P>
 
-<P>Генерируется при получении части тела сообщения.</P>
+<P>Генерирется при получении части тела сообщения.</P>
 
 <P>Часть тела сообщения передаётся обработчику в качестве единственного аргумета. Строка уже преобразована из кодировки с помощью которой осуществлялась передача. Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела сообщения задаётся response.setBodyEncoding().</P>
 
@@ -2449,8 +2449,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P><CODE class="sh_sourceCode">ca</CODE> : строка или список строк PEM-закодированных доверенных корневых сертификатов.</P>
 
-<P>If no 'ca' details are given, then node.js will use the default publicly trusted list of CAs as given in
-http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
+<P>Если корневые сертификаты не указаны, node.js будет использовать список доверенных сертификатов, расположенный по адресу http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
 
 <H3 id="crypto-createhash-234">crypto.createHash(algorithm)</H3>
 
