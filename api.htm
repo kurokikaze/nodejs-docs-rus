@@ -3035,44 +3035,35 @@ a directory.</P>
 
 <P><CODE class="sh_sourceCode">require<SPAN class="sh_symbol">.</SPAN>paths</CODE> can be modified at runtime by simply unshifting new
 paths onto it, or at startup with the <CODE class="sh_sourceCode">NODE_PATH</CODE> environmental
-variable (which should be a list of paths, colon separated).</P>
+variable (which should be a list of paths, colon separated).</P>-->
 
-<H2 id="addons-293">Addons</H2>
+<H2 id="addons-293">Дополнения</H2>
 
-<P>Addons are dynamically linked shared objects. They can provide glue to C and
-C++ libraries. The API (at the moment) is rather complex, involving
-knowledge of several libraries:</P>
+<P>Дополнения &mdash; это динамически подключаемые объекты. Они могут предоставлять связь с библиотеками на языках C/C++.
+На данный момент API для дополнения довольно сложное и использует следующие библиотеки:</P>
 
 <UL>
-<LI><P>V8 JavaScript, a C++ library. Used for interfacing with JavaScript:
-creating objects, calling functions, etc.  Documented mostly in the
-<CODE class="sh_sourceCode">v8<SPAN class="sh_symbol">.</SPAN>h</CODE> header file (<CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">v8</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">include</SPAN><SPAN class="sh_symbol">/</SPAN>v8<SPAN class="sh_symbol">.</SPAN>h</CODE> in the Node source tree).</P></LI>
-<LI><P>libev, C event loop library. Anytime one needs to wait for a file
-descriptor to become readable, wait for a timer, or wait for a signal to
-received one will need to interface with libev.  That is, if you perform
-any I/O, libev will need to be used.  Node uses the <CODE class="sh_sourceCode">EV_DEFAULT</CODE> event
-loop.  Documentation can be found http:/cvs.schmorp.de/libev/ev.html[here].</P></LI>
-<LI><P>libeio, C thread pool library. Used to execute blocking POSIX system
-calls asynchronously. Mostly wrappers already exist for such calls, in
+<LI><P>Движок V8 JavaScript, написан на C++. Используется для обращения к JavaScript из дополнения:
+создания объектов, вызова функций и т.д. Документация по нему крайне скудна, в основнос тоит полагаться на заголовочный файл
+<CODE class="sh_sourceCode">v8<SPAN class="sh_symbol">.</SPAN>h</CODE> (<CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">v8</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">include</SPAN><SPAN class="sh_symbol">/</SPAN>v8<SPAN class="sh_symbol">.</SPAN>h</CODE> в дистрибутиве Node).</P></LI>
+<LI><P>libev, библиотеку обработки цикла событий на C. Каждый раз, когда вам потребуется подождать пока файловый дескриптор станет доступен для чтения,
+подождать вызова таймера или поступления сигнала, вы будете испльзовать вызовы из libev. Соответственно, вам придётся использовать  libev для любых операций ввода/вывода. Node использует цикл событий <CODE class="sh_sourceCode">EV_DEFAULT</CODE>. Документация доступна на <A HREF="http:/cvs.schmorp.de/libev/ev.html">сайте автора</A>.</P></LI>
+<LI><P>libeio, библиотеку пула потоков на C. Она используется для выполнения блокирующих вызовов POSIX асинхронно, в отдельных потоках. Для большинства вызовов существуют стандартные обёртки, которые вы можете найти в заголовочном файле
 <CODE class="sh_sourceCode"><SPAN class="sh_normal">src</SPAN><SPAN class="sh_symbol">/</SPAN>file<SPAN class="sh_symbol">.</SPAN>cc</CODE> so you will probably not need to use it. If you do need it,
-look at the header file <CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">libeio</SPAN><SPAN class="sh_symbol">/</SPAN>eio<SPAN class="sh_symbol">.</SPAN>h</CODE>.</P></LI>
-<LI><P>Internal Node libraries. Most importantly is the <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">::</SPAN>ObjectWrap</CODE>
-class which you will likely want to derive from.</P></LI>
-<LI><P>Others. Look in <CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN></CODE> for what else is available.</P></LI>
+<CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">libeio</SPAN><SPAN class="sh_symbol">/</SPAN>eio<SPAN class="sh_symbol">.</SPAN>h</CODE>.</P></LI>
+<LI><P>Внутренние библиотеки Node. Наиюолее важная из них &mdash; класс <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">::</SPAN>ObjectWrap</CODE>, от которого будут наследоваться большинство ваших классов.</P></LI>
+<LI><P>Другое. Остальные доступные библиотеки вы можете найти впапке <CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN></CODE> дистрибутива Node.</P></LI>
 </UL>
 
 
-<P>Node statically compiles all its dependencies into the executable. When
-compiling your module, you don't need to worry about linking to any of these
-libraries.</P>
+<P>При сборке Node все её зависимости статически компилируются в исполняемый файл. При сборке своего модуля вы не должны задумываться об описанных выше библиотеках.</P>
 
-<P>To get started let's make a small Addon which does the following except in
-C++:</P>
+<P>В качестве простого примера сделаем дополнение для Node на C++, которое будет делать тоже самое, что и JavaScript код:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">exports<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>hello <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'world'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 </CODE></PRE>
 
-<P>To get started we create a file <CODE class="sh_sourceCode">hello<SPAN class="sh_symbol">.</SPAN>cc</CODE>:</P>
+<P>Создадим файл <CODE class="sh_sourceCode">hello<SPAN class="sh_symbol">.</SPAN>cc</CODE>:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">#include <SPAN class="sh_symbol"><SPAN class="sh_symbol">&lt;</SPAN></SPAN>v8<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>h<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN>
 
@@ -3086,9 +3077,8 @@ extern <SPAN class="sh_string"><SPAN class="sh_string">'C'</SPAN></SPAN> void
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>This source code needs to be built into <CODE class="sh_sourceCode">hello<SPAN class="sh_symbol">.</SPAN>node</CODE>, the binary Addon. To
-do this we create a file called <CODE class="sh_sourceCode">wscript</CODE> which is python code and looks
-like this:</P>
+<P>Этот код нужно собрать в файл <CODE class="sh_sourceCode">hello<SPAN class="sh_symbol">.</SPAN>node</CODE>, файл бинарного дополнения.
+Для этого создадим файл <CODE class="sh_sourceCode">wscript</CODE>, содержащий код на Python (аналог Makefile):</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">srcdir <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'.'</SPAN></SPAN>
 blddir <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'build'</SPAN></SPAN>
@@ -3107,18 +3097,17 @@ def <SPAN class="sh_function"><SPAN class="sh_function">build</SPAN></SPAN><SPAN
   obj<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>source <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'hello.cc'</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Running <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf configure build</CODE> will create a file
-<CODE class="sh_sourceCode"><SPAN class="sh_normal">build</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_keyword">default</SPAN><SPAN class="sh_symbol">/</SPAN>hello<SPAN class="sh_symbol">.</SPAN>node</CODE> which is our Addon.</P>
+<P>Теперь можно запустить команду <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf configure build</CODE>, которая создаст файл 
+<CODE class="sh_sourceCode"><SPAN class="sh_normal">build</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_keyword">default</SPAN><SPAN class="sh_symbol">/</SPAN>hello<SPAN class="sh_symbol">.</SPAN>node</CODE>, содержащий бинарную версию дополнения.</P>
 
-<P><CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> is just http://code.google.com/p/waf/[WAF], the python-based build system. <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> is
-provided for the ease of users.</P>
+<P><CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> &mdash; расширение <A HREF="http://code.google.com/p/waf/">WAF</A>, системы сборки на Python. <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> включён в состав Node для упрощения процесса сборки дополнений.</P>
 
-<P>All Node addons must export a function called <CODE class="sh_sourceCode">init</CODE> with this signature:</P>
+<P>Каждое дополнение должно содержать функцию <CODE class="sh_sourceCode">init</CODE> со следующим интерфейсом:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">extern <SPAN class="sh_string"><SPAN class="sh_string">'C'</SPAN></SPAN> void <SPAN class="sh_function"><SPAN class="sh_function">init</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>Handle<SPAN class="sh_symbol"><SPAN class="sh_symbol">&lt;</SPAN></SPAN><SPAN class="sh_predef_func"><SPAN class="sh_predef_func">Object</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> target<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Пока это вся документация по дополнениям. Смотрите <A href="http://github.com/ry/node_postgres">http://github.com/ry/node_postgres</A> для реального примера.</P>-->
+<P>Пока это вся документация по дополнениям. В качестве примера вы можете просмотреть код дополнения <A href="http://github.com/ry/node_postgres">http://github.com/ry/node_postgres</A>.</P>
 
 <p>Оригинальная документация: <a href="http://nodejs.org">nodejs.org</a>. Перевод: <a href="http://kuroikaze85.wordpress.com">Сергей Широков</a> и <a href="http://nodejs.ru">Nodejs.ru</a>.</p>
 
