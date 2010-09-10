@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	<META name="generator" content="Ronn/v0.4.1">
 	<TITLE>node(1) -- Synopsis for V8 JavaScript</TITLE>
 	<STYLE type="text/css">
 		*{
@@ -17,7 +15,7 @@
 			background:#22252a;
 			color:#eee;
 			font-size:16px;
-      line-height:1.3;
+			line-height:1.3;
 			position:relative;
 			min-width: 690px;
 		}
@@ -295,7 +293,7 @@
 
 <DIV id="toc">
 	<DIV id="toctitle">Node v0.1.100</DIV>
-	<NOSCRIPT>Для чтения документации в Вашем браузере должен быть включен JavaScript</NOSCRIPT>
+	<NOSCRIPT>Для удобного чтения документации в Вашем браузере должен быть включен JavaScript</NOSCRIPT>
 </DIV>
 
 <DIV id="man">
@@ -337,8 +335,8 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 <H2 id="standard-modules-2">Стандартные модули</H2>
 
 <P>Вместе с Node поставляется несколько стандартных встроенных модулей,
-большинство из которых задокументированы ниже. Стандартный способ использования этих модулей &mdash;
-вызов   <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'name'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> и сохранение возвращаемого объекта в локальной
+большинство из которых описано ниже. Стандартный способ использования этих модулей &mdash;
+вызов <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'name'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> и сохранение возвращаемого объекта в локальной
 переменной с именем, совпадающим с именем модуля.</P>
 
 <P>Пример:</P>
@@ -360,11 +358,11 @@ Server running at http<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></
 Подключить класс можно с помощью <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'buffer'</SPAN><SPAN class="sh_symbol">).</SPAN>Buffer</CODE>.</P>
 
 <P>При преобразовании между буферами и строками JavaScript требуется явно указывать
-метод кодировки символов. Node поддерживает 3 кодировки для строк: UTF-8 (<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>), ASCII (<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>), и
+метод кодирования символов. Node поддерживает 3 кодировки для строк: UTF-8 (<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>), ASCII (<CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>) и
 двоичную (<CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>).</P>
 
 <UL>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE> &mdash; только для 7-битных ASCII-строк.  Этот метод кодировки очень быстрый, и
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE> &mdash; только для 7-битных ASCII-строк.  Этот метод кодирования очень быстрый, и
 будет сбрасывать старший бит символа, если тот установлен.</P></LI>
 <LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> &mdash; Unicode-символы.  Многие веб-страницы и документы используют UTF-8.</P></LI>
 <LI><P><CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE> &mdash; устаревший способ. Хранит двоичные данные в строке используя младшие 8 бит каждого символа. Не используйте эту кодировку.</P></LI>
