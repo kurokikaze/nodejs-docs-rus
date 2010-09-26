@@ -729,7 +729,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Имя директории исполняемого скрипта.</P>
 
-<P>Example: running <CODE class="sh_sourceCode">node example<SPAN class="sh_symbol">.</SPAN>js</CODE> from <CODE class="sh_sourceCode"><SPAN class="sh_regexp">/Users/m</SPAN>jr</CODE></P>
+<P>Пример: запускаем <CODE class="sh_sourceCode">node example<SPAN class="sh_symbol">.</SPAN>js</CODE> bp папки <CODE class="sh_sourceCode"><SPAN class="sh_regexp">/Users/mjr</SPAN></CODE></P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>__filename<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>__dirname<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -905,7 +905,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P><CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>compile</CODE> не имеет доступа к локальной области видимости, поэтому <CODE class="sh_sourceCode">localVar</CODE> не меняется.
 <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">eval</SPAN></CODE> имеет доступ к локальной области видимости, поэтому <CODE class="sh_sourceCode">localVar</CODE> изменяется.</P>
 
-<P>Пр синтаксической ошибке в <CODE class="sh_sourceCode">code</CODE>, <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>compile</CODE> завершает работу node.</P>
+<P>При синтаксической ошибке в коде <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>compile</CODE> завершает работу node.</P>
 
 <P>См. также: <CODE class="sh_sourceCode">Script</CODE></P>
 
@@ -1450,16 +1450,15 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="file-system-99">Файловая система</H2>
 
-<P>File I/O is provided by simple wrappers around standard POSIX functions.  To
-use this module do <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'fs'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>. All the methods have asynchronous and
-synchronous forms.</P>
+<P>Файловый вводювывод обеспечивается с помощью простой обертки вокруг стандартных функций POSIX.
+Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'fs'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить к ним доступ.
+Все эти методы имеют асинхронную и синхронную версии.</P>
 
-<P>The asynchronous form always take a completion callback as its last argument.
-The arguments passed to the completion callback depend on the method, but the
-first argument is always reserved for an exception. If the operation was
-completed successfully, then the first argument will be <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE> or <CODE class="sh_sourceCode"><SPAN class="sh_predef_var">undefined</SPAN></CODE>.</P>
+<P>Асинхронные версии всегда принимают функцию обратного вызова в качестве последнего аргумента.
+Аргументы, передаваемые в функцию обратного вызова зависят от вызываемой функции, но первый из них всегда зарезервирован для исключения.
+Если операция завершается без ошибок, то в качется первого аргумента передаётся <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE> или <CODE class="sh_sourceCode"><SPAN class="sh_predef_var">undefined</SPAN></CODE>.</P>
 
-<P>Here is an example of the asynchronous version:</P>
+<P>Пример использования асинхронной версии:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> fs <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'fs'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
@@ -1469,7 +1468,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Вот пример синхронной версии:</P>
+<P>Пример использования синхронной версии:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> fs <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'fs'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 
@@ -2766,7 +2765,7 @@ path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'user:pass@host.com:8080'</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">auth</CODE></P>
 
-<P>Информация для аутентификации.  Example: <CODE class="sh_sourceCode"><SPAN class="sh_string">'user:pass'</SPAN></CODE></P></LI>
+<P>Информация для аутентификации.  Пример: <CODE class="sh_sourceCode"><SPAN class="sh_string">'user:pass'</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">hostname</CODE></P>
 
 <P>Имя хоста.  Пример: <CODE class="sh_sourceCode"><SPAN class="sh_string">'host.com'</SPAN></CODE></P></LI>
