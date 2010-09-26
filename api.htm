@@ -2428,13 +2428,13 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 <P>Включает/выключает функционал keep-alive , и дополнительно позволяет установить начальную задержку после которой будет отправлен первый пакет проверки соединения при неактивности.
 Значение <CODE class="sh_sourceCode">initialDelay</CODE> (в миллисекундах) означает интервал между последним отправленным пакетом и первой проверкой соединения. Установка initialDelay в 0 оставит в силе предыдущее значение.</P>
 
-<H2 id="crypto-232">Криптографический модуль</H2>
+<H2 id="crypto-232">Модуль криптографии</H2>
 
 <P>Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'crypto'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить доступ к функциям модуля.</P>
 
 <P>Криптографический модуль требует для своей работы наличия OpenSSL. Он предоставляет возможность использовать аутентификацию в HTTPS и HTTP-соединениях.</P>
 
-<P>Модуль также предоставляет набор врапперов для некоторых методов OpenSSL: hash, hmac, cipher, decipher, sign и verify.</P>
+<P>Модуль также предоставляет набор обёрток для некоторых методов OpenSSL: hash, hmac, cipher, decipher, sign и verify.</P>
 
 <H3 id="crypto-createcredentials-233">crypto.createCredentials(details)</H3>
 
@@ -2446,90 +2446,98 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P><CODE class="sh_sourceCode">ca</CODE> : строка или список строк PEM-закодированных доверенных корневых сертификатов.</P>
 
-<P>Если корневые сертификаты не указаны, node.js будет использовать список доверенных сертификатов, расположенный по адресу http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
+<P>Если корневые сертификаты не указаны, node.js будет использовать список доверенных сертификатов, расположенный по адресу <a href="http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt">http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</a></P>
 
 <H3 id="crypto-createhash-234">crypto.createHash(algorithm)</H3>
 
-<P>Creates and returns a hash object, a cryptographic hash with the given algorithm which can be used to generate hash digests.</P>
+<P>Создает и возвращает объект <CODE class="sh_sourceCode">hash</CODE>, который может быть использован для создания криптографических хэшей по заданному алгоритму.</P>
 
-<P><CODE class="sh_sourceCode">algorithm</CODE> is dependent on the available algorithms supported by the version of OpenSSL on the platform. Examples are sha1, md5, sha256, sha512, etc. On recent releases, <CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN>message<SPAN class="sh_symbol">-</SPAN>digest<SPAN class="sh_symbol">-</SPAN>algorithms</CODE> will display the available digest algorithms.</P>
+<P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в той версии OpenSSL, которая у вас установлена. Например, это может быть 'sha1', 'md5' и т.д.
+В последней версии можно было узнать список поддерживаемых алгоритмов с помощью команды
+<CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN>message<SPAN class="sh_symbol">-</SPAN>digest<SPAN class="sh_symbol">-</SPAN>algorithms</CODE>.</P>
 
 <H3 id="hash-update-235">hash.update(data)</H3>
 
-<P>Updates the hash content with the given <CODE class="sh_sourceCode">data</CODE>. This can be called many times with new data as it is streamed.</P>
+<P>Обновляет содержимое на <CODE class="sh_sourceCode">data</CODE>. Этот метод может быть вызван несколько раз.</P>
 
 <H3 id="hash-digest-236">hash.digest(encoding)</H3>
 
-<P>Calculates the digest of all of the passed data to be hashed. The <CODE class="sh_sourceCode">encoding</CODE> can be 'hex', 'binary' or 'base64'.</P>
+<P>Вычисляет хеш от всех поступивших данных. Параметр <CODE class="sh_sourceCode">encoding</CODE> может равняться 'hex', 'binary' или 'base64'.</P>
 
 <H3 id="crypto-createhmac-237">crypto.createHmac(algorithm, key)</H3>
 
-<P>Creates and returns a hmac object, a cryptographic hmac with the given algorithm and key.</P>
+<P>Создает и возвращает объект <CODE class="sh_sourceCode">hmac</CODE>, который может быть использован для создания хеш-кода идентификации сообщений (HMAC) по заданному алгоритму и ключу.</P>
 
-<P><CODE class="sh_sourceCode">algorithm</CODE> is dependent on the available algorithms supported by OpenSSL - see createHash above.
-<CODE class="sh_sourceCode">key</CODE> is the hmac key to be used.</P>
+<P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в OpenSSL, см. описание для <CODE class="sh_sourceCode">crypto.createHash()</CODE> выше.
+<CODE class="sh_sourceCode">key</CODE> определяет используемый ключа.</P>
 
 <H3 id="hmac-update-238">hmac.update(data)</H3>
 
-<P>Update the hmac content with the given <CODE class="sh_sourceCode">data</CODE>. This can be called many times with new data as it is streamed.</P>
+<P>Обновляет содержимое на <CODE class="sh_sourceCode">data</CODE>. Этот метод может быть вызван несколько раз.</P>
 
 <H3 id="hmac-digest-239">hmac.digest(encoding)</H3>
 
-<P>Calculates the digest of all of the passed data to the hmac. The <CODE class="sh_sourceCode">encoding</CODE> can be 'hex', 'binary' or 'base64'.</P>
+<P>Вычисляет хеш от всех поступивших данных. Параметр <CODE class="sh_sourceCode">encoding</CODE> может равняться 'hex', 'binary' или 'base64'.</P>
 
 <H3 id="crypto-createcipher-240">crypto.createCipher(algorithm, key)</H3>
 
-<P>Creates and returns a cipher object, with the given algorithm and key.</P>
+<P>Создает и возвращает объект <CODE class="sh_sourceCode">cipher</CODE>, который может быть использован для шифрования по заданному алгоритму и ключу.</P>
 
-<P><CODE class="sh_sourceCode">algorithm</CODE> is dependent on OpenSSL, examples are aes192, etc. On recent releases, <CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN>cipher<SPAN class="sh_symbol">-</SPAN>algorithms</CODE> will display the available cipher algorithms.</P>
+<P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в той версии OpenSSL, которая у вас установлена. Например, это может быть 'aes192', 'blowfish' и т.д.
+В последней версии можно было узнать список поддерживаемых алгоритмов с помощью команды
+<CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN>cipher<SPAN class="sh_symbol">-</SPAN>algorithms</CODE>.</P>
 
 <H3 id="cipher-update-241">cipher.update(data, input_encoding, output_encoding)</H3>
 
-<P>Updates the cipher with <CODE class="sh_sourceCode">data</CODE>, the encoding of which is given in <CODE class="sh_sourceCode">input_encoding</CODE> and can be 'utf8', 'ascii' or 'binary'. The <CODE class="sh_sourceCode">output_encoding</CODE> specifies the output format of the enciphered data, and can be 'binary', 'base64'  or 'hex'.</P>
+<P>Обновляет содержимое на <CODE class="sh_sourceCode">data</CODE>, кодировку которых задаёт аргумент <CODE class="sh_sourceCode">input_encoding</CODE> (может равняться 'utf8', 'ascii' или 'binary'). Аргумент <CODE class="sh_sourceCode">output_encoding</CODE> определяет выходной формат и может равняться 'binary', 'base64' или 'hex'.</P>
 
-<P>Returns the enciphered contents, and can be called many times with new data as it is streamed.</P>
+<P>Возвращает зашифрованного содержимого и может быть названо много раз с новыми данными.</P>
 
 <H3 id="cipher-final-242">cipher.final(output_encoding)</H3>
 
-<P>Returns any remaining enciphered contents, with <CODE class="sh_sourceCode">output_encoding</CODE> as update above.</P>
+<P>Возвращает все оставшиеся зашифрованного содержимого. Значение аргументо <CODE class="sh_sourceCode">output_encoding</CODE> объяснено выше.</P>
 
 <H3 id="crypto-createdecipher-243">crypto.createDecipher(algorithm, key)</H3>
 
-<P>Creates and returns a decipher object, with the given algorithm and key. This is the mirror of the cipher object above.</P>
+<P>Создает и возвращает объект <CODE class="sh_sourceCode">decipher</CODE>, который может быть использован для дешифрования по заданному алгоритму и ключу. Это объект-близнец для объекта <CODE class="sh_sourceCode">cipher</CODE>.</P>
 
 <H3 id="decipher-update-244">decipher.update(data, input_encoding, output_encoding)</H3>
 
-<P>Updates the decipher with <CODE class="sh_sourceCode">data</CODE>, which is encoded in 'binary', 'base64' or 'hex'. The <CODE class="sh_sourceCode">output_decoding</CODE> specifies in what format to return the deciphered plaintext - either 'binary', 'ascii' or 'utf8'.</P>
+<P>Обновляет содержимое на <CODE class="sh_sourceCode">data</CODE>, формат которых задаёт аргумент <CODE class="sh_sourceCode">input_encoding</CODE> (может равняться 'binary', 'base64' или 'hex'). Аргумент <CODE class="sh_sourceCode">output_encoding</CODE> определяет выходную кодировку и может равняться 'utf8', 'ascii' или 'binary'.</P>
 
 <H3 id="decipher-final-245">decipher.final(output_encoding)</H3>
 
-<P>Returns any remaining plaintext which is deciphered, with `output_encoding' as update above.</P>
+<P>Возвращает все оставшиеся разшифрованного содержимого в виде простого текста. Значение аргументо <CODE class="sh_sourceCode">output_encoding</CODE> объяснено выше.</P>
 
 <H3 id="crypto-createsign-246">crypto.createSign(algorithm)</H3>
 
-<P>Creates and returns a signing object, with the given algorithm. On recent OpenSSL releases, <CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN><SPAN class="sh_keyword">public</SPAN><SPAN class="sh_symbol">-</SPAN>key<SPAN class="sh_symbol">-</SPAN>algorithms</CODE> will display the available signing algorithms. Examples are 'RSA-SHA256'.</P>
+<P>Создает и возвращает объект <CODE class="sh_sourceCode">signer</CODE>, который может быть использован для создания электронной подписи по заданному алгоритму.</P>
+
+<P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в той версии OpenSSL, которая у вас установлена. Например, это может быть 'rsa', 'RSA-SHA256' и т.д.
+В последней версии можно было узнать список поддерживаемых алгоритмов с помощью команды
+<CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN><SPAN class="sh_symbol">public</SPAN><SPAN class="sh_symbol">-</SPAN>key<SPAN class="sh_symbol">-</SPAN>algorithms</CODE>.</P>
 
 <H3 id="signer-update-247">signer.update(data)</H3>
 
-<P>Updates the signer object with data. This can be called many times with new data as it is streamed.</P>
+<P>Обновляет содержимое на <CODE class="sh_sourceCode">data</CODE>. Этот метод может быть вызван несколько раз.</P>
 
 <H3 id="signer-sign-248">signer.sign(private_key, output_format)</H3>
 
-<P>Calculates the signature on all the updated data passed through the signer. <CODE class="sh_sourceCode">private_key</CODE> is a string containing the PEM encoded private key for signing.</P>
+<P>Вычисляет подпись для всех данных. <CODE class="sh_sourceCode">private_key</CODE> задаёт закрытый ключ в формате PEM.</P>
 
-<P>Returns the signature in <CODE class="sh_sourceCode">output_format</CODE> which can be 'binary', 'hex' or 'base64'</P>
+<P>Возвращает подпись в формате <CODE class="sh_sourceCode">output_format</CODE>, который может равняться 'binary', 'hex' или 'base64'</P>
 
 <H3 id="crypto-createverify-249">crypto.createVerify(algorithm)</H3>
 
-<P>Creates and returns a verification object, with the given algorithm. This is the mirror of the signing object above.</P>
+<P>Создает и возвращает объект <CODE class="sh_sourceCode">verifier</CODE>, который может быть использован для проверки электронной подписи. Это объект-близнец для объекта <CODE class="sh_sourceCode">signer</CODE>.</P>
 
 <H3 id="verifier-update-250">verifier.update(data)</H3>
 
-<P>Updates the verifyer object with data. This can be called many times with new data as it is streamed.</P>
+<P>Обновляет содержимое на <CODE class="sh_sourceCode">data</CODE>. Этот метод может быть вызван несколько раз.</P>
 
 <H3 id="verifier-verify-251">verifier.verify(public_key, signature, signature_format)</H3>
 
-<P>Verifies the signed data by using the <CODE class="sh_sourceCode">public_key</CODE> which is a string containing the PEM encoded public key, and <CODE class="sh_sourceCode">signature</CODE>, which is the previously calculates signature for the data, in the <CODE class="sh_sourceCode">signature_format</CODE> which can be 'binary', 'hex' or 'base64'.</P>
+<P>Проверяет данные с помощью открытого ключа <CODE class="sh_sourceCode">public_key</CODE> в формате PEM и подписи <CODE class="sh_sourceCode">signature</CODE> формата <CODE class="sh_sourceCode">signature_format</CODE> (может равняться 'binary', 'hex' или 'base64'.</P>
 
 <P>Возвращает true или false в зависимости от действительности подписи и публичного ключа.</P>
 
