@@ -2871,13 +2871,9 @@ querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN 
 
 <!--<H2 id="repl-289">REPL</H2>
 
-<P>A Read-Eval-Print-Loop (REPL) is available both as a standalone program and easily
-includable in other programs.  REPL provides a way to interactively run
-JavaScript and see the results.  It can be used for debugging, testing, or
-just trying things out.</P>
+<P>Интерактивная консоль (Read-Eval-Print-Loop, REPL) доступна как самостоятельная программа и может включаться в другие скрипты. REPL предоставляет возможность интерактивно выполнять JavaScript и сразу видеть результат. Он может использоваться для отладки, тестирования, и просто знакомства с системой.</P>
 
-<P>By executing <CODE class="sh_sourceCode">node</CODE> without any arguments from the command-line you will be
-dropped into the REPL. It has simplistic emacs line-editting.</P>
+<P>Выполняя <CODE class="sh_sourceCode">node</CODE> без аргументов из командной строки вы попадёте прямо в REPL. В нём есть простое редактирование строк по образцу emacs.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">mjr<SPAN class="sh_symbol"><SPAN class="sh_symbol">:~</SPAN></SPAN>$ node
 Type <SPAN class="sh_string"><SPAN class="sh_string">'.help'</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">for</SPAN></SPAN> options<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>
@@ -2891,24 +2887,21 @@ node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> a<SPAN cl
 <SPAN class="sh_number"><SPAN class="sh_number">3</SPAN></SPAN>
 </CODE></PRE>
 
-<P>For advanced line-editors, start node with the environmental variable <CODE class="sh_sourceCode">NODE_NO_READLINE<SPAN class="sh_symbol">=</SPAN><SPAN class="sh_number">1</SPAN></CODE>.
-This will start the REPL in canonical terminal settings which will allow you to use with <CODE class="sh_sourceCode">rlwrap</CODE>.</P>
+<P>Чтобы использовать продвинутые редакторы, запустите Node с переменной окружения <CODE class="sh_sourceCode">NODE_NO_READLINE<SPAN class="sh_symbol">=</SPAN><SPAN class="sh_number">1</SPAN></CODE>.
+Это запустит REPL с обычными терминальными настройками, позволяющими использовать <CODE class="sh_sourceCode">rlwrap</CODE>.</P>
 
-<P>For example, you could add this to your bashrc file:</P>
+<P>К примеру, можно добавить следующее к Вашему файлу bashrc:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">alias node<SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">"env NODE_NO_READLINE=1 rlwrap node"</SPAN></SPAN>
 </CODE></PRE>
 
 <H3 id="repl-start-290">repl.start(prompt, stream)</H3>
 
-<P>Starts a REPL with <CODE class="sh_sourceCode">prompt</CODE> as the prompt and <CODE class="sh_sourceCode">stream</CODE> for all I/O.  <CODE class="sh_sourceCode">prompt</CODE>
-is optional and defaults to <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">&gt;</SPAN></CODE>.  <CODE class="sh_sourceCode">stream</CODE> is optional and defaults to
-<CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">openStdin</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Запускает REPL с <CODE class="sh_sourceCode">prompt</CODE> в качестве приглашения и потоком <CODE class="sh_sourceCode">stream</CODE> для ввода/вывода. Параметр <CODE class="sh_sourceCode">prompt</CODE> необязателен и по умолчанию принимает значение <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">&gt;</SPAN></CODE>. Параметр <CODE class="sh_sourceCode">stream</CODE> также необязателен и по умолчанию принимает значение <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">openStdin</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
-<P>Multiple REPLs may be started against the same running instance of node.  Each
-will share the same global object but will have unique I/O.</P>
+<P>В одном экземпляре node могут быть запущены несколько консолей REPL.  Все будут использовать один глобальный объект но разный ввод-вывод.</P>
 
-<P>Here is an example that starts a REPL on stdin, a Unix socket, and a TCP socket:</P>
+<P>Вот пример, запускающий консоль REPL на стандартном потоке ввода-вывода, сокете Unix, и TCP-сокете:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> net <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">"net"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     repl <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">"repl"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -2928,13 +2921,9 @@ net<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">listen</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">5001</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Running this program from the command line will start a REPL on stdin.  Other
-REPL clients may connect through the Unix socket or TCP socket. <CODE class="sh_sourceCode">telnet</CODE> is useful
-for connecting to TCP sockets, and <CODE class="sh_sourceCode">socat</CODE> can be used to connect to both Unix and
-TCP sockets.</P>
+<P>Запуск этой программы из командной строки запустит консоль на stdin. Другие клиенты могут подключаться через Unix-сокет или TCP-сокет. <CODE class="sh_sourceCode">telnet</CODE> можно использовать для подключения к TCP сокетам, и <CODE class="sh_sourceCode">socat</CODE> можно использовать для обоих типов сокетов.</P>
 
-<P>By starting a REPL from a Unix socket-based server instead of stdin, you can
-connect to a long-running node process without restarting it.</P>
+<P>Запуская REPL на сокете вместо стандартного ввода-вывода Вы можете подключаться к работающему процессу node не перезапуская его.</P>
 
 <H3 id="repl-features-291">Возможности REPL</H3>
 
