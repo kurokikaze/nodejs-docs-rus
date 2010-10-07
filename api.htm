@@ -1228,7 +1228,7 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stdin<SPAN cl
 и указывает кодировку: его возможные значения <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, и
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
-<P>Пример: достаточно сложный способ выполнить 'ps ax | grep ssh'</P>
+<P>ример: достаточно сложный способ выполнить 'ps ax | grep ssh'</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys   <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -2938,9 +2938,9 @@ connect to a long-running node process without restarting it.</P>
 
 <H3 id="repl-features-291">Возможности REPL</H3>
 
-<P>Inside the REPL, Control+D will exit.  Multi-line expressions can be input.</P>
+<P>Внутри REPL Control+D завершает его работу.  Можно вводить многострочные выражения.</P>
 
-<P>The special variable <CODE class="sh_sourceCode">_</CODE> (underscore) contains the result of the last expression.</P>
+<P>Специальная переменная <CODE class="sh_sourceCode">_</CODE> (знак подчёркивания) содержит результат последнего выражения.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">[</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"a"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"b"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">"c"</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">]</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">[</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'a'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'b'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'c'</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">]</SPAN></SPAN>
@@ -2950,9 +2950,7 @@ node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> _ <SPAN c
 <SPAN class="sh_number"><SPAN class="sh_number">4</SPAN></SPAN>
 </CODE></PRE>
 
-<P>The REPL provides access to any variables in the global scope. You can expose a variable
-to the REPL explicitly by assigning it to the <CODE class="sh_sourceCode">scope</CODE> object associated with each
-<CODE class="sh_sourceCode">REPLServer</CODE>.  For example:</P>
+<P>REPL предоставляет доступ к любым переменным глобальной области видимости. Вы можете явно передать переменную в REPL, присвоив её объекту <CODE class="sh_sourceCode">scope</CODE> ассоциированному с каждым экземпляром <CODE class="sh_sourceCode">REPLServer</CODE>.  Например:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_comment"><SPAN class="sh_comment">// repl_test.js</SPAN></SPAN>
 <SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> repl <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">"repl"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
@@ -2961,21 +2959,20 @@ to the REPL explicitly by assigning it to the <CODE class="sh_sourceCode">scope<
 repl<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">start</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">().</SPAN></SPAN>scope<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>m <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> msg<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Things in the <CODE class="sh_sourceCode">scope</CODE> object appear as local within the REPL:</P>
+<P>Свойства объекта <CODE class="sh_sourceCode">scope</CODE> выглядят внутри REPL как локальные:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">mjr<SPAN class="sh_symbol"><SPAN class="sh_symbol">:~</SPAN></SPAN>$ node repl_test<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>js
 node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> m
 <SPAN class="sh_string"><SPAN class="sh_string">'message'</SPAN></SPAN>
 </CODE></PRE>
 
-<P>There are a few special REPL commands:</P>
+<P>В REPL есть несколько специальных команд:</P>
 
 <UL>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> - While inputting a multi-line expression, sometimes you get lost or just don't care
-about completing it.  <CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> will start over.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>clear</CODE> - Resets the <CODE class="sh_sourceCode">scope</CODE> object to an empty object and clears any multi-line expression.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>exit</CODE> - Close the I/O stream, which will cause the REPL to exit.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>help</CODE> - Show this list of special commands.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> - При вводе многострочного выражения иногда можно потеряться либо совсем отказаться от его ввода.  <CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> начнёт ввод заново.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>clear</CODE> - Сбрасывает объект <CODE class="sh_sourceCode">scope</CODE> object в пустой и очищает введённое многострочное выражение.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>exit</CODE> - Закрывает потоки ввода-вывода, принуждая REPL завершиться.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>help</CODE> - Показывает список специальных команд.</P></LI>
 </UL>
 
 
