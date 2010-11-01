@@ -1138,6 +1138,8 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>С дочерним процессом всегда ассоциированы три потока. <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdin</CODE>,
 <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdout</CODE>, и <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stderr</CODE>.</P>
 
+<P>Чтобы дочерний поток мог продолжать работу после остановки родительского, он должен обрабатывать сигнал SIGHUP.</P>
+
 <P><CODE class="sh_sourceCode">ChildProcess</CODE> &mdash; экземпляр EventEmitter.</P>
 
 <H3 id="event-exit-86">Событие:  'exit'</H3>
