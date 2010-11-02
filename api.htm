@@ -2649,20 +2649,14 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
  
 <h3>dgram.createSocket(type, [callback])</h3> 
  
-<p>Creates a datagram socket of the specified types.  Valid types are:
-<code>udp4</code>, <code>udp6</code>, and <code>unix_dgram</code>.  </p> 
- 
-<p>Takes an optional callback which is added as a listener for <code>message</code> events.</p> 
+<p>Создаёт сокет для датаграмм заданного типа.  Доступные типы: <code>udp4</code>, <code>udp6</code> и <code>unix_dgram</code>.  </p> 
+<p>Принимает необязательную функцию, которая добавляется обработчиком событий <code>message</code>.</p> 
  
 <h3>dgram.send(buf, offset, length, path, [callback])</h3> 
  
-<p>For Unix domain datagram sockets, the destination address is a pathname in the filesystem.
-An optional callback may be supplied that is invoked after the <code>sendto</code> call is completed
-by the OS.  It is not safe to re-use <code>buf</code> until the callback is invoked.  Note that 
-unless the socket is bound to a pathname with <code>bind()</code> there is no way to receive messages
-on this socket.</p> 
+<p>Для датаграмм на Unix-сокетах адрес назначения это путь в файловой системе. Принимает необязательную функцию, которая будет вызвана после завершения вызова <code>sendto</code> операционной системой.  Пока идёт вызов, повторное использование буфера <code>buf</code> небезопасно. Заметьте, что если сокет не привязан к пути в файловой системе с помощью <code>bind()</code>, на нём невозможно получать сообщения.</p> 
  
-<p>Example of sending a message to syslogd on OSX via Unix domain socket <code>/var/run/syslog</code>:</p> 
+<p>Пример отправки сообщения демону syslogd в OSX через сокет Unix <code>/var/run/syslog</code>:</p> 
  
 <pre><code>var dgram = require('dgram');
 var message = new Buffer("A message to log.");
