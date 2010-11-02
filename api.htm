@@ -2625,29 +2625,27 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <h2 id="dgram">dgram</h2> 
  
-<p>Datagram sockets are available through <code>require('dgram')</code>.  Datagrams are most commonly 
-handled as IP/UDP messages, but they can also be used over Unix domain sockets.</p> 
+<p>Сокеты для датаграмм доступны при включении <code>require('dgram')</code>.  Датаграммы чаще всего обрабатываются как сообщения IP/UDP, но они могут быть использованы и с доменными сокетами Unix.</p> 
  
-<h3>Event: 'message'</h3> 
+<h3>Событие: 'message'</h3> 
  
 <p><code>function (msg, rinfo) { }</code></p> 
  
-<p>Emitted when a new datagram is available on a socket.  <code>msg</code> is a <code>Buffer</code> and <code>rinfo</code> is
-an object with the sender's address information and the number of bytes in the datagram.</p> 
+<p>Генерируется когда новая датаграмма доступна на сокете.  <code>msg</code> это <code>Buffer</code> и <code>rinfo</code> это
+объект с информацией об адресе отправителя и количестве байт в датаграмме.</p> 
  
-<h3>Event: 'listening'</h3> 
- 
-<p><code>function () { }</code></p> 
- 
-<p>Emitted when a socket starts listening for datagrams.  This happens as soon as UDP sockets
-are created.  Unix domain sockets do not start listening until calling <code>bind()</code> on them.</p> 
- 
-<h3>Event: 'close'</h3> 
+<h3>Событие: 'listening'</h3> 
  
 <p><code>function () { }</code></p> 
  
-<p>Emitted when a socket is closed with <code>close()</code>.  No new <code>message</code> events will be emitted
-on this socket.</p> 
+<p>Генеритуется когда сокет начинает приём датаграмм. Для UDP-сокета это происходит при создании.
+ Сокеты Unix не начинают приём до вызова на них <code>bind()</code>.</p> 
+ 
+<h3>Событие: 'close'</h3> 
+ 
+<p><code>function () { }</code></p> 
+ 
+<p>Генерируется когда сокет закрывается с помощью <code>close()</code>.  События <code>message</code> на этом сокете больше не будут генерироваться.</p> 
  
 <h3>dgram.createSocket(type, [callback])</h3> 
  
