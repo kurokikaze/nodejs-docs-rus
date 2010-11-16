@@ -28,6 +28,7 @@
 @include child_processes
 @include assert
 
-# Appendixes
+# Приложения
 @include appendix_1
 @include appendix_2
+

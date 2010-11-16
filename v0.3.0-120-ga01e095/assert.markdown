@@ -1,48 +1,51 @@
 ## Assert
 
-This module is used for writing unit tests for your applications, you can
-access it with `require('assert')`.
+Этот модуль используется для написания юнит-тестов для ваших приложений,
+вы можете использовать его вызвав `require('assert')`.
 
 ### assert.fail(actual, expected, message, operator)
 
-Tests if `actual` is equal to `expected` using the operator provided.
+Проверяет что `actual` соответствует `expected` используя указанный оператор.
 
 ### assert.ok(value, [message])
 
-Tests if value is a `true` value, it is equivalent to `assert.equal(true, value, message);`
+Проверяет что значение `value` равно `true`, то же самое что
+`assert.equal(true, value, message);`.
 
 ### assert.equal(actual, expected, [message])
 
-Tests shallow, coercive equality with the equal comparison operator ( `==` ). 
+Неглубокая проверка на равенство с использованием соответствующего оператора ( `==` ).
 
 ### assert.notEqual(actual, expected, [message])
 
-Tests shallow, coercive non-equality with the not equal comparison operator ( `!=` ).
+Неглубокая проверка на неравенство с использованием соответствующего оператора ( `!=` ).
 
 ### assert.deepEqual(actual, expected, [message])
 
-Tests for deep equality.
+Глубокая проверка на равенство.
 
 ### assert.notDeepEqual(actual, expected, [message])
 
-Tests for any deep inequality. 
+Глубокая проверка на неравенство.
 
 ### assert.strictEqual(actual, expected, [message])
 
-Tests strict equality, as determined by the strict equality operator ( `===` ) 
+Проверка на строгое равенство, с использованием соответствующего оператора ( `===` ).
 
 ### assert.notStrictEqual(actual, expected, [message])
 
-Tests strict non-equality, as determined by the strict not equal operator ( `!==` ) 
+Проверка на строгое неравенство, с использованием соответствующего оператора ( `!==` ).
 
 ### assert.throws(block, [error], [message])
 
-Expects `block` to throw an error.
+Ожидает что блок кода `block` вызовет ошибку.
 
 ### assert.doesNotThrow(block, [error], [message])
 
-Expects `block` not to throw an error.
+Ожидает что блок кода `block` не вызовет ошибки.
 
 ### assert.ifError(value)
 
-Tests if value is not a false value, throws if it is a true value. Useful when testing the first argument, `error` in callbacks.
+Проверяет что `value` имеет значение `false`, бросает исключение встретив `true`.
+Удобно для проверки первого аргумента функций-обработчиков, `error`.
+

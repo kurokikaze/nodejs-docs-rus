@@ -1,54 +1,56 @@
-## Addons
+## Дополнения
 
-Addons are dynamically linked shared objects. They can provide glue to C and
-C++ libraries. The API (at the moment) is rather complex, involving
-knowledge of several libraries:
+Дополнения &mdash; это динамически подключаемые объекты. Они могут предоставлять
+связь с библиотеками на языках C/C++. На данный момент API для дополнений
+довольно сложное и использует следующие библиотеки:
 
- - V8 JavaScript, a C++ library. Used for interfacing with JavaScript:
-   creating objects, calling functions, etc.  Documented mostly in the
-   `v8.h` header file (`deps/v8/include/v8.h` in the Node source tree).
+ - Движок V8 JavaScript, написан на C++. Используется для обращения к JavaScript
+   из дополнения: создания объектов, вызова функций и т.д. Документация по нему
+   крайне скудна, в основном стоит полагаться на заголовочный файл `v8.h`
+   (`deps/v8/include/v8.h` в дистрибутиве Node).
 
- - libev, C event loop library. Anytime one needs to wait for a file
-   descriptor to become readable, wait for a timer, or wait for a signal to
-   received one will need to interface with libev.  That is, if you perform
-   any I/O, libev will need to be used.  Node uses the `EV_DEFAULT` event
-   loop.  Documentation can be found http:/cvs.schmorp.de/libev/ev.html[here].
+ - libev, библиотеку обработки цикла событий на C. Каждый раз, когда вам
+   потребуется подождать пока файловый дескриптор станет доступен для чтения,
+   подождать вызова таймера или поступления сигнала, вы будете испльзовать
+   вызовы из libev. Соответственно, вам придётся использовать libev для любых
+   операций ввода/вывода. Node использует цикл событий `EV_DEFAULT`.
+   Документация доступна на [сайте автора](http:/cvs.schmorp.de/libev/ev.html).
 
- - libeio, C thread pool library. Used to execute blocking POSIX system
-   calls asynchronously. Mostly wrappers already exist for such calls, in
-   `src/file.cc` so you will probably not need to use it. If you do need it,
-   look at the header file `deps/libeio/eio.h`.
+ - libeio, библиотеку пула потоков на C. Она используется для выполнения
+   блокирующих вызовов POSIX асинхронно, в отдельных потоках. Для большинства
+   вызовов существуют стандартные обёртки, которые вы можете найти
+   в заголовочном файле `src/file.cc`, так что скорее всего вам не понадобится
+   использовать эту библиотеку. Внутренние функции libeio можно посмотреть
+   в файле `deps/libeio/eio.h` дистрибутива Node.
 
- - Internal Node libraries. Most importantly is the `node::ObjectWrap`
-   class which you will likely want to derive from.
+ - Внутренние библиотеки Node. Наиболее важная из них &mdash; класс
+   `node::ObjectWrap`, от которого будут наследоваться большинство ваших классов.
 
- - Others. Look in `deps/` for what else is available.
+ - Остальные доступные библиотеки вы можете найти впапке `deps` дистрибутива Node.
 
-Node statically compiles all its dependencies into the executable. When
-compiling your module, you don't need to worry about linking to any of these
-libraries.
+При сборке Node все её зависимости статически компилируются в исполняемый файл.
+При сборке своего модуля вы не должны задумываться об описанных выше библиотеках.
 
-To get started let's make a small Addon which does the following except in
-C++:
+В качестве простого примера сделаем дополнение для Node на C++, которое будет
+делать тоже самое, что и JavaScript код:
 
     exports.hello = 'world';
 
-To get started we create a file `hello.cc`:
+Создадим файл `hello.cc`:
 
     #include <v8.h>
 
     using namespace v8;
 
     extern "C" void
-    init (Handle<Object> target) 
+    init (Handle<Object> target)
     {
       HandleScope scope;
       target->Set(String::New("hello"), String::New("World"));
     }
 
-This source code needs to be built into `hello.node`, the binary Addon. To
-do this we create a file called `wscript` which is python code and looks
-like this:
+Этот код нужно собрать в файл `hello.node`, файл бинарного дополнения.
+Для этого создадим файл `wscript`, содержащий код на Python (аналог Makefile):
 
     srcdir = '.'
     blddir = 'build'
@@ -66,15 +68,16 @@ like this:
       obj.target = 'hello'
       obj.source = 'hello.cc'
 
-Running `node-waf configure build` will create a file
-`build/default/hello.node` which is our Addon.
+Теперь можно запустить команду `node-waf configure build`, которая создаст файл
+`build/default/hello.node`, содержащий бинарную версию дополнения.
 
-`node-waf` is just http://code.google.com/p/waf/[WAF], the python-based build system. `node-waf` is
-provided for the ease of users.
+`node-waf` &mdash; расширение [WAF](http://code.google.com/p/waf/), системы
+сборки на языке Python. `node-waf` включён в состав Node для упрощения
+процесса сборки дополнений.
 
-All Node addons must export a function called `init` with this signature:
+Каждое дополнение должно содержать функцию `init` со следующим интерфейсом:
 
     extern 'C' void init (Handle<Object> target)
 
-For the moment, that is all the documentation on addons. Please see
-<http://github.com/ry/node_postgres> for a real example.
+На данный момент это вся документация по созданию дополнений. В качестве примера
+вы можете просмотреть код [node_postgres](http://github.com/ry/node_postgres).
