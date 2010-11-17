@@ -1,38 +1,38 @@
-## net
+## Сеть
 
-The `net` module provides you with an asynchronous network wrapper. It contains
-methods for creating both servers and clients (called streams). You can include 
-this module with `require("net");`
+Модуль `net` предоставляет асинхронные методы для работы с сетью. Он включает
+методы для создания как серверов, так и клиентов (называемых потоками).
+Вы может использовать этот модуль вызвав `require("net")`.
 
 ### net.createServer(connectionListener)
 
-Creates a new TCP server. The `connectionListener` argument is
-automatically set as a listener for the `'connection'` event.
+Создаёт новый TCP сервер. Аргумент `connection_listener` автоматически
+становится обработчиком события `'connection'`.
 
 ### net.createConnection(arguments...)
 
-Construct a new stream object and opens a stream to the given location. When
-the stream is established the `'connect'` event will be emitted.
+Создаёт новый объект потока. Когда соединение установлено, будет сгенерировано
+событие `'connect'`.
 
-The arguments for this method change the type of connection:
+Аргументы для этого метода определяются тепим соединения:
 
 * `net.createConnection(port, [host])`
 
-  Creates a TCP connection to `port` on `host`. If `host` is omitted, `localhost`
-  will be assumed.
+  Открывает TCP-соединение с указанным портом `port` и адресом `host`.
+  Если второй параметр не задан, предполагается значение `localhost`.
 
 * `net.createConnection(path)`
 
-  Creates unix socket connection to `path`
+  Создаёт соединение с Unix-сокетом `path`.
 
 ---
 
 ### net.Server
 
-This class is used to create a TCP or UNIX server.
+Этот класс используется для создания TCP или UNIX сервера.
 
-Here is an example of a echo server which listens for connections
-on port 8124:
+Вот простой пример сервера, который возвращает полученный запрос
+и слушает на порту 8124:
 
     var net = require('net');
     var server = net.createServer(function (stream) {
@@ -50,49 +50,45 @@ on port 8124:
     });
     server.listen(8124, 'localhost');
 
-To listen on the socket `'/tmp/echo.sock'`, the last line would just be
-changed to
+Чтобы слушать сокет `'/tmp/echo.sock'`, последнюю строку надо заменить на
 
     server.listen('/tmp/echo.sock');
 
-This is an `EventEmitter` with the following events:
-
 #### server.listen(port, [host], [callback])
 
-Begin accepting connections on the specified `port` and `host`.  If the
-`host` is omitted, the server will accept connections directed to any
-IPv4 address (`INADDR_ANY`).
+Начинает принимать соединения на указанном порту `port` и имени хоста `host`.
+Если `host` пропущен, сервер будет принимать соединения
+на каждом IPv4-адресе (INADDR_ANY).
 
-This function is asynchronous. The last parameter `callback` will be called
-when the server has been bound.
+Эта функция асинхронна. Последний параметр `callback` будет вызван когда сервер
+начнёт принимать соединения.
 
 #### server.listen(path, [callback])
 
-Start a UNIX socket server listening for connections on the given `path`.
+Запускает сервер слушающий UNIX-сокет по указанному адресу `path`.
 
-This function is asynchronous. The last parameter `callback` will be called
-when the server has been bound.
+Эта функция асинхронна. Последний параметр `callback` будет вызван когда сервер
+начнёт принимать соединения.
 
 #### server.listenFD(fd)
 
-Start a server listening for connections on the given file descriptor.
+Запускает сервер, слушающий указанный файловый дескриптор.
 
-This file descriptor must have already had the `bind(2)` and `listen(2)` system
-calls invoked on it.
+Для указанного файлового дескриптора должны быть уже выполнены
+системные вызовы `bind(2)` и `listen(2)`.
 
 #### server.close()
 
-Stops the server from accepting new connections. This function is
-asynchronous, the server is finally closed when the server emits a `'close'`
-event.
+Прекращает приём соединений сервером. Эта функция асинхронна,
+сервер полностью закрывается только после генерации события `'close'`.
 
 
 #### server.address()
 
-Returns the bound address of the server as seen by the operating system.
-Useful to find which port was assigned when giving getting an OS-assigned address
+Возвращает адрес, к которому привязан сервер. Удобно использовать, если выбор
+адреса предоставляется стисеме.
 
-Example:
+Пример:
 
     var server = net.createServer(function (socket) {
       socket.end("goodbye\n");
@@ -107,217 +103,219 @@ Example:
 
 #### server.maxConnections
 
-Set this property to reject connections when the server's connection count gets high.
+Установите это свойство, если хотите запретить серверу принимать
+больше определённого числа соединений единовременно.
 
 #### server.connections
 
-The number of concurrent connections on the server.
+Текущее число соединений с сервером.
 
-#### Event: 'connection'
+---
+
+`net.Server` — экземпляр `EventEmitter` со следующими событиями:
+
+#### Событие: 'connection'
 
 `function (stream) {}`
 
-Emitted when a new connection is made. `stream` is an instance of
-`net.Stream`.
+Генерируется при новом соединении. `stream` — экземпляр `net.Stream`.
 
-#### Event: 'close'
+#### Событие: 'close'
 
 `function () {}`
 
-Emitted when the server closes.
+Генерируется при завершении работы сервера.
 
 ---
 
 ### net.Stream
 
-This object is an abstraction of of a TCP or UNIX socket.  `net.Stream`
-instance implement a duplex stream interface.  They can be created by the
-user and used as a client (with `connect()`) or they can be created by Node
-and passed to the user through the `'connection'` event of a server.
-
-`net.Stream` instances are EventEmitters with the following events:
+Этот объект — абстракция TCP порта или UNIX сокета. Экземпляр `net.Stream`
+имеет возможность как чтения, так и записи. Он может быть создан и использован
+как клиентом (с помощью `connect()`) либо создан внутри Node и передан
+пользователю через обработчик события `'connection'`.
 
 #### stream.connect(port, [host])
 #### stream.connect(path)
 
-Opens the connection for a given stream. If `port` and `host` are given,
-then the stream will be opened as a TCP stream, if `host` is omitted,
-`localhost` will be assumed. If a `path` is given, the stream will be
-opened as a unix socket to that path.
+Открывает TCP-соединение с указанным портом `port` и адресом `host`. Если второй
+параметр не задан, предполагается значение `localhost`. Если указан параметр
+`path`, то создаёт соединение с Unix-сокетом `path`.
 
-Normally this method is not needed, as `net.createConnection` opens the
-stream. Use this only if you are implementing a custom Stream or if a
-Stream is closed and you want to reuse it to connect to another server.
+Обычно этот метод не нужен. Используйте его только если поток закрыт и вы хотите
+повторно использовать тот же объект для соединения с другим сервером.
 
-This function is asynchronous. When the `'connect'` event is emitted the
-stream is established. If there is a problem connecting, the `'connect'`
-event will not be emitted, the `'error'` event will be emitted with
-the exception.
+Эта функция асинхронна. Когда генерируется событие `'connect'`, соединение
+установлено. Если при соединении возникли проблемы, событие `'connect'`
+не будет сгенерировано, вместо него будет сгенерировано событие `'error'`
+с аргументом исключения.
 
 
 #### stream.setEncoding(encoding=null)
 
-Sets the encoding (either `'ascii'`, `'utf8'`, or `'base64'`) for data that is
-received.
+Задаёт кодировку (`'ascii'`, `'utf8'` или `'base64'`) для принимаемых данных.
 
 #### stream.setSecure([credentials])
 
-Enables SSL support for the stream, with the crypto module credentials specifying
-the private key and certificate of the stream, and optionally the CA certificates
-for use in peer authentication.
+Включает поддержку HTTPS для потока, параметры передаются криптографическому
+модулю и включают private key и сертификат потока, дополнительно могут включать
+сертификаты CA для аутентификации участника соединения.
 
-If the credentials hold one ore more CA certificates, then the stream will request
-for the peer to submit a client certificate as part of the SSL connection handshake.
-The validity and content of this can be accessed via verifyPeer() and getPeerCertificate().
+Если объект параметров содержит один или несколько сертификатов CA, поток
+запросит у участника соединения сертификат в ходе установки HTTPS-соединения.
+Правильность и содержимое сертификата могут быть проверены функциями
+`verifyPeer()` и `getPeerCertificate()`.
 
 #### stream.verifyPeer()
 
-Returns true or false depending on the validity of the peers's certificate in the
-context of the defined or default list of trusted CA certificates.
+Возвращает `true` или `false` в зависимости от правильности сертификата участника
+соединения в контексте заданных CA-сертификатов (или списка CA по умолчанию).
 
 #### stream.getPeerCertificate()
 
-Returns a JSON structure detailing the peer's certificate, containing a dictionary
-with keys for the certificate 'subject', 'issuer', 'valid\_from' and 'valid\_to'
+Возвращает JSON с деталями сертификата участника соединения, содержащий свойства
+`'subject'`, `'issuer'`, `'valid_from'` и `'valid_to'`.
 
 #### stream.write(data, encoding='ascii')
 
-Sends data on the stream. The second parameter specifies the encoding in
-the case of a string--it defaults to ASCII because encoding to UTF8 is rather
-slow.
+Отправляет данные в поток. Второй параметр означает кодировку, если первым
+параметром передана строка. По умолчанию используется ASCII т.к. кодирование
+в UTF-8 довольно медленно.
 
-Returns `true` if the entire data was flushed successfully to the kernel
-buffer. Returns `false` if all or part of the data was queued in user memory.
-`'drain'` will be emitted when the buffer is again free.
+Возвращает `true` если все данные были успешно переданы в буфер ядра. Возвращает
+`false` если все данные или их часть были помещены в очередь в памяти. Событие
+`'drain'` будет сгенерировано когда буфер ядра снова будет пуст.
 
 #### stream.end([data], [encoding])
 
-Half-closes the stream. I.E., it sends a FIN packet. It is possible the
-server will still send some data. After calling this `readyState` will be
-`'readOnly'`.
+Наполовину закрывает соединение, т.е. отправляет пакет FIN. Возможно сервер ещё
+получит какие-то данные. После вызова этого метода свойство `readyState` будет
+установлено в значение `'readOnly'`.
 
-If `data` is specified, it is equivalent to calling `stream.write(data, encoding)`
-followed by `stream.end()`.
+Если определён аргумент `data`, то этот вызов эквивалентен последовательному вызову
+`stream.write(data, encoding)` и `stream.end()`.
 
 #### stream.destroy()
 
-Ensures that no more I/O activity happens on this stream. Only necessary in
-case of errors (parse error or so).
+Закрывает поток таким образом чтобы в нём больше не происходило ввода-вывода.
+Необходимо только для закрытия соединения в случае серьёзных ошибок.
 
 #### stream.pause()
 
-Pauses the reading of data. That is, `'data'` events will not be emitted.
-Useful to throttle back an upload.
+Приостанавливает чтение данных. Т.е. события 'data' не будут генерироваться.
+Используется при приёме файлов.
 
 #### stream.resume()
 
-Resumes reading after a call to `pause()`.
+Возобновляет чтение данных после вызова pause().
 
 #### stream.setTimeout(timeout)
 
-Sets the stream to timeout after `timeout` milliseconds of inactivity on
-the stream. By default `net.Stream` do not have a timeout.
+Устанавливает таймаут в `timeout` миллисекунд бездействия потока. По умолчанию
+`net.Stream` не имеет таймаута.
 
-When an idle timeout is triggered the stream will receive a `'timeout'`
-event but the connection will not be severed. The user must manually `end()`
-or `destroy()` the stream.
+Если поток не будет проявлять активности указанное количество миллисекунд будет
+сгенерировано событие `'timeout'`, но само соединение не будет затронуто.
+Пользователь должен самостоятельно вызвать `end()` или `destroy()` для закрытия потока.
 
-If `timeout` is 0, then the existing idle timeout is disabled.
+Если в качестве `timeout` передан 0, существующий таймаут перестаёт действовать.
 
 #### stream.setNoDelay(noDelay=true)
 
-Disables the Nagle algorithm. By default TCP connections use the Nagle
-algorithm, they buffer data before sending it off. Setting `noDelay` will
-immediately fire off data each time `stream.write()` is called.
+Выключает алгоритм Нагла. По умолчанию TCP-соединения используют алгоритм Нагла,
+собирая данные в буфер перед отправкой. Установка noDelay приведёт к немедленной
+отправке всех данных, передаваемых в `stream.write()`.
 
 #### stream.setKeepAlive(enable=false, [initialDelay])
 
-Enable/disable keep-alive functionality, and optionally set the initial
-delay before the first keepalive probe is sent on an idle stream.
-Set `initialDelay` (in milliseconds) to set the delay between the last
-data packet received and the first keepalive probe. Setting 0 for
-initialDelay will leave the value unchanged from the default
-(or previous) setting.
+Включает/выключает функционал keep-alive, и дополнительно позволяет установить
+начальную задержку после которой будет отправлен первый пакет проверки соединения
+при неактивности. Значение `initialDelay` (в миллисекундах) означает интервал
+между последним отправленным пакетом и первой проверкой соединения. Установка
+`initialDelay` в 0 оставит в силе предыдущее значение.
 
 #### stream.remoteAddress
 
-The string representation of the remote IP address. For example,
-`'74.125.127.100'` or `'2001:4860:a005::68'`.
+Строковое представление удалённого IP адреса. Например, `'74.125.127.100'` или
+`'2001:4860:a005::68'`.
 
-This member is only present in server-side connections.
+Это ствойство доступно тольок для соединений сервер-сервер.
 
 #### stream.readyState
 
-Either `'closed'`, `'open'`, `'opening'`, `'readOnly'`, or `'writeOnly'`.
+Текущий статус потока, может равняться `'closed'`, `'open'`, `'opening'`,
+`'readOnly'` или `'writeOnly'`.
 
-#### Event: 'connect'
+---
 
-`function () { }`
+Экземпляры `net.Stream` — экземпляры `EventEmitter` со следующими событиями:
 
-Emitted when a stream connection successfully is established.
-See `connect()`.
-
-
-#### Event: 'secure'
+#### Событие: 'connect'
 
 `function () { }`
 
-Emitted when a stream connection successfully establishes an SSL handshake with its peer.
+Генерируется после успешной установки соединения. См. `connect()`.
 
 
-#### Event: 'data'
+#### Событие: 'secure'
+
+`function () { }`
+
+Генерируется когда соединение успешно проходит HTTPS-аутентификацию клиента.
+
+
+#### Событие: 'data'
 
 `function (data) { }`
 
-Emitted when data is received.  The argument `data` will be a `Buffer` or
-`String`.  Encoding of data is set by `stream.setEncoding()`.
-(See the section on `Readable Stream` for more information.)
+Генерируется при приёме данных. Аргумент `data` будет экземпляром `Buffer`
+или `String`. Кодировка передаваемых данных устанавливается методом
+`stream.setEncoding()`. (См. секцию о `потоках с возможностью чтения` для
+более подробной информации.)
 
-#### Event: 'end'
-
-`function () { }`
-
-Emitted when the other end of the stream sends a FIN packet.
-
-By default (`allowHalfOpen == false`) the stream will destroy its file
-descriptor  once it has written out its pending write queue.  However, by
-setting `allowHalfOpen == true` the stream will not automatically `end()`
-its side allowing the user to write arbitrary amounts of data, with the
-caveat that the user is required to `end()` their side now. In the
-`allowHalfOpen == true` case after `'end'` is emitted the `readyState` will
-be `'writeOnly'`.
-
-
-#### Event: 'timeout'
+#### Событие: 'end'
 
 `function () { }`
 
-Emitted if the stream times out from inactivity. This is only to notify that
-the stream has been idle. The user must manually close the connection.
+Генерируется когда другой участник соединения посылает пакет FIN.
 
-See also: `stream.setTimeout()`
+По умолчанию (`allowHalfOpen == false`) поток уничтожает свой файловый дескриптор
+после завершения обработки очереди записи. Но если установить `allowHalfOpen == true`,
+то поток не будет автоматически завершаться (`end()`), т.е. пользоввателю
+требуется вручную вызвать `end()`. В случае `allowHalfOpen == true` после
+генерации этого события свойство readyState будет установлено в значение 'writeOnly'.
 
 
-#### Event: 'drain'
+#### Событие: 'timeout'
 
 `function () { }`
 
-Emitted when the write buffer becomes empty. Can be used to throttle uploads.
+Генерируется если поток долгое время не используется. Это просто уведомление
+о длительной неактивности потока. Пользователь должен сам закрыть соединение.
 
-#### Event: 'error'
+См. также: `stream.setTimeout()`.
+
+
+#### Событие: 'drain'
+
+`function () { }`
+
+Генерируется когда буфер записи становится пустым (все данные, переданные в поток,
+были отправлены получателю). Может быть использоваться для отправки файлов.
+
+#### Событие: 'error'
 
 `function (exception) { }`
 
-Emitted when an error occurs.  The `'close'` event will be called directly
-following this event.
+Генерируется при возникновении ошибки. Сразу после этого будет сгенерировано
+событие `'close'`.
 
-#### Event: 'close'
+#### Событие: 'close'
 
 `function (had_error) { }`
 
-Emitted once the stream is fully closed. The argument `had_error` is a boolean which says if
-the stream was closed due to a transmission
-error.
+Генерируется один раз когда поток полностью закрывается. Аргумент had_error —
+двоичное значение, устанавливаемое в true если поток был закрыт из за ошибки передачи.
 
 ---
 
@@ -325,16 +323,16 @@ error.
 
 #### net.isIP(input)
 
-Tests if input is an IP address. Returns 0 for invalid strings,
-returns 4 for IP version 4 addresses, and returns 6 for IP version 6 addresses.
+Проверяет. является ли `input` валидным IP адресом. Возвращает 0 для неверных строк,
+4 для IPv4 адресов и 6 для IPv6 адресов.
 
 
 #### net.isIPv4(input)
 
-Returns true if input is a version 4 IP address, otherwise returns false.
+Возвращает `true` если `input` является IPv4 адресов, в осатльных случаях `false`.
 
 
 #### net.isIPv6(input)
 
-Returns true if input is a version 6 IP address, otherwise returns false.
+Возвращает `true` если `input` является IPv6 адресов, в осатльных случаях `false`.
 
