@@ -1,15 +1,16 @@
-## File System
+## Файловая система
 
-File I/O is provided by simple wrappers around standard POSIX functions.  To
-use this module do `require('fs')`. All the methods have asynchronous and
-synchronous forms. 
+Файловый ввод/вывод обеспечивается с помощью простой обертки вокруг стандартных
+функций POSIX. Используйте `require('fs')` чтобы получить к ним доступ.
+Все эти методы имеют асинхронную и синхронную версии.
 
-The asynchronous form always take a completion callback as its last argument.
-The arguments passed to the completion callback depend on the method, but the
-first argument is always reserved for an exception. If the operation was
-completed successfully, then the first argument will be `null` or `undefined`.
+Асинхронные версии всегда принимают функцию обратного вызова в качестве
+последнего аргумента. Аргументы, передаваемые в функцию обратного вызова зависят
+от вызываемой функции, но первый из них всегда зарезервирован для исключения.
+Если операция завершается без ошибок, то в качется первого аргумента
+передаётся `null` или `undefined`.
 
-Here is an example of the asynchronous version:
+Пример использования асинхронной версии:
 
     var fs = require('fs');
 
@@ -18,15 +19,15 @@ Here is an example of the asynchronous version:
       console.log('successfully deleted /tmp/hello');
     });
 
-Here is the synchronous version:
+Пример использования асинхронной версии:
 
     var fs = require('fs');
 
     fs.unlinkSync('/tmp/hello')
     console.log('successfully deleted /tmp/hello');
 
-With the asynchronous methods there is no guaranteed ordering. So the
-following is prone to error:
+Асинхронные методы не гарантируют порядок выполнения операций.
+Следующий код может сработать неправильно:
 
     fs.rename('/tmp/hello', '/tmp/world', function (err) {
       if (err) throw err;
@@ -37,8 +38,8 @@ following is prone to error:
       console.log('stats: ' + JSON.stringify(stats));
     });
 
-It could be that `fs.stat` is executed before `fs.rename`.
-The correct way to do this is to chain the callbacks.
+Вполне возможно что fs.stat выполнится до fs.rename. Правильный способ сделать
+то же самое — выполнение этих методов по цепочке.
 
     fs.rename('/tmp/hello', '/tmp/world', function (err) {
       if (err) throw err;
@@ -48,37 +49,41 @@ The correct way to do this is to chain the callbacks.
       });
     });
 
-In busy processes, the programmer is _strongly encouraged_ to use the
-asynchronous versions of these calls. The synchronous versions will block
-the entire process until they complete--halting all connections.
+В нагруженных процессах программисту _строго рекомендуется_ использовать
+асинхронные версии вызовов. Синхронные версии будут блокировать весь процесс
+до своего завершения — предотвращая любые новые соединения.
 
 ### fs.rename(path1, path2, [callback])
 
-Asynchronous rename(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронное переименование (rename(2)).
+Обработчику не передаётся аргументов кроме возможного исключения.
 
 ### fs.renameSync(path1, path2)
 
-Synchronous rename(2).
+Синхронный rename(2).
 
 ### fs.truncate(fd, len, [callback])
 
-Asynchronous ftruncate(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронный ftruncate(2).
+Обработчику не передаётся аргументов кроме возможного исключения.
 
 ### fs.truncateSync(fd, len)
 
-Synchronous ftruncate(2).
+Синхронный ftruncate(2).
 
 ### fs.chmod(path, mode, [callback])
 
-Asynchronous chmod(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронное изменение прав доступа (chmod(2)).
+Обработчику не передаётся аргументов кроме возможного исключения.
 
 ### fs.chmodSync(path, mode)
 
-Synchronous chmod(2).
-  
+Синхронный chmod(2).
+
 ### fs.stat(path, [callback])
 
-Asynchronous stat(2). The callback gets two arguments `(err, stats)` where `stats` is a `fs.Stats` object. It looks like this:
+Асинхронный stat(2). Обработчик получает два аргумента `(err, stats)`,
+где `stats` это экземпляр `fs.Stats`. Он выглядит примерно так:
 
     { dev: 2049
     , ino: 305352
@@ -95,185 +100,194 @@ Asynchronous stat(2). The callback gets two arguments `(err, stats)` where `stat
     , ctime: '2009-06-29T11:11:40Z' 
     }
 
-See the `fs.Stats` section below for more information.
+См. `fs.Stats` ниже для дополнительной информации.
 
 ### fs.lstat(path, [callback])
 
-Asynchronous lstat(2). The callback gets two arguments `(err, stats)` where `stats` is a `fs.Stats` object.
+Асинхронный lstat(2). Обработчик получает два аргумента `(err, stats)`,
+где `stats` это экземпляр `fs.Stats`.
 
 ### fs.fstat(fd, [callback])
 
-Asynchronous fstat(2). The callback gets two arguments `(err, stats)` where `stats` is a `fs.Stats` object.
+Асинхронный fstat(2). Обработчик получает два аргумента `(err, stats)`,
+где `stats` это экземпляр `fs.Stats`.
 
 ### fs.statSync(path)
 
-Synchronous stat(2). Returns an instance of `fs.Stats`.
+Синхронный stat(2). Возвращает экземпляр `fs.Stats`.
 
 ### fs.lstatSync(path)
 
-Synchronous lstat(2). Returns an instance of `fs.Stats`.
+Синхронный lstat(2). Возвращает экземпляр `fs.Stats`.
 
 ### fs.fstatSync(fd)
 
-Synchronous fstat(2). Returns an instance of `fs.Stats`.
+Синхронный fstat(2). Возвращает экземпляр `fs.Stats`.
 
 ### fs.link(srcpath, dstpath, [callback])
 
-Asynchronous link(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронное создание ссылки (link(2)).
+Передаваемой функции не передаётся ничего кроме возможного исключения.
 
 ### fs.linkSync(dstpath, srcpath)
 
-Synchronous link(2).
+Синхронный link(2).
 
 ### fs.symlink(linkdata, path, [callback])
 
-Asynchronous symlink(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронное создание символической ссылки (symlink(2)).
+Передаваемой функции не передаётся ничего кроме возможного исключения.
 
 ### fs.symlinkSync(linkdata, path)
 
-Synchronous symlink(2).
+Синхронный symlink(2).
 
 ### fs.readlink(path, [callback])
 
-Asynchronous readlink(2). The callback gets two arguments `(err, resolvedPath)`. 
+Асинхронное разрешение ссылки (readlink(2)).
+Обработчик принимает два аргумента `(err, resolvedPath)`.
 
 ### fs.readlinkSync(path)
 
-Synchronous readlink(2). Returns the resolved path.
+Синхронный readlink(2). Возвращает полученный путь.
 
 ### fs.realpath(path, [callback])
 
-Asynchronous realpath(2).  The callback gets two arguments `(err, resolvedPath)`.
+Асинхронный realpath(2).
+Обработчик принимает два аргумента `(err, resolvedPath)`.
 
 ### fs.realpathSync(path)
 
-Synchronous realpath(2). Returns the resolved path.
+Синхронный realpath(2). Возвращает полученный путь.
 
 ### fs.unlink(path, [callback])
 
-Asynchronous unlink(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронный unlink(2).
+Передаваемой функции не передаётся ничего кроме возможного исключения.
 
 ### fs.unlinkSync(path)
 
-Synchronous unlink(2).
+Синхронный unlink(2).
 
 ### fs.rmdir(path, [callback])
 
-Asynchronous rmdir(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронный rmdir(2).
+Передаваемой функции не передаётся ничего кроме возможного исключения.
 
 ### fs.rmdirSync(path)
 
-Synchronous rmdir(2).
+Синхронный rmdir(2).
 
 ### fs.mkdir(path, mode, [callback])
 
-Asynchronous mkdir(2). No arguments other than a possible exception are given to the completion callback.
+Асинхронный mkdir(2).
+Передаваемой функции не передаётся ничего кроме возможного исключения.
 
 ### fs.mkdirSync(path, mode)
 
-Synchronous mkdir(2).
+Синхронный mkdir(2).
 
 ### fs.readdir(path, [callback])
 
-Asynchronous readdir(3).  Reads the contents of a directory.
-The callback gets two arguments `(err, files)` where `files` is an array of
-the names of the files in the directory excluding `'.'` and `'..'`.
+Асинхронное чтение содержимого директории (readdir(3)).
+Обработчик принимает два аргумента `(err, files)`,
+где `files` это массив имён файлов в директории исключая `'.'` и `'..'`.
+
 
 ### fs.readdirSync(path)
 
-Synchronous readdir(3). Returns an array of filenames excluding `'.'` and
-`'..'`.
+Синхронный readdir(3). Возвращает массив имён файлов исключая `'.'` и `'..'`.
 
 ### fs.close(fd, [callback])
 
-Asynchronous close(2).  No arguments other than a possible exception are given to the completion callback.
+Асинхронный close(2).
+Передаваемой функции не передаётся ничего кроме возможного исключения.
 
 ### fs.closeSync(fd)
 
-Synchronous close(2).
+Синхронный close(2).
 
 ### fs.open(path, flags, mode=0666, [callback])
 
-Asynchronous file open. See open(2). Flags can be 'r', 'r+', 'w', 'w+', 'a',
-or 'a+'. The callback gets two arguments `(err, fd)`. 
+Асинхронное открытие файла. См. open(2).
+Флаги могут быть `'r'`, `'r+'`, `'w'`, `'w+'`, `'a'` или `'a+'`.
+Обработчик принимает два аргумента `(err, fd)`.
 
 ### fs.openSync(path, flags, mode=0666)
 
-Synchronous open(2). 
+Синхронный open(2).
 
 ### fs.write(fd, buffer, offset, length, position, [callback])
 
-Write `buffer` to the file specified by `fd`.
+Записывает буфер `buffer` в файл указанный дескриптором `fd`.
 
-`offset` and `length` determine the part of the buffer to be written.
+Сдвиг `offset` и длина `length` определяют часть буфера, которая будет записана.
 
-`position` refers to the offset from the beginning of the file where this data
-should be written. If `position` is `null`, the data will be written at the
-current position.
-See pwrite(2).
+Позиция `position` задаёт смещение от начала файла куда должны быть записаны данные.
+Если `position` равна `null`, данные записываются с текущей позиции. См. pwrite(2).
 
-The callback will be given two arguments `(err, written)` where `written`
-specifies how many _bytes_ were written.
+Обработчик принимает два аргумента `(err, written)`,
+где `written` указывает сколько _байт_ было записано в файлn.
 
 ### fs.writeSync(fd, buffer, offset, length, position)
 
-Synchronous version of buffer-based `fs.write()`. Returns the number of bytes written.
+Синхронная версия `fs.write()`. Возвращает число записанных _байт_.
 
 ### fs.writeSync(fd, str, position, encoding='utf8')
 
-Synchronous version of string-based `fs.write()`. Returns the number of bytes written.
+Синхронная версия `fs.write()`, записывающая в файл строку, а не буфер.
+Возвращает число записанных _байт_.
 
 ### fs.read(fd, buffer, offset, length, position, [callback])
 
-Read data from the file specified by `fd`.
+Читает данные из файла, указанного дескриптором `fd`.
 
-`buffer` is the buffer that the data will be written to.
+`buffer` — буфер, в который будут помещены прочитанные данные.
 
-`offset` is offset within the buffer where writing will start.
+`offset` — смещение внутри буфера с которого начнётся запись.
 
-`length` is an integer specifying the number of bytes to read.
+`length` — число байт для чтения.
 
-`position` is an integer specifying where to begin reading from in the file.
-If `position` is `null`, data will be read from the current file position.
+`position` — число означающее позицию, с которой начнётся чтение файла.
+Если `position` принимает значение `null`, данные будут прочитаны с текущей позиции.
 
-The callback is given the two arguments, `(err, bytesRead)`.
+Функция-обработчик принимает два аргумента, `(err, bytesRead)`.
 
 ### fs.readSync(fd, buffer, offset, length, position)
 
-Synchronous version of buffer-based `fs.read`. Returns the number of `bytesRead`.
+Синхронная версия `fs.read`. Возвращает количество прочитанных _байт_.
 
 ### fs.readSync(fd, length, position, encoding)
 
-Synchronous version of string-based `fs.read`. Returns the number of `bytesRead`.
+Синхронная версия `fs.read`, читающая из файл строку, а не буфер.
+Возвращает количество прочитанных _байт_.
 
 ### fs.readFile(filename, [encoding], [callback])
 
-Asynchronously reads the entire contents of a file. Example:
+Асинхронно загружает в память содержимое файла. Пример:
 
     fs.readFile('/etc/passwd', function (err, data) {
       if (err) throw err;
       console.log(data);
     });
 
-The callback is passed two arguments `(err, data)`, where `data` is the
-contents of the file.
+Обработчику передаются два аргумента: `(err, data)`, где `data` — содержимое файла.
 
-If no encoding is specified, then the raw buffer is returned.
+Если кодировка не указана, возвращается буфер.
 
 
 ### fs.readFileSync(filename, [encoding])
 
-Synchronous version of `fs.readFile`. Returns the contents of the `filename`.
+Синхронная версия `fs.readFile`. Возвращает содержимое файла `filename`.
 
-If `encoding` is specified then this function returns a string. Otherwise it
-returns a buffer.
+Если указана кодировка `encoding`, то функция возвращает строку. Иначе — возвращает буфер.
 
 
 ### fs.writeFile(filename, data, encoding='utf8', [callback])
 
-Asynchronously writes data to a file. `data` can be a string or a buffer.
+Асинхронно записывает данные в файл. `data` может быть строкой или буфером.
 
-Example:
+Пример:
 
     fs.writeFile('message.txt', 'Hello Node', function (err) {
       if (err) throw err;
@@ -282,53 +296,53 @@ Example:
 
 ### fs.writeFileSync(filename, data, encoding='utf8')
 
-The synchronous version of `fs.writeFile`.
+Синхронная версия `fs.writeFile`.
 
 ### fs.watchFile(filename, [options], listener)
 
-Watch for changes on `filename`. The callback `listener` will be called each
-time the file changes.
+Наблюдает за изменениями файла `filename`.
+Обработчик `listener` вызывается каждый раз при изменении файла.
 
-The second argument is optional. The `options` if provided should be an object
-containing two members a boolean, `persistent`, and `interval`, a polling
-value in milliseconds. The default is `{persistent: true, interval: 0}`.
+Второй аргумент необязателен. Объект `options`, если он передан, должен содержать
+два свойства: булево `persistent` и `interval`, задержку между проверками
+файла в миллисекундах. Значение по умолчанию: `{persistent: true, interval: 0}`.
 
-The `listener` gets two arguments the current stat object and the previous
-stat object:
+Обработчик `listener` принимает два аргумента: текущий объект stat и предыдущий объект stat.
 
     fs.watchFile(f, function (curr, prev) {
       console.log('the current mtime is: ' + curr.mtime);
       console.log('the previous mtime was: ' + prev.mtime);
     });
 
-These stat objects are instances of `fs.Stat`. 
+Эти объекты — экземпляры `fs.Stat`.
 
 ### fs.unwatchFile(filename)
 
-Stop watching for changes on `filename`.
+Прекращает обрабатывать изменения файла `filename`.
 
 ## fs.Stats
 
-Objects returned from `fs.stat()` and `fs.lstat()` are of this type.
+Объекты, возвращаемые `fs.stat()`, `fs.lstat()` и `fs.fstat()` являются
+экземплярами этого класса.
 
  - `stats.isFile()`
  - `stats.isDirectory()`
  - `stats.isBlockDevice()`
  - `stats.isCharacterDevice()`
- - `stats.isSymbolicLink()` (only valid with  `fs.lstat()`)
+ - `stats.isSymbolicLink()` (доступно только после `fs.lstat()`)
  - `stats.isFIFO()`
  - `stats.isSocket()`
 
 
 ## fs.ReadStream
 
-`ReadStream` is a `Readable Stream`.
+`ReadStream` является `потоком с возможностью чтения`.
 
 ### fs.createReadStream(path, [options])
 
-Returns a new ReadStream object (See `Readable Stream`).
+Возвращает новый объект ReadStream.
 
-`options` is an object with the following defaults:
+`options` это объект со следующими полями по умолчанию:
 
     { 'flags': 'r'
     , 'encoding': null
@@ -336,32 +350,33 @@ Returns a new ReadStream object (See `Readable Stream`).
     , 'bufferSize': 4 * 1024
     }
 
-`options` can include `start` and `end` values to read a range of bytes from
-the file instead of the entire file.  Both `start` and `end` are inclusive and
-start at 0.  When used, both the limits must be specified always.
+Объект `options` может содержать поля `start` и `end` для чтения фрагмента файла
+вместо всего файла. И `start`, и `end` являются границами с включением
+и начинаюся с 0. При использовании необходимо задавать обе границы
 
-An example to read the last 10 bytes of a file which is 100 bytes long:
+Пример чтения последних 10 байт файла размером 100 байт:
 
     fs.createReadStream('sample.txt', {start: 90, end: 99});
 
 
 ## fs.WriteStream
 
-`WriteStream` is a `Writable Stream`.
+`WriteStream` является `потоком с возможностью записи`.
 
-### Event: 'open'
+### Событие: 'open'
 
 `function (fd) { }`
 
- `fd` is the file descriptor used by the WriteStream.
+`fd` содержит файловый дескриптов, используемый WriteStream.
 
 ### fs.createWriteStream(path, [options])
 
-Returns a new WriteStream object (See `Writable Stream`).
+Возвращает новый объект WriteStream.
 
-`options` is an object with the following defaults:
+`options` это объект со следующими свойствами по умолчанию:
 
     { 'flags': 'w'
     , 'encoding': null
     , 'mode': 0666
     }
+
