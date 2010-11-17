@@ -1,107 +1,132 @@
-## Crypto
+## Модуль криптографии
 
-Use `require('crypto')` to access this module.
+Используйте `require('crypto')` чтобы получить доступ к функциям модуля.
 
-The crypto module requires OpenSSL to be available on the underlying platform. It offers a way of encapsulating secure credentials to be used as part of a secure HTTPS net or http connection.
+Криптографический модуль требует для своей работы наличия OpenSSL.
+Он предоставляет возможность использовать аутентификацию в HTTPS и HTTP-соединениях.
 
-It also offers a set of wrappers for OpenSSL's hash, hmac, cipher, decipher, sign and verify methods.
+Модуль также предоставляет набор обёрток для некоторых методов OpenSSL:
+hash, hmac, cipher, decipher, sign и verify.
 
 ### crypto.createCredentials(details)
 
-Creates a credentials object, with the optional details being a dictionary with keys:
+Создаёт объект данных аутентификации, может принимать параметром объект со следующими свойствами:
 
-* `key` : a string holding the PEM encoded private key
-* `cert` : a string holding the PEM encoded certificate
-* `ca` : either a string or list of strings of PEM encoded CA certificates to trust.
+* `key` : строка с PEM-закодированным приватным ключом,
+* `cert` : строка с PEM-закодированным сертификатом,
+* `ca` : строка или список строк PEM-закодированных доверенных корневых сертификатов.
 
-If no 'ca' details are given, then node.js will use the default publicly trusted list of CAs as given in 
-http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt
+Если корневые сертификаты не указаны, node.js будет использовать список доверенных сертификатов,
+расположенный по адресу <http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt>.
 
 
 ### crypto.createHash(algorithm)
 
-Creates and returns a hash object, a cryptographic hash with the given algorithm which can be used to generate hash digests.
+Создает и возвращает объект `hash`, который может быть использован
+для создания криптографических хэшей по заданному алгоритму.
 
-`algorithm` is dependent on the available algorithms supported by the version of OpenSSL on the platform. Examples are sha1, md5, sha256, sha512, etc. On recent releases, `openssl list-message-digest-algorithms` will display the available digest algorithms.
+Возможные значения для `algorithm` зависят от доступных алгоритмах в той версии OpenSSL,
+которая у вас установлена. Например, это может быть `'sha1'`, `'md5'` и т.д.
+В последней версии OpenSSL список поддерживаемых алгоритмов можно было узнать
+с помощью команды `openssl list-message-digest-algorithms`.
 
 ### hash.update(data)
 
-Updates the hash content with the given `data`. This can be called many times with new data as it is streamed.
+Обновляет содержимое на `data`. Этот метод может быть вызван несколько раз.
 
 ### hash.digest(encoding='binary')
 
-Calculates the digest of all of the passed data to be hashed. The `encoding` can be 'hex', 'binary' or 'base64'.
+Вычисляет хеш от всех поступивших данных.
+Параметр `encoding` может равняться `'hex'`, `'binary'` или `'base64'`.
 
 
 ### crypto.createHmac(algorithm, key)
 
-Creates and returns a hmac object, a cryptographic hmac with the given algorithm and key.
+Создает и возвращает объект `hmac`, который может быть использован
+для создания хеш-кода идентификации сообщений (HMAC) по заданному алгоритму и ключу.
 
-`algorithm` is dependent on the available algorithms supported by OpenSSL - see createHash above.
-`key` is the hmac key to be used.
+Возможные значения для `algorithm` зависят от доступных алгоритмах в OpenSSL,
+см. описание для `crypto.createHash()` выше. `key` определяет используемый ключ.
 
 ### hmac.update(data)
 
-Update the hmac content with the given `data`. This can be called many times with new data as it is streamed.
+Обновляет содержимое на `data`. Этот метод может быть вызван несколько раз.
 
 ### hmac.digest(encoding='binary')
 
-Calculates the digest of all of the passed data to the hmac. The `encoding` can be 'hex', 'binary' or 'base64'.
+Вычисляет хеш от всех поступивших данных.
+Параметр encoding может равняться `'hex'`, `'binary'` или `'base64'`.
 
 
 ### crypto.createCipher(algorithm, key)
 
-Creates and returns a cipher object, with the given algorithm and key.
+Создает и возвращает объект `cipher`, который может быть использован
+для шифрования по заданному алгоритму и ключу.
 
-`algorithm` is dependent on OpenSSL, examples are aes192, etc. On recent releases, `openssl list-cipher-algorithms` will display the available cipher algorithms.
+Возможные значения для `algorithm` зависят от доступных алгоритмах в той версии OpenSSL,
+которая у вас установлена. Например, это может быть `'aes192'`, `'blowfish'` и т.д.
+В последней версии OpenSSL список поддерживаемых алгоритмов можно было узнать
+с помощью команды `openssl list-cipher-algorithms`.
 
 ### cipher.update(data, input_encoding='binary', output_encoding='binary')
 
-Updates the cipher with `data`, the encoding of which is given in `input_encoding` and can be 'utf8', 'ascii' or 'binary'. The `output_encoding` specifies the output format of the enciphered data, and can be 'binary', 'base64'  or 'hex'.
+Обновляет содержимое на `data`, кодировку которых задаёт аргумент `input_encoding`
+(может равняться `'utf8'`, `'ascii'` или `'binary'`). Аргумент `output_encoding`
+определяет выходной формат и может равняться `'binary'`, `'base64'` или `'hex'`.
 
-Returns the enciphered contents, and can be called many times with new data as it is streamed.
+Возвращает зашифрованного содержимого и может быть названо много раз с новыми данными.
 
 ### cipher.final(output_encoding='binary')
 
-Returns any remaining enciphered contents, with `output_encoding` being one of: 'binary', 'ascii' or 'utf8'.
+Возвращает все оставшиеся зашифрованного содержимого в кодировке `output_encoding`,
+которая может равняться `'binary'`, `'ascii'` или `'utf8'`.
 
 ### crypto.createDecipher(algorithm, key)
 
-Creates and returns a decipher object, with the given algorithm and key. This is the mirror of the cipher object above.
+Создает и возвращает объект `decipher`, который может быть использован
+для дешифрования по заданному алгоритму и ключу. Это объект-близнец для объекта `cipher`.
 
 ### decipher.update(data, input_encoding='binary', output_encoding='binary')
 
-Updates the decipher with `data`, which is encoded in 'binary', 'base64' or 'hex'. The `output_decoding` specifies in what format to return the deciphered plaintext - either 'binary', 'ascii' or 'utf8'.
+Обновляет содержимое на `data`, формат которых задаёт аргумент `input_encoding`
+(может равняться `'binary'`, `'base64'` или `'hex'`). Аргумент `output_encoding`
+определяет выходную кодировку и может равняться `'utf8'`, `'ascii'` или `'binary'`.
 
 ### decipher.final(output_encoding='binary')
 
-Returns any remaining plaintext which is deciphered, with `output_encoding' being one of: 'binary', 'ascii' or 'utf8'.
+Возвращает все оставшиеся разшифрованного содержимого в виде простого текста.
+Значение аргументо output_encoding объяснено выше.
 
 
 ### crypto.createSign(algorithm)
 
-Creates and returns a signing object, with the given algorithm. On recent OpenSSL releases, `openssl list-public-key-algorithms` will display the available signing algorithms. Examples are 'RSA-SHA256'.
+Создает и возвращает объект `signer`, который может быть использован
+для создания электронной подписи по заданному алгоритму.
 
 ### signer.update(data)
 
-Updates the signer object with data. This can be called many times with new data as it is streamed.
+Обновляет содержимое на `data`. Этот метод может быть вызван несколько раз.
 
 ### signer.sign(private_key, output_format='binary')
 
-Calculates the signature on all the updated data passed through the signer. `private_key` is a string containing the PEM encoded private key for signing.
+Вычисляет подпись для всех данных. `private_key` задаёт закрытый ключ в формате PEM.
 
-Returns the signature in `output_format` which can be 'binary', 'hex' or 'base64'
+Возвращает подпись в формате `output_format`, который может равняться `'binary'`, `'hex'` или `'base64'`.
+
 
 ### crypto.createVerify(algorithm)
 
-Creates and returns a verification object, with the given algorithm. This is the mirror of the signing object above.
+Создает и возвращает объект `verifier`, который может быть использован
+для проверки электронной подписи. Это объект-близнец для объекта `signer`.
 
 ### verifier.update(data)
 
-Updates the verifyer object with data. This can be called many times with new data as it is streamed.
+Обновляет содержимое на `data`. Этот метод может быть вызван несколько раз.
 
 ### verifier.verify(public_key, signature, signature_format='binary')
 
-Verifies the signed data by using the `public_key` which is a string containing the PEM encoded public key, and `signature`, which is the previously calculates signature for the data, in the `signature_format` which can be 'binary', 'hex' or 'base64'.
+Проверяет данные с помощью открытого ключа `public_key` в формате PEM и подписи
+`signature` формата `signature_format` (может равняться `'binary'`, `'hex'` или `'base64'`.
 
-Returns true or false depending on the validity of the signature for the data and public key.
+Возвращает `true` или `false` в зависимости от действительности подписи и публичного ключа.
+

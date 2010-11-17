@@ -1,52 +1,49 @@
-## Buffers
+## Буферы
 
-Pure Javascript is Unicode friendly but not nice to binary data.  When
-dealing with TCP streams or the file system, it's necessary to handle octet
-streams. Node has several strategies for manipulating, creating, and
-consuming octet streams.
+Чистый JavaScript поддерживает Unicode, но в нём нет средств для работы
+с двоичными данными. При работе с TCP или файловой системой часто необходимо
+работать именно с потоками двоичных данных. В Node предусмотрено несколько
+средств управления, создания и приёма двоичных потоков.
 
-Raw data is stored in instances of the `Buffer` class. A `Buffer` is similar
-to an array of integers but corresponds to a raw memory allocation outside
-the V8 heap. A `Buffer` cannot be resized.
+Бинарные данные хранятся в экземплярах класса Buffer. Buffer похож на массив
+целых чисел, но ему соответствует область памяти, выделенная вне стандартной
+кучи V8. Размер Buffer невозможно изменить после создания. 
 
-The `Buffer` object is global.
+Объект `Buffer` существует в глобальном пространстве имён.
 
-Converting between Buffers and JavaScript string objects requires an explicit encoding
-method.  Here are the different string encodings;
+При преобразовании между буферами и строками JavaScript требуется явно
+указывать метод кодирования символов. Node поддерживает 3 кодировки для строк:
 
-* `'ascii'` - for 7 bit ASCII data only.  This encoding method is very fast, and will
-strip the high bit if set.
+* `'ascii'` — только для 7-битных ASCII-строк. Этот метод кодирования очень
+  быстрый, и будет сбрасывать старший бит символа, если тот установлен.
 
-* `'utf8'` - Unicode characters.  Many web pages and other document formats use UTF-8.
+* `'utf8'` — Unicode-символы. Многие веб-страницы и документы используют UTF-8.
 
-* `'base64'` - Base64 string encoding.
-
-* `'binary'` - A way of encoding raw binary data into strings by using only
-the first 8 bits of each character. This encoding method is depreciated and
-should be avoided in favor of `Buffer` objects where possible. This encoding
-will be removed in future versions of Node.
+* `'binary'` — устаревший способ. Хранит двоичные данные в строке используя
+  младшие 8 бит каждого символа. Не используйте эту кодировку.
 
 
 ### new Buffer(size)
 
-Allocates a new buffer of `size` octets.
+Создаёт новый буфер размера `size` байт.
 
 ### new Buffer(array)
 
-Allocates a new buffer using an `array` of octets.
+Создаёт новый буфер из массива `array` 8-битных символов.
 
 ### new Buffer(str, encoding='utf8')
 
-Allocates a new buffer containing the given `str`.
+Создаёт новый буфер, содержащий строку `str` в кодировке `encoding`.
 
 ### buffer.write(string, offset=0, encoding='utf8')
 
-Writes `string` to the buffer at `offset` using the given encoding. Returns
-number of octets written.  If `buffer` did not contain enough space to fit
-the entire string it will write a partial amount of the string. In the case
-of `'utf8'` encoding, the method will not write partial characters.
+Записывает строку `string` в буфер по смещению `offset` от его начала
+с использованием указанной кодировки. Возвращает количество записанных байт.
+Если `buffer` не имеет достаточно места для сохранения всей строки,
+то метод запишет только её часть. В случае если кодировка строки — `'utf8'`,
+то метод не будет записывать частичные символы.
 
-Example: write a utf8 string into a buffer, then print it
+Пример: записать UTF-8 строку в буфер, потом напечатать его.
 
     buf = new Buffer(256);
     len = buf.write('\u00bd + \u00bc = \u00be', 0);
@@ -57,18 +54,19 @@ Example: write a utf8 string into a buffer, then print it
 
 ### buffer.toString(encoding, start=0, end=buffer.length)
 
-Decodes and returns a string from buffer data encoded with `encoding`
-beginning at `start` and ending at `end`.
+Декодирует и возвращает строку из данных буфера, закодированных в кодировке
+`encoding` начиная с позиции `start` и заканчивая позицией `end`.
 
-See `buffer.write()` example, above.
+См. пример `buffer.write()` выше.
 
 
 ### buffer[index]
 
-Get and set the octet at `index`. The values refer to individual bytes,
-so the legal range is between `0x00` and `0xFF` hex or `0` and `255`.
+Получает или устанавливает байт на позиции `index`. Значения соответствуют индивидуальным
+байтам и могут лежать в пределах от `0x00` до `0xFF` в шестнадцатиричной записи
+и от `0` до `255` в десятичной. 
 
-Example: copy an ASCII string into a buffer, one byte at a time:
+Пример: скопировать ASCII строку в буфер, байт за байтом.
 
     str = "node.js";
     buf = new Buffer(str.length);
@@ -84,11 +82,10 @@ Example: copy an ASCII string into a buffer, one byte at a time:
 
 ### Buffer.byteLength(string, encoding='utf8')
 
-Gives the actual byte length of a string.  This is not the same as 
-`String.prototype.length` since that returns the number of *characters* in a
-string.
+Возвращает количество байт в строке. Это не то же самое что `String.prototype.length`,
+так как этот метод возвращает число *символов* в строке.
 
-Example:
+Пример:
 
     str = '\u00bd + \u00bc = \u00be';
 
@@ -100,9 +97,9 @@ Example:
 
 ### buffer.length
 
-The size of the buffer in bytes.  Note that this is not necessarily the size
-of the contents. `length` refers to the amount of memory allocated for the 
-buffer object.  It does not change when the contents of the buffer are changed.
+Размер буфера в байтах. Заметьте, что это значение не всегда соответствует размеру
+содержимого. `length` возвращает объем памяти, зарезервированный для объекта буфера.
+Это значение не изменяется при изменении содержимого буфера.
 
     buf = new Buffer(1234);
 
@@ -115,10 +112,10 @@ buffer object.  It does not change when the contents of the buffer are changed.
 
 ### buffer.copy(targetBuffer, targetStart, sourceStart, sourceEnd=buffer.length)
 
-Does a memcpy() between buffers.
+Копирует данные между буферами с помощью memcpy().
 
-Example: build two Buffers, then copy `buf1` from byte 16 through byte 19
-into `buf2`, starting at the 8th byte in `buf2`.
+Пример: создадим два буфера, потом скопировать `buf1`
+с байта 16 по байт 19 в `buf2`, начиная с 8-го байта в `buf2`.
 
     buf1 = new Buffer(26);
     buf2 = new Buffer(26);
@@ -132,18 +129,16 @@ into `buf2`, starting at the 8th byte in `buf2`.
     console.log(buf2.toString('ascii', 0, 25));
 
     // !!!!!!!!qrst!!!!!!!!!!!!!
-    
 
 ### buffer.slice(start, end=buffer.length)
 
-Returns a new buffer which references the
-same memory as the old, but offset and cropped by the `start` and `end`
-indexes.
+Возвращает новый буфер, указывающий на ту же область памяти что предыдущий,
+но начиная со `start` и заканчивая `end` байтами.
 
-**Modifying the new buffer slice will modify memory in the original buffer!**
+**Изменение содержимого нового буфера затронет содержимое старого!**
 
-Example: build a Buffer with the ASCII alphabet, take a slice, then modify one byte
-from the original Buffer.
+Пример: построить буфер с ASCII-алфавитом, вырезать часть в новый буфер, затем
+изменить 1 часть в оригинальном буфере.
 
     var buf1 = new Buffer(26);
 
@@ -158,3 +153,4 @@ from the original Buffer.
 
     // abc
     // !bc
+

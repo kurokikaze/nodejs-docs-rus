@@ -1,9 +1,9 @@
 ## DNS
 
-Use `require('dns')` to access this module.
+Используйте `require('dns')` чтобы получить доступ к модулю.
 
-Here is an example which resolves `'www.google.com'` then reverse
-resolves the IP addresses which are returned.
+Пример, преобразующий в IP-адрес хост `'www.google.com'`
+и преобразовывающий обратно полученные адреса.
 
     var dns = require('dns');
 
@@ -38,65 +38,61 @@ neccessarily the value initially passed to `lookup`).
 
 ### dns.resolve(domain, rrtype='A', callback)
 
-Resolves a domain (e.g. `'google.com'`) into an array of the record types
-specified by rrtype. Valid rrtypes are `A` (IPV4 addresses), `AAAA` (IPV6
-addresses), `MX` (mail exchange records), `TXT` (text records), `SRV` (SRV
-records), and `PTR` (used for reverse IP lookups).
+Разрешает домен (например `'google.com'`) в массив записей типа, указанного в `rrtype`.
+Допустимые значения rrtypes: `'A'` (адреса IPV4), `'AAAA'` (адреса IPV6),
+`'MX'` (записи mail exchange), `'TXT'` (текстовые записи), `'SRV'` (записи SRV)
+и `'PTR'` (используются для запросов домена по IP).
 
-The callback has arguments `(err, addresses)`.  The type of each item
-in `addresses` is determined by the record type, and described in the
-documentation for the corresponding lookup methods below.
+Обработчик принимает аргументы `(err, addresses)`. Тип каждого элемента `addresses`
+определяется типом записи и описан в документации по соответствующим методам запроса ниже.
 
-On error, `err` would be an instanceof `Error` object, where `err.errno` is
-one of the error codes listed below and `err.message` is a string describing
-the error in English.
-
+При ошибке `err` будет экземпляром объекта `Error`, где `err.errno` — один из кодов ошибки,
+перечисленных ниже, а `err.message` — строка, содержащая описание ошибки на английском.
 
 ### dns.resolve4(domain, callback)
 
-The same as `dns.resolve()`, but only for IPv4 queries (`A` records). 
-`addresses` is an array of IPv4 addresses (e.g.  
+То же что `dns.resolve()`, но только для IPv4 адресов (записи типа A).
+`addresses` это массив IPv4 адресов (например  
 `['74.125.79.104', '74.125.79.105', '74.125.79.106']`).
 
 ### dns.resolve6(domain, callback)
 
-The same as `dns.resolve4()` except for IPv6 queries (an `AAAA` query).
-
+То же что `dns.resolve4()` но только для IPv6 адресов (записи типа AAAA).
 
 ### dns.resolveMx(domain, callback)
 
-The same as `dns.resolve()`, but only for mail exchange queries (`MX` records).
+То же что `dns.resolve()`, но только для MX-записей.
 
-`addresses` is an array of MX records, each with a priority and an exchange
-attribute (e.g. `[{'priority': 10, 'exchange': 'mx.example.com'},...]`).
+`addresses` это массив MX записей, каждая с атрибутами `priority` и `exchange`
+(например `[{'priority': 10, 'exchange': 'mx.example.com'},...]`).
 
 ### dns.resolveTxt(domain, callback)
 
-The same as `dns.resolve()`, but only for text queries (`TXT` records).
-`addresses` is an array of the text records available for `domain` (e.g.,
-`['v=spf1 ip4:0.0.0.0 ~all']`).
+То же что `dns.resolve()`, но только для текстовых записей (тип записи TXT).
+`addresses` это массив текстовых записей, доступных для домена `domain`
+(например `['v=spf1 ip4:0.0.0.0 ~all']`).
 
 ### dns.resolveSrv(domain, callback)
 
-The same as `dns.resolve()`, but only for service records (`SRV` records).
-`addresses` is an array of the SRV records available for `domain`. Properties
-of SRV records are priority, weight, port, and name (e.g., 
-`[{'priority': 10, {'weight': 5, 'port': 21223, 'name': 'service.example.com'}, ...]`).
+То же, что `dns.resolve()`, но только для service records (записей SRV).
+`addresses` это массив SRV записей, доступных для домена `domain`.
+Свойства SRV записей: `priority`, `weight`, `port`, и `name`
+(например, `[{'priority': 10, {'weight': 5, 'port': 21223, 'name': 'service.example.com'}, ...]`).
 
 ### dns.reverse(ip, callback)
 
-Reverse resolves an ip address to an array of domain names.
+Обратно разрешает IP-адрес в массив доменных имён.
 
-The callback has arguments `(err, domains)`. 
+Аргументы обработчика: `(err, domains)`.
 
-If there an an error, `err` will be non-null and an instanceof the Error
-object.
+Если произошла ошибка, err будет ненулевым экземпляром объекта `Error`.
 
-Each DNS query can return an error code.
+Каждый запрос к DNS может вернуть код ошибки.
 
-- `dns.TEMPFAIL`: timeout, SERVFAIL or similar.
-- `dns.PROTOCOL`: got garbled reply.
-- `dns.NXDOMAIN`: domain does not exists.
-- `dns.NODATA`: domain exists but no data of reqd type.
-- `dns.NOMEM`: out of memory while processing.
-- `dns.BADQUERY`: the query is malformed.
+- `dns.TEMPFAIL`: таймаут, SERVFAIL или что-то подобное.
+- `dns.PROTOCOL`: получен повреждённый ответ.
+- `dns.NXDOMAIN`: домен не существует.
+- `dns.NODATA`: домен существует, но нет данных требуемого типа.
+- `dns.NOMEM`: при обработке закончилась память.
+- `dns.BADQUERY`: запрос неверно сформирован.
+

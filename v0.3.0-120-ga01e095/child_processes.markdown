@@ -1,47 +1,46 @@
-## Child Processes
+## Дочерние процессы
 
-Node provides a tri-directional `popen(3)` facility through the `ChildProcess`
-class.
+Node предоставляет tri-directional popen(3) в классе `ChildProcess`.
 
-It is possible to stream data through the child's `stdin`, `stdout`, and
-`stderr` in a fully non-blocking way.
+С дочерним потоком можно обмениваться данными через `stdin`, `stdout` и `stderr`
+в полностью неблокирующем стиле.
 
-To create a child process use `require('child_process').spawn()`.
+Для создания дочернего процесса используйте `require('child_process').spawn()`.
 
-Child processes always have three streams associated with them. `child.stdin`,
-`child.stdout`, and `child.stderr`.
+С дочерним процессом всегда ассоциированы три потока:
+`child.stdin`, `child.stdout` и `child.stderr`.
 
-`ChildProcess` is an `EventEmitter`.
+`ChildProcess` — экземпляр `EventEmitter`.
 
-### Event:  'exit'
+### Событие: 'exit'
 
 `function (code, signal) {}`
 
-This event is emitted after the child process ends. If the process terminated
-normally, `code` is the final exit code of the process, otherwise `null`. If
-the process terminated due to receipt of a signal, `signal` is the string name
-of the signal, otherwise `null`.
+Это событие генерируется при завершении дочернего процесса. Если процесс
+завершён нормально, в `code` передаётся код завершения процесса, иначе
+передаётся `null`. Если процесс завершился от принятия сигнала, то `signal` —
+это строка, содержащая имя сигнала, либо `null`.
 
-See `waitpid(2)`.
+См. также: `waitpid(2)`.
 
 ### child.stdin
 
-A `Writable Stream` that represents the child process's `stdin`.
-Closing this stream via `end()` often causes the child process to terminate.
+`Поток с возможностью записи`, связанный со `stdin` процесса дочернего.
+Закрытие потока с помощью `end()` часто приводит к завершению процесса.
 
 ### child.stdout
 
-A `Readable Stream` that represents the child process's `stdout`.
+`Поток с возможностью чтения`, связанный со `stdout` дочернего процесса.
 
 ### child.stderr
 
-A `Readable Stream` that represents the child process's `stderr`.
+`Поток с возможностью чтения`, связанный со `stderr` дочернего процесса.
 
 ### child.pid
 
-The PID of the child process.
+Идентификатор дочернего процесса.
 
-Example:
+Пример:
 
     var spawn = require('child_process').spawn,
         grep  = spawn('grep', ['ssh']);
@@ -52,26 +51,27 @@ Example:
 
 ### child_process.spawn(command, args=[], [options])
 
-Launches a new process with the given `command`, with  command line arguments in `args`.
-If omitted, `args` defaults to an empty Array.
+Запускает новый процесс с указанной командой `command` и аргументами командной
+строки `args`. Если аргументы пропущены, args будет пустым массивом.
 
-The third argument is used to specify additional options, which defaults to:
+Третий аргумент функции используется для задания дополнительных опций
+со следующими значениями по умолчанию:
 
     { cwd: undefined
     , env: process.env,
     , customFds: [-1, -1, -1]
     }
 
-`cwd` allows you to specify the working directory from which the process is spawned.
-Use `env` to specify environment variables that will be visible to the new process.
-With `customFds` it is possible to hook up the new process' [stdin, stout, stderr] to
-existing streams; `-1` means that a new stream should be created.
+`cwd` позволяет вам задать рабочую папку для дочернего процесса.
+Используйте `env` для определия переменных окружения, видимых дочернему процессу.
+С помощью `customFds` возможно связать stdin, stout и stderr дочернего процесса
+с существующими потоками; -1 означает, что нужно создать новый поток.
 
-Example of running `ls -lh /usr`, capturing `stdout`, `stderr`, and the exit code:
+Пример запуска `ls -lh /usr`, чтения `stdout`, `stderr` и получения кода завершения:
 
     var util   = require('util'),
-        spawn = require('child_process').spawn,
-        ls    = spawn('ls', ['-lh', '/usr']);
+        spawn  = require('child_process').spawn,
+        ls     = spawn('ls', ['-lh', '/usr']);
 
     ls.stdout.on('data', function (data) {
       console.log('stdout: ' + data);
@@ -85,8 +85,7 @@ Example of running `ls -lh /usr`, capturing `stdout`, `stderr`, and the exit cod
       console.log('child process exited with code ' + code);
     });
 
-
-Example: A very elaborate way to run 'ps ax | grep ssh'
+Пример: достаточно сложный способ выполнить 'ps ax | grep ssh'.
 
     var util   = require('util'),
         spawn = require('child_process').spawn,
@@ -122,8 +121,7 @@ Example: A very elaborate way to run 'ps ax | grep ssh'
       }
     });
 
-
-Example of checking for failed exec:
+Пример проверки ошибки запуска приложения:
 
     var spawn = require('child_process').spawn,
         child = spawn('bad_command');
@@ -134,13 +132,13 @@ Example of checking for failed exec:
       }
     });
 
+См. также: `child_process.exec()`.
 
-See also: `child_process.exec()`
 
 ### child_process.exec(command, [options], callback)
 
-High-level way to execute a command as a child process, buffer the
-output, and return it all in a callback.
+Высокоуровневый способ выполнить команду в качестве дочернего процесса,
+сохранить весь её вывод, и передать его в callback.
 
     var util   = require('util'),
         exec  = require('child_process').exec,
@@ -155,12 +153,13 @@ output, and return it all in a callback.
         }
     });
 
-The callback gets the arguments `(error, stdout, stderr)`. On success, `error`
-will be `null`.  On error, `error` will be an instance of `Error` and `err.code`
-will be the exit code of the child process, and `err.signal` will be set to the
-signal that terminated the process.
+Функция-callback получает аргументы `(error, stdout, stderr)`. При удачном
+выполнении в `error` будет `null`. При ошибке `error` будет экземпляром `Error`,
+`err.code` будет кодом завершения дочернего процесса, а в `err.signal` будет
+содержаться имя сигнала, завершившего процесс.
 
-There is a second optional argument to specify several options. The default options are
+Вторым аргументом могут быть переданы дополнительные опции
+со следующими значениями по умолчанию:
 
     { encoding: 'utf8'
     , timeout: 0
@@ -170,17 +169,17 @@ There is a second optional argument to specify several options. The default opti
     , env: null
     }
 
-If `timeout` is greater than 0, then it will kill the child process
-if it runs longer than `timeout` milliseconds. The child process is killed with
-`killSignal` (default: `'SIGTERM'`). `maxBuffer` specifies the largest
-amount of data allowed on stdout or stderr - if this value is exceeded then
-the child process is killed.
+Если `timeout` больше 0, процесс будет завершён, если он выполняется дольше,
+чем `timeout` миллисекунд. Дочерний процесс завершается с помощью сигнала
+`killSignal`. В `maxBuffer` указывается максимальный объём данных, разрешённый
+на `stdout` или `stderr` — если этот объём будет превышен,
+то дочерний процесс будет завершён.
 
 
 ### child.kill(signal='SIGTERM')
 
-Send a signal to the child process. If no argument is given, the process will
-be sent `'SIGTERM'`. See `signal(7)` for a list of available signals.
+Отправляет сигнал дочернему процессу. Если аргументы не переданы, то процессу
+будет отправлен сигнал `'SIGTERM'`. См. `signal(7)` для списка возможных имён сигналов.
 
     var spawn = require('child_process').spawn,
         grep  = spawn('grep', ['ssh']);
@@ -192,7 +191,8 @@ be sent `'SIGTERM'`. See `signal(7)` for a list of available signals.
     // send SIGHUP to process
     grep.kill('SIGHUP');
 
-Note that while the function is called `kill`, the signal delivered to the child
-process may not actually kill it.  `kill` really just sends a signal to a process.
+Заметьте, что хотя функция называется `kill`, сигнал, отправляемый дочернему процессу,
+не обязательно его завершит. Метод `kill` просто отправляет сигналы.
 
-See `kill(2)`
+См. также: `kill(2)`.
+
