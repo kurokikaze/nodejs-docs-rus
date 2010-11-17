@@ -7,7 +7,7 @@ $(function(){
       , last_level = 0
       , toc = [
         '<div id="toc">',
-        '<h2>Table Of Contents <a id="toggler" href="#toc">Hide</a></h2>'
+        '<h2>Сожержание <a id="toggler" href="#toc">Скрыть</a></h2>'
       ];
 
     for(var i=0, hl=$headings.size()+1; i < hl; i++) {
@@ -52,11 +52,11 @@ $(function(){
     $("#container header").after(toc.join("\n"));
     $("#toggler").toggle(function(e){
       $("#toc ul").hide();
-      $(this).text("show");
+      $(this).text("Показать");
       e.preventDefault();
     }, function(e){
       $("#toc ul").show();
-      $(this).text("hide");
+      $(this).text("Скрыть");
       e.preventDefault();
     });
   }

@@ -1,4 +1,3 @@
-/*--------------------- Layout and Typography ----------------------------*/
 body {
 //  font-family: "Helvetica Neue", Helvetica, FreeSans, Arial, sans-serif;
   font-family: Georgia, FreeSerif, Times, serif;
@@ -222,7 +221,7 @@ a.octothorpe {
   opacity: 0;
   -webkit-transition: opacity 0.2s linear;
 }
-    p:hover  > a.octothorpe, 
+    p:hover  > a.octothorpe,
     dt:hover > a.octothorpe,
     dd:hover > a.octothorpe,
     h1:hover > a.octothorpe,
@@ -233,3 +232,4 @@ a.octothorpe {
     h6:hover > a.octothorpe {
       opacity: 1;
     }
+
