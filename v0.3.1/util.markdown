@@ -1,38 +1,36 @@
-## util
+## Утилиты
 
-These functions are in the module `'util'`. Use `require('util')` to access
-them.
+Используйте `require('util')` для доступа к этим функциям.
 
 
 ### util.debug(string)
 
-A synchronous output function. Will block the process and
-output `string` immediately to `stderr`.
+Синхронный вывод. Заблокирует процесс и выведет строку `string`
+в поток `stderr` немедленно.
 
     require('util').debug('message on stderr');
 
 
 ### util.log(string)
 
-Output with timestamp on `stdout`.
+Выводит строку с меткой времени в `stdout`.
 
     require('util').log('Timestmaped message.');
 
 
 ### util.inspect(object, showHidden=false, depth=2)
 
-Return a string representation of `object`, which is useful for debugging.
+Возвращает объект `object` в виде строки, очень удобно для отладки.
 
-If `showHidden` is `true`, then the object's non-enumerable properties will be
-shown too.
+Если `showHidden` имеет значение true, неперечисляемые свойства тоже будут показаны.
 
-If `depth` is provided, it tells `inspect` how many times to recurse while
-formatting the object. This is useful for inspecting large complicated objects.
+Параметр `depth` он сообщает `inspect` на какую глубину просмотреть объект,
+прежде чем выдавать результат. Это полезно для больших сложных объектов.
 
-The default is to only recurse twice.  To make it recurse indefinitely, pass
-in `null` for `depth`.
+По умолчанию принята глубина просмотра 2. Чтобы просмотреть объект
+на неограниченную глубину, передайте `null` в качестве значения `depth`.
 
-Example of inspecting all properties of the `util` object:
+Пример просмотра всех свойств объекта `util`:
 
     var util = require('util');
 
@@ -41,10 +39,11 @@ Example of inspecting all properties of the `util` object:
 
 ### util.pump(readableStream, writeableStream, [callback])
 
-Experimental
+Экспериментальный метод.
 
-Read the data from `readableStream` and send it to the `writableStream`.
-When `writeableStream.write(data)` returns `false` `readableStream` will be
-paused until the `drain` event occurs on the `writableStream`. `callback` gets
-an error as its only argument and is called when `writableStream` is closed or
-when an error occurs.
+Читает данные из потока `readableStream` и посылает потоку `writableStream`.
+Когда `writeableStream.write(data)` возвращает `false` `readableStream`
+приостанавливается пока не произойдёт событие `drain` во `writableStream`.
+`callback` вызывается после закрытия `writableStream`. `callback` принимает
+ошибку в случае если `writableStream` был закрыт или возникла ошибка.
+

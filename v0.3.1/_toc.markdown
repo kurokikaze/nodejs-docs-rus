@@ -23,7 +23,7 @@
 * [Разбор строки запроса](querystring.html)
 * [Readline](readline.html)
 * [Интерактивная консоль (REPL)](repl.html)
-* [VM](vm.html)
+* [Выполнение JavaScript](vm.html)
 * [Дочерние процессы](child_processes.html)
 * [Тестирование (asserts)](assert.html)
 * Приложения

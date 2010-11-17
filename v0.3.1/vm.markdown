@@ -1,18 +1,20 @@
-## Executing JavaScript
+## Выполнение JavaScript
 
-You can access this module with:
+Для доступа к модулю используйте:
 
     var vm = require('vm');
 
-JavaScript code can be compiled and run immediately or compiled, saved, and run later.
+JavaScript-код может быть скомпилирован и исполнен немедленно,
+либо сохранён для последующего запуска.
 
 
 ### vm.runInThisContext(code, [filename])
 
-`vm.runInThisContext()` compiles `code` as if it were loaded from `filename`,
-runs it and returns the result. Running code does not have access to local scope. `filename` is optional.
+`vm.runInThisContext()` компилирует `code` как будто он загружен из файла `filename`,
+выполняет его и возвращает результат выполнения. Запускаемый код не имеет доступа
+к локальной области видимости. `filename` не является обязательным аргументом.
 
-Example of using `vm.runInThisContext` and `eval` to run the same code:
+Пример использования `vm.runInThisContext` и `eval` для выполнения одинакового кода:
 
     var localVar = 123,
         usingscript, evaled,
@@ -29,22 +31,24 @@ Example of using `vm.runInThisContext` and `eval` to run the same code:
     // localVar: 123, usingscript: 1
     // localVar: 1, evaled: 1
 
-`vm.runInThisContext` does not have access to the local scope, so `localVar` is unchanged.
-`eval` does have access to the local scope, so `localVar` is changed.
+`vm.runInThisContext` не имеет доступа к локальной области видимости, поэтому
+`localVar` остаётся неизменной. `eval` имеет доступ к локальной области видимости,
+поэтому `localVar` изменяется.
 
-In case of syntax error in `code`, `vm.runInThisContext` emits the syntax error to stderr
-and throws.an exception.
+В случае синтаксической ошибке в `code`, `vm.runInThisContext` выводит ошибку
+на stderr и бросает исключение.
 
 
 ### vm.runInNewContext(code, [sandbox], [filename])
 
-`vm.runInNewContext` compiles `code` to run in `sandbox` as if it were loaded from `filename`,
-then runs it and returns the result. Running code does not have access to local scope and
-the object `sandbox` will be used as the global object for `code`.
-`sandbox` and `filename` are optional.
+`vm.runInNewContext` компилирует `code` для запуска в области видимости
+`sandbox` как будто он загружен из файла `filename`, выполняет его и возвращает
+результат выполнения. Запускаемый код не имеет доступа к локальной области
+видимости, и использует объект `sandbox` в качестве глобального объекта.
+`sandbox` и `filename` не являются обязательными аргументами.
 
-Example: compile and execute code that increments a global variable and sets a new one.
-These globals are contained in the sandbox.
+Пример: компиляция и выполнение кода, который увеличивает глобальную переменную
+юи создаёт новую. Эти глобальные переменные становятся доступными в `sandbox`.
 
     var util = require('util'),
         vm = require('vm'),
@@ -58,34 +62,35 @@ These globals are contained in the sandbox.
 
     // { animal: 'cat', count: 3, name: 'kitty' }
 
-Note that running untrusted code is a tricky business requiring great care.  To prevent accidental
-global variable leakage, `vm.runInNewContext` is quite useful, but safely running untrusted code
-requires a separate process.
+Имейте в виду, что исполнение непроверенного кода довольно опасно. Для предотвращения
+изменения таким кодом глобальных переменных можно использовать `vm.runInNewContext`,
+но лучше всего выполнять такой код в отдельном процессе.
 
-In case of syntax error in `code`, `vm.runInThisContext` emits the syntax error to stderr
-and throws an exception.
+В случае синтаксической ошибке в `code`, `vm.runInNewContext` выводит ошибку
+на stderr и бросает исключение.
 
 
 ### vm.createScript(code, [filename])
 
-`createScript` compiles `code` as if it were loaded from `filename`,
-but does not run it. Instead, it returns a `vm.Script` object representing this compiled code.
-This script can be run later many times using methods below.
-The returned script is not bound to any global object.
-It is bound before each run, just for that run. `filename` is optional.
+`createScript` компилирует `code` как будто он загружен из файла `filename`,
+но нен выполняет его. Эта функция возвращает объект `vm.Script`, представляющий
+гдаоткомпилированный кода. Этот код может быть запущель позже с помощью описанных
+ниже методов. Возвращаемый скрипт не связан с каким-лтбо глобальным объектом,
+это связаванеи происходит при каждом выполнение. `filename` не является
+обязательным аргументом.
 
-In case of syntax error in `code`, `createScript` prints the syntax error to stderr
-and throws an exception.
+В случае синтаксической ошибке в `code`, `vm.createScript` выводит ошибку
+на stderr и бросает исключение.
 
 
 ### script.runInThisContext()
 
-Similar to `vm.runInThisContext` but a method of a precompiled `Script` object.
-`script.runInThisContext` runs the code of `script` and returns the result.
-Running code does not have access to local scope, but does have access to the `global` object
-(v8: in actual context).
+Тоже самое, что и `vm.runInThisContext`, но для предварительно скомпилированного
+объекта `vm.Script. Запускаемый код не имет доступа к локальным переменным,
+но имеет дост к глобальным (v8: in actual context).
 
-Example of using `script.runInThisContext` to compile code once and run it multiple times:
+Пример использования `script.runInThisContext` дял компиляции кода
+и множественного его исполнения:
 
     var vm = require('vm');
 
@@ -104,12 +109,12 @@ Example of using `script.runInThisContext` to compile code once and run it multi
 
 ### script.runInNewContext([sandbox])
 
-Similar to `vm.runInNewContext` a method of a precompiled `Script` object.
-`script.runInNewContext` runs the code of `script` with `sandbox` as the global object and returns the result.
-Running code does not have access to local scope. `sandbox` is optional.
+Тоже самое, что и `vm.runInNewContext`, но для предварительно скомпилированного
+объекта `vm.Script.
 
-Example: compile code that increments a global variable and sets one, then execute this code multiple times.
-These globals are contained in the sandbox.
+Пример: компиляция кода, который увеличивает глобальную переменную
+юи создаёт новую, и множественное его выполнение. Эти глобальные переменные
+становятся доступными в `sandbox`.
 
     var util = require('util'),
         vm = require('vm'),
@@ -128,6 +133,7 @@ These globals are contained in the sandbox.
 
     // { animal: 'cat', count: 12, name: 'kitty' }
 
-Note that running untrusted code is a tricky business requiring great care.  To prevent accidental
-global variable leakage, `script.runInNewContext` is quite useful, but safely running untrusted code
-requires a separate process.
+Имейте в виду, что исполнение непроверенного кода довольно опасно. Для предотвращения
+изменения таким кодом глобальных переменных можно использовать `script.runInNewContext`,
+но лучше всего выполнять такой код в отдельном процессе.
+
