@@ -43,7 +43,7 @@ function convertData(data, current_file){
 
   // Convert it to HTML from Markdown
   if(data.length == 0){
-    data = "Sorry, this section is currently undocumented, but we'll be working on it.";
+    data = "Извините, данная часть документации ещё не готова, но мы уже работает над ней.";
   }
 
   data = markdown.toHTML(markdown.parse(data), {xhtml:true});
@@ -74,7 +74,7 @@ if(argc > 3){
       output = output.replace("{{section}}", "");
       output = output.replace(/<body([^>]*)>/, '<body class="index" $1>');
     } else {
-      output = output.replace("{{section}}", filename+" - ")
+      output = output.replace("{{section}}", filename+" &mdash; ")
     }
 
     if(argc > 4) {
