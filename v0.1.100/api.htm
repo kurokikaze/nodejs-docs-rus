@@ -1082,9 +1082,9 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Возвращает объект <CODE class="sh_sourceCode">object</CODE> в виде строки, очень удобно для отладки.</P>
 
-<P>Если <CODE class="sh_sourceCode">showHidden</CODE> имеет значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, non-numerable свойства тоже будут показаны.</P>
+<P>Если <CODE class="sh_sourceCode">showHidden</CODE> имеет значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, неперечисляемые свойства тоже будут показаны.</P>
 
-<P>Если передан параметр <CODE class="sh_sourceCode">depth</CODE>, он сообщает <CODE class="sh_sourceCode">inspect</CODE> на какую глубину просмотреть объект прежде чем выдавать результат. Это полезно для больших сложных объектов.</P>
+<P>Параметр <CODE class="sh_sourceCode">depth</CODE> сообщает <CODE class="sh_sourceCode">inspect</CODE> на какую глубину просмотреть объект, прежде чем выдавать результат. Это полезно для больших сложных объектов.</P>
 
 <P>По умолчанию принята глубина просмотра 2.  Чтобы просмотреть объект на неограниченную глубину, передайте
 <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE> в качестве значения <CODE class="sh_sourceCode">depth</CODE>.</P>
@@ -1098,7 +1098,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="sys-pump-79">sys.pump(readableStream, writeableStream, [callback])</H3>
 
-<P>Экспериментальный метод</P>
+<P>Экспериментальный метод.</P>
 
 <P>Читает данные из потока <CODE class="sh_sourceCode">readableStream</CODE> и посылает потоку <CODE class="sh_sourceCode">writableStream</CODE>.
 Когда <CODE class="sh_sourceCode">writeableStream<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">(</SPAN>data<SPAN class="sh_symbol">)</SPAN></CODE> возвращает <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> <CODE class="sh_sourceCode">readableStream</CODE> приостанавливается
@@ -1813,10 +1813,10 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <P>Для использования клиента и сервера HTTP необходимо подключить соответствующий модуль с помощью <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'http'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
-<P>Интерфейс HTTP спроектирован в Node таким образом чтобы поддерживать
+<P>Интерфейс HTTP спроектирован в Node таким образом, чтобы поддерживать
 многие возможности протокола, которые традиционно было довольно сложно использовать.
-В частности, большие сообщения с возможной chunk-encoding. Интерфейс никогда
-не сохраняет в буфере целиком запрос или ответ, давая пользователю возможность 
+В частности, большие сообщения с возможным chunk-encoding. Интерфейс никогда
+не сохраняет в буфере целиком запрос или ответ, давая пользователю возможность
 принимать и отправлять данные в потоковом режиме.</P>
 
 <P>Заголовки сообщения HTTP представлены примерно таким объектом:</P>
@@ -1845,7 +1845,7 @@ Node разбирает HTTP-сообщение на заголовки и те�
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">,</SPAN> response<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
 <P>Объект <CODE class="sh_sourceCode">request</CODE> &mdash; экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerRequest</CODE>, объект <CODE class="sh_sourceCode">response</CODE> &mdash;
- экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerResponse</CODE></P>
+ экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerResponse</CODE>.</P>
 
 <H3 id="event-connection-154">Событие: 'connection'</H3>
 
@@ -1919,7 +1919,7 @@ Node разбирает HTTP-сообщение на заголовки и те�
 
 <P>Включает поддержку HTTPS для сервера, с параметрами для криптографического модуля: private-ключом и сертификатом сервера; также можно передать CA-сертификат для аутентификации клиентов.</P>
 
-<P>Если в параметрах указан один или несколько CA-сертификатов, сервер запросит у клиента его сертификат при установке HTTPS-соединения. Достоверность и содержимое сертификата могут быть проверены с помощью методов verifyPeer() and getPeerCertificate() объекта request.connection сервера.</P>
+<P>Если в параметрах указан один или несколько CA-сертификатов, сервер запросит у клиента его сертификат при установке HTTPS-соединения. Достоверность и содержимое сертификата могут быть проверены с помощью методов verifyPeer() и getPeerCertificate() объекта request.connection сервера.</P>
 
 <H3 id="server-close-163">server.close()</H3>
 
@@ -1976,7 +1976,7 @@ Accept<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN clas
 </CODE></PRE>
 
 <P>Если вам нужно извлечь параметры из строки запроса, можно использовать функцию
-you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'querystring'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE> , или передать
+<CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'querystring'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE> , или передать
 <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> в качестве второго аргумента <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE>.  Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'url'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">parse</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">true</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
@@ -1995,12 +1995,12 @@ you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</S
 
 <P>Версия протокола HTTP в виде строки. Только чтение. Пример:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
-Также <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> это первое число и
+Также <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> содержит первое число и
 <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> &mdash; второе.</P>
 
 <H3 id="request-setencoding-171">request.setEncoding(encoding='binary')</H3>
 
-<P>Задаёт кодировку тела запроса. Либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>. По умолчанию принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
+<P>Задаёт кодировку тела запроса. Либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>. По умолчанию принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
 <H3 id="request-pause-172">request.pause()</H3>
 
@@ -2012,7 +2012,7 @@ you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</S
 
 <H3 id="request-connection-174">request.connection</H3>
 
-<P>Объект соединения, экземпляр <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE></P>
+<P>Объект соединения, экземпляр <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE>.</P>
 
 <P>Если включена поддержка HTTPS, используйте request.connection.verifyPeer() и
 request.connection.getPeerCertificate() чтобы получить сведения об аутентификации клиента.</P>
@@ -2025,7 +2025,7 @@ request.connection.getPeerCertificate() чтобы получить сведен
 <H3 id="response-writehead-176">response.writeHead(statusCode[, reasonPhrase] , headers)</H3>
 
 <P>Отправляет заголовки ответа клиенту. <CODE class="sh_sourceCode"><SPAN class="sh_string">statusCode</SPAN></CODE> это три цифры кода статуса HTTP, например <CODE class="sh_sourceCode"><SPAN class="sh_number">404</SPAN></CODE>. Последний аргумент, <CODE class="sh_sourceCode">headers</CODE>, это заголовки ответа.
-Также вторым аргументом можно передать фразу <CODE class="sh_sourceCode">reasonPhrase</CODE> в качестве второго аргумента.</P>
+Также вторым аргументом можно передать фразу <CODE class="sh_sourceCode">reasonPhrase</CODE>.</P>
 
 <P>Пример:</P>
 
@@ -2088,9 +2088,9 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>Создаёт новый HTTP клиент. <CODE class="sh_sourceCode">port</CODE> и
 <CODE class="sh_sourceCode">host</CODE> относятся к серверу, к которому производится подключение. Поток не создаётся до отправки запроса.</P>
 
-<P><CODE class="sh_sourceCode">secure</CODE> &mdash; дополнительный двоичный флаг для включения поддержки https и <CODE class="sh_sourceCode">credentials</CODE> &mdash; необязательный объект параметров для crypto-модуля, хранящий private-ключ клиента, сертификат и список доверенных CA сертификатов.</P>
+<P><CODE class="sh_sourceCode">secure</CODE> &mdash; дополнительный двоичный флаг для включения поддержки HTTPS, а <CODE class="sh_sourceCode">credentials</CODE> &mdash; необязательный объект параметров для crypto-модуля, хранящий private-ключ клиента, сертификат и список доверенных CA сертификатов.</P>
 
-<P>Если соединение зашифровано но в объекте параметров не переданы сертификаты CA, node.js будет использовать публично доступный список CA, как он представлен в http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
+<P>Если соединение зашифровано, но в объекте параметров не переданы сертификаты CA, то Node будет использовать публично доступный список CA, который представлен в <a href="http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt">http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</a>.</P>
 
 <H3 id="client-request-182">client.request([method], path, [request_headers])</H3>
 
@@ -2103,7 +2103,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Не забудьте включить заголовок <CODE class="sh_sourceCode">Content<SPAN class="sh_symbol">-</SPAN>Length</CODE> если планируете отправить тело запроса. Если вы хотите отправить тело запроса потоком, поставьте <CODE class="sh_sourceCode">Transfer<SPAN class="sh_symbol">-</SPAN>Encoding<SPAN class="sh_symbol">:</SPAN> chunked</CODE>.</P>
 
-<P><EM>ВНМАНИЕ</EM>: запрос ещё не закончен. Этот метод только отсылает заголовки серверу. Необходимо вызвать <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> чтобы отправить запрос целиком и получить ответ.  (Это звучит сложно, но позволяет пользователю передавать тело запроса в потоковом режиме с помощью <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.)</P>
+<P><EM>ВНИМАНИЕ</EM>: запрос ещё не закончен. Этот метод только отсылает заголовки серверу. Необходимо вызвать <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> чтобы отправить запрос целиком и получить ответ.  (Это звучит сложно, но позволяет пользователю передавать тело запроса в потоковом режиме с помощью <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.)</P>
 
 <H3 id="client-verifypeer-183">client.verifyPeer()</H3>
 
@@ -2121,8 +2121,8 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>Чтобы получить ответ, добавьте обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> объекта запроса.
 Событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> будет сгенерировано объектом запроса при получении заголовков ответа. Обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> выполняется с одним аргументом &mdash; экземпляром <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientResponse</CODE>.</P>
 
-<P>Во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> можно добавлять обработчики к объекту ответа; в частности, чтобы получать части тела ответа надо добавить обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE>. Заметьте что обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> вызывается до того как будут получены части тела ответа, поэтому не надо беспокоиться что первая часть тела будет пропущена.
-Если обработчик <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> добавляется во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> всё тело ответа будет получено наверняка.</P>
+<P>Во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> можно добавлять обработчики к объекту ответа; в частности, чтобы получать части тела ответа надо добавить обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE>. Заметьте что обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> вызывается до того, как будут получены части тела ответа, поэтому не надо беспокоиться, что первая часть тела будет пропущена.
+Если обработчик <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> добавляется во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE>, то всё тело ответа будет получено наверняка.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_comment"><SPAN class="sh_comment">// Good</SPAN></SPAN>
 request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">addListener</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'response'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>response<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
@@ -2177,7 +2177,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Генерирется при получении части тела сообщения.</P>
 
-<P>Часть тела сообщения передаётся обработчику в качестве единственного аргумета. Строка уже преобразована из кодировки с помощью которой осуществлялась передача. Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела сообщения задаётся response.setBodyEncoding().</P>
+<P>Часть тела сообщения передаётся обработчику в качестве единственного аргумента. Строка уже преобразована из кодировки с помощью которой осуществлялась передача. Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела сообщения задаётся response.setBodyEncoding().</P>
 
 <H3 id="event-end-191">Событие: 'end'</H3>
 
@@ -2192,7 +2192,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <H3 id="response-httpversion-193">response.httpVersion</H3>
 
 <P>Версия HTTP для текущего соединения. Скорее всего либо 
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE>, либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
 Также <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> &mdash; первая цифра версии,
 <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> &mdash; вторая.</P>
 
@@ -2240,7 +2240,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">listen</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">8124</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'localhost'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Чтобы слушать сокет <CODE class="sh_sourceCode"><SPAN class="sh_string">'/tmp/echo.sock'</SPAN></CODE>, последнюю линию надо заменить на</P>
+<P>Чтобы слушать сокет <CODE class="sh_sourceCode"><SPAN class="sh_string">'/tmp/echo.sock'</SPAN></CODE>, последнюю строку надо заменить на</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">listen</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/tmp/echo.sock'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
@@ -2325,7 +2325,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Генерируется если поток долгое время не используется. Это просто уведомление о длительной неактивности потока. Пользователь должен сам закрыть соединение.</P>
 
-<P>См. также: <CODE class="sh_sourceCode">stream<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">setTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></P>
+<P>См. также: <CODE class="sh_sourceCode">stream<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">setTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="event-drain-213">Событие: 'drain'</H3>
 
@@ -2415,7 +2415,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Устанавливает таймаут в <CODE class="sh_sourceCode">timeout</CODE> миллисекунд бездействия потока. По умолчанию <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE> не имеет таймаута.</P>
 
-<P>Если поток не будет проявлять активности указанное количество миллисекунд будет сгенерировано событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'timeout'</SPAN></CODE> но само соединение не будет затронуто. пользователь должен самостоятельно вызвать <CODE class="sh_sourceCode"><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>
+<P>Если поток не будет проявлять активности указанное количество миллисекунд будет сгенерировано событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'timeout'</SPAN></CODE>, но само соединение не будет затронуто. Пользователь должен самостоятельно вызвать <CODE class="sh_sourceCode"><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>
 или <CODE class="sh_sourceCode"><SPAN class="sh_function">destroy</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> для закрытия потока.</P>
 
 <P>Если в качестве <CODE class="sh_sourceCode">timeout</CODE> передан 0, существующий таймаут перестаёт действовать.</P>
