@@ -1,14 +1,15 @@
 ## HTTP
 
-To use the HTTP server and client one must `require('http')`.
+Для использования клиента и сервера HTTP необходимо подключить
+соответствующий модуль с помощью `require('http')`.
 
-The HTTP interfaces in Node are designed to support many features
-of the protocol which have been traditionally difficult to use.
-In particular, large, possibly chunk-encoded, messages. The interface is
-careful to never buffer entire requests or responses--the
-user is able to stream data.
+Интерфейс HTTP спроектирован в Node таким образом, чтобы поддерживать многие
+возможности протокола, которые традиционно было довольно сложно использовать.
+В частности, большие сообщения с возможным chunk-encoding. Интерфейс никогда
+не сохраняет в буфере целиком запрос или ответ, давая пользователю возможность
+принимать и отправлять данные в потоковом режиме.
 
-HTTP message headers are represented by an object like this:
+Заголовки сообщения HTTP представлены примерно таким объектом:
 
     { 'content-length': '123'
     , 'content-type': 'text/plain'
@@ -16,170 +17,165 @@ HTTP message headers are represented by an object like this:
     , 'accept': '*/*'
     }
 
-Keys are lowercased. Values are not modified.
+Ключи приводятся к нижнему регистру. Значения не изменяются.
 
-In order to support the full spectrum of possible HTTP applications, Node's
-HTTP API is very low-level. It deals with stream handling and message
-parsing only. It parses a message into headers and body but it does not
-parse the actual headers or the body.
+Для поддержки всего спектра возможных применений HTTP, соответствующее API
+в Node довольно низкоуровневое. Оно основано на потоках и передаче сообщений.
+Node разбирает HTTP-сообщение на заголовки и тело, остальное должен сделать
+программист.
 
-HTTPS is supported if OpenSSL is available on the underlying platform.
+HTTPS поддерживается если на целевой платформе доступен OpenSSL.
 
 ## http.Server
 
-This is an `EventEmitter` with the following events:
+Это `EventEmitter` со следующими событиями:
 
-### Event: 'request'
+### Событие: 'request'
 
 `function (request, response) { }`
 
- `request` is an instance of `http.ServerRequest` and `response` is
- an instance of `http.ServerResponse`
+Генерируется каждый раз при получении запроса. Заметьте, что в течении одного
+соединения может происходить несколько запросов (в случае keep-alive соединения).
+Объект `request` — экземпляр `http.ServerRequest`,
+объект `response` — экземпляр `http.ServerResponse`.
 
-### Event: 'connection'
+### Событие: 'connection'
 
 `function (stream) { }`
 
- When a new TCP stream is established. `stream` is an object of type
- `net.Stream`. Usually users will not want to access this event. The
- `stream` can also be accessed at `request.connection`.
+Генерируется при установке нового HTTP-соединения. `stream` — объект типа `net.Stream`.
+Обычно пользователи не используют это событие. Объект потока `stream` также можно
+найти в свойстве объекта запроса `request.connection`.
 
-### Event: 'close'
+### Событие: 'close'
 
 `function (errno) { }`
 
- Emitted when the server closes. 
+Генерируется при завершении работы сервера.
 
-### Event: 'request'
-
-`function (request, response) {}`
-
-Emitted each time there is request. Note that there may be multiple requests
-per connection (in the case of keep-alive connections).
-
-### Event: 'checkContinue'
+### Событие: 'checkContinue'
 
 `function (request, response) {}`
 
-Emitted each time a request with an http Expect: 100-continue is received.
-If this event isn't listened for, the server will automatically respond
-with a 100 Continue as appropriate.
+Событие наступает кажды раз при получении заголовка `'Expect: 100'`.
+Если для этого события не назначен ни один обработчик, то сервер автоматически
+отвечает `'100 Continue'`.
 
-Handling this event involves calling `response.writeContinue` if the client
-should continue to send the request body, or generating an appropriate HTTP
-response (e.g., 400 Bad Request) if the client should not continue to send the
-request body.
+Обработка этого события подразумевает вызов `response.writeContinue` если клиент
+должен продолжить отправку тела запроса, или генерацию другого HTTP запроса
+(например `'400 Bad Request'`) если клиент не должен этого делать.
 
-Note that when this event is emitted and handled, the `request` event will
-not be emitted.
+Имейте в виду, что если это событие наступило и было обработано, то событие
+`request` не наступает.
 
-### Event: 'upgrade'
+### Событие: 'upgrade'
 
 `function (request, socket, head)`
 
-Emitted each time a client requests a http upgrade. If this event isn't
-listened for, then clients requesting an upgrade will have their connections
-closed.
+Генерируется каждый раз когда клиент запрашивает апгрейд соединения
+до защищённого (см. RFC 2817). Если это событие никак не обрабатывается
+соединение для которого запрошен апгрейд будет закрыто.
 
-* `request` is the arguments for the http request, as it is in the request event.
-* `socket` is the network socket between the server and client.
-* `head` is an instance of Buffer, the first packet of the upgraded stream, this may be empty.
+* `request` — аргументы для HTTP запроса, как в событии `'request'`.
+* `socket` — сетевой сокет между сервером и клиентом.
+* `head` — экземпляр Buffer, первый пакет защищенного потока, может быть пустым.
 
-After this event is emitted, the request's socket will not have a `data`
-event listener, meaning you will need to bind to it in order to handle data
-sent to the server on that socket.
+После генерации этого события, у объекта `server` не будет обработчика события
+`data`, и программисту нужно назначить его заново чтобы обрабатывать данные,
+получаемые этим соединением.
 
-### Event: 'clientError'
+### Событие: 'clientError'
 
 `function (exception) {}`
 
-If a client connection emits an 'error' event - it will forwarded here.
+Если соединение с клиентом генерирует событие `'error'` — оно поднимается сюда.
 
 ### http.createServer(requestListener)
 
-Returns a new web server object.
+Возвращает новый объект web-сервера.
 
-The `requestListener` is a function which is automatically
-added to the `'request'` event.
+Функция `requestListener` автоматически добавляется к событию `'request'` сервера.
 
 ### server.listen(port, [hostname], [callback])
 
-Begin accepting connections on the specified port and hostname.  If the
-hostname is omitted, the server will accept connections directed to any
-IPv4 address (`INADDR_ANY`).
+Начинает приём соединений на указанном порту и имени хоста. Если имя хоста не указано,
+сервер будет принимать соединения на любой IPv4-адрес машины (`INADDR_ANY`).
 
-To listen to a unix socket, supply a filename instead of port and hostname.
+Чтобы слушать unix-сокет, передайте имя файла вместо порта и имени хоста.
 
-This function is asynchronous. The last parameter `callback` will be called
-when the server has been bound to the port.
+Эта функция асинхронна. Функция, переданная последним параметром `callback`
+будет вызвана когда сервер будет связан с портом.
 
 
 ### server.listen(path, [callback])
 
-Start a UNIX socket server listening for connections on the given `path`.
+Начинает слушать unix-сокет с заданным путём `path`.
 
-This function is asynchronous. The last parameter `callback` will be called
-when the server has been bound.
+Эта функция асинхронна. Функция, переданная последним параметром `callback`
+будет вызвана когда сервер будет связан с сокетом.
 
 
 ### server.setSecure(credentials)
 
-Enables HTTPS support for the server, with the crypto module credentials specifying the private key and certificate of the server, and optionally the CA certificates for use in client authentication.
+Включает поддержку HTTPS для сервера, с параметрами для криптографического модуля:
+private-ключом и сертификатом сервера; также можно передать CA-сертификат
+для аутентификации клиентов.
 
-If the credentials hold one or more CA certificates, then the server will request for the client to submit a client certificate as part of the HTTPS connection handshake. The validity and content of this can be accessed via verifyPeer() and getPeerCertificate() from the server's request.connection.
+Если в параметрах указан один или несколько CA-сертификатов, сервер запросит
+у клиента его сертификат при установке HTTPS-соединения. Достоверность
+и содержимое сертификата могут быть проверены с помощью методов `verifyPeer()`
+и `getPeerCertificate()` объекта `request.connection` сервера.
 
 ### server.close()
 
-Stops the server from accepting new connections.
+Прекращает приём новых соединений сервером.
 
 
 ## http.ServerRequest
 
-This object is created internally by a HTTP server--not by
-the user--and passed as the first argument to a `'request'` listener.
+Этот объект создаётся автоматически HTTP-сервером (не пользователем)
+и передаётся первым аргументом обработчику события `'request'`.
 
-This is an `EventEmitter` with the following events:
+Это `EventEmitter` со следующими событиями:
 
-### Event: 'data'
+### Событие: 'data'
 
 `function (chunk) { }`
 
-Emitted when a piece of the message body is received.
+Генерируется при получении части тела сообщения.
 
-Example: A chunk of the body is given as the single
-argument. The transfer-encoding has been decoded.  The
-body chunk is a string.  The body encoding is set with
-`request.setBodyEncoding()`.
+Пример: Часть тела сообщения передаётся как единственный аргумент. Сообщение
+уже раскодировано из transfer-encoding. Часть тела представлена в виде строки.
+Кодировка тела сообщения задаётся `request.setBodyEncoding()`.
 
-### Event: 'end'
+### Событие: 'end'
 
 `function () { }`
 
-Emitted exactly once for each message. No arguments.  After
-emitted no other events will be emitted on the request.
+Генерируется строго один раз для каждого сообщения. Нет аргументов. После этого
+события запрос не будет генерировать другие.
 
 
 ### request.method
 
-The request method as a string. Read only. Example:
-`'GET'`, `'DELETE'`.
+Метод запроса в виде строки. Только для чтения. Пример `'GET'` или `'DELETE'`.
 
 
 ### request.url
 
-Request URL string. This contains only the URL that is
-present in the actual HTTP request. If the request is:
+Строка с URL запроса. Здесь содержится URL в том виде, в котором он задан
+в самом HTTP-запросе. Если запрос выглядит так:
 
     GET /status?name=ryan HTTP/1.1\r\n
     Accept: text/plain\r\n
     \r\n
 
-Then `request.url` will be:
+Тогда значением `request.url` будет:
 
     '/status?name=ryan'
 
-If you would like to parse the URL into its parts, you can use
-`require('url').parse(request.url)`.  Example:
+Если вы хотите разделить URL на составные части, вы можете использовать
+`require('url').parse(request.url)`. Пример:
 
     node> require('url').parse('/status?name=ryan')
     { href: '/status?name=ryan'
@@ -188,9 +184,9 @@ If you would like to parse the URL into its parts, you can use
     , pathname: '/status'
     }
 
-If you would like to extract the params from the query string,
-you can use the `require('querystring').parse` function, or pass
-`true` as the second argument to `require('url').parse`.  Example:
+Если вам нужно извлечь параметры из строки запроса, можно использовать функцию
+`require('querystring').parse`, или передать `true` в качестве второго аргумента
+`require('url').parse`. Пример:
 
     node> require('url').parse('/status?name=ryan', true)
     { href: '/status?name=ryan'
@@ -200,68 +196,65 @@ you can use the `require('querystring').parse` function, or pass
     }
 
 
-
 ### request.headers
 
-Read only.
+Заголовки запроса. Только для чтения.
 
 ### request.trailers
 
-Read only; HTTP trailers (if present). Only populated after the 'end' event.
+HTTP trailers (если есть). Только для чтения.
+Доступны тольк после наступления события `'end'`.
 
 ### request.httpVersion
 
-The HTTP protocol version as a string. Read only. Examples:
-`'1.1'`, `'1.0'`.
-Also `request.httpVersionMajor` is the first integer and
-`request.httpVersionMinor` is the second.
+Версия протокола HTTP в виде строки. Только чтение. Пример: `'1.1'`, `'1.0'`.
+Также `request.httpVersionMajor` содержит первое число и `request.httpVersionMinor` — второе.
 
 
 ### request.setEncoding(encoding=null)
 
-Set the encoding for the request body. Either `'utf8'` or `'binary'`. Defaults
-to `null`, which means that the `'data'` event will emit a `Buffer` object..
+Задаёт кодировку тела запроса. Либо `'utf8'`, либо `'binary'`. По умолчанию
+принимает значение `null`, что означает что в обработчик события `'data'`
+поступает буфер.
 
 
 ### request.pause()
 
-Pauses request from emitting events.  Useful to throttle back an upload.
+Прекращает генерирование событий запросом.
+Можно использовать для ускорения закачки файла.
 
 
 ### request.resume()
 
-Resumes a paused request.
+Возобновляет генерирование событий запросом
 
 ### request.connection
 
-The `net.Stream` object associated with the connection.
+Объект соединения, экземпляр `net.Stream`.
 
-
-With HTTPS support, use request.connection.verifyPeer() and
-request.connection.getPeerCertificate() to obtain the client's
-authentication details.
+При поддержке HTTPS достоверность и содержимое сертификата могут быть проверены
+с помощью методов `verifyPeer()` и `getPeerCertificate()`
+объекта `request.connection` сервера.
 
 
 
 ## http.ServerResponse
 
-This object is created internally by a HTTP server--not by the user. It is
-passed as the second parameter to the `'request'` event. It is a `Writable Stream`.
+Этот объект создаётся внутри HTTP-сервера — не пользователем. Он передаётся
+вторым параметром в обработчик события `'request'` и является `потоком с возможностью записи`.
 
 ### response.writeContinue()
 
-Sends a HTTP/1.1 100 Continue message to the client, indicating that
-the request body should be sent. See the the `checkContinue` event on
-`Server`.
+Отправдяет клиенту сообщение `'HTTP/1.1 100 Continue'`, которое разрешает
+отправку тела запроса. См. описанеи события `checkContinue` объекта `http.Server`.
 
 ### response.writeHead(statusCode, [reasonPhrase], [headers])
 
-Sends a response header to the request. The status code is a 3-digit HTTP
-status code, like `404`. The last argument, `headers`, are the response headers.
-Optionally one can give a human-readable `reasonPhrase` as the second
-argument.
+Отправляет заголовки ответа клиенту. `statusCode` это три цифры кода статуса HTTP,
+например 404. Последний аргумент, `headers`, это заголовки ответа. Также вторым
+аргументом можно передать фразу `reasonPhrase`.
 
-Example:
+Пример:
 
     var body = 'hello world';
     response.writeHead(200, {
@@ -269,39 +262,35 @@ Example:
       'Content-Type': 'text/plain'
     });
 
-This method must only be called once on a message and it must
-be called before `response.end()` is called.
+Этот метод должен быть вызван только однажды для каждого сообщения
+и должен быть вызван до `response.end()`.
 
 ### response.write(chunk, encoding='utf8')
 
-This method must be called after `writeHead` was
-called. It sends a chunk of the response body. This method may
-be called multiple times to provide successive parts of the body.
+Этот метод должен вызываться после `writeHead`. Он отправляет часть тела ответа.
+Метод может быть вызван несколько раз для отправки последующих частей тела ответа.
 
-`chunk` can be a string or a buffer. If `chunk` is a string,
-the second parameter specifies how to encode it into a byte stream.
-By default the `encoding` is `'utf8'`.
+Аргумент `chunk` может быть буфером или строкой. Если `chunk` это строка, то
+бойвторой параметр указывает в какой кодировке отправлять её в поток.
+По умолчанию encoding принимает значение 'utf8'.
 
-**Note**: This is the raw HTTP body and has nothing to do with
-higher-level multi-part body encodings that may be used.
+**Замечание:** Это необработанное тело HTTP-ответа и не имеет отношения к более
+высокоуровневым вещам вроде multi-part encoding, которые тоже могут использоваться.
 
-The first time `response.write()` is called, it will send the buffered
-header information and the first body to the client. The second time
-`response.write()` is called, Node assumes you're going to be streaming
-data, and sends that separately. That is, the response is buffered up to the
-first chunk of body.
+После первого вызова `response.write()` клиенту будет отправлены заголовки
+и первая часть тела сообщения. После второго вызова `response.write()` Node
+предполагает что вы начинаете потоковую передачу данных и отправляет часть
+тела отдельно. Таким образом, данные буферизуются только до первой части тела ответа.
 
 ### response.addTrailers(headers)
 
-This method adds HTTP trailing headers (a header but at the end of the
-message) to the response. 
+Этот метод добавляет завершающие заголовки HTTP, следующие после тела ответа.
 
-Trailers will **only** be emitted if chunked encoding is used for the 
-response; if it is not (e.g., if the request was HTTP/1.0), they will
-be silently discarded.
+Эти заголовки могут быть использованы **только* в случае использование ответом 
+`chunked encoding`; в противном случае они будут проигнорированы.
 
-Note that HTTP requires the `Trailer` header to be sent if you intend to
-emit trailers, with a list of the header fields in its value. E.g.,
+Имейте в виду, что протокол HTTP требует указания заголовка `Trailer`
+в случае использования HTTP trailers, например:
 
     response.writeHead(200, { 'Content-Type': 'text/plain',
                               'Trailer': 'TraceInfo' });
@@ -312,24 +301,23 @@ emit trailers, with a list of the header fields in its value. E.g.,
 
 ### response.end([data], [encoding])
 
-This method signals to the server that all of the response headers and body
-has been sent; that server should consider this message complete.
-The method, `response.end()`, MUST be called on each
-response.
+Этот метод отправляет серверу сигнал что все заголовки и тело ответа отправлены;
+сервер должен считать это сообщение законченным. Метод `response.end()`
+**ДОЛЖЕН** быть вызван при каждом ответе.
 
-If `data` is specified, it is equivalent to calling `response.write(data, encoding)`
-followed by `response.end()`.
+Если задан аргумент `data`, то этот вызов эквивалентен поледовательному вызову
+`response.write(data, encoding)` и `response.end()`.
 
 
 ## http.Client
 
-An HTTP client is constructed with a server address as its
-argument, the returned handle is then used to issue one or more
-requests.  Depending on the server connected to, the client might
-pipeline the requests or reestablish the stream after each
-stream. _Currently the implementation does not pipeline requests._
+HTTP-клиент создаётся принимая адрес сервера в качестве аргумента, возвращаемый
+идентификатор используется для отправки одного или нескольких запросов.
+В зависимости от того, к какому серверу совершено подключение клиент может
+использовать pipeline (несколько запросов за соединение) либо пересоздавать
+поток после каждого запроса. _Текущая версия не использует pipeline_.
 
-Example of connecting to `google.com`:
+Пример подключения к `google.com`:
 
     var http = require('http');
     var google = http.createClient(80, 'www.google.com');
@@ -345,15 +333,14 @@ Example of connecting to `google.com`:
       });
     });
 
-There are a few special headers that should be noted.
+Нужно иметь в виду следующие особенности реализации:
 
-* The 'Host' header is not added by Node, and is usually required by
-  website.
+* Заголовок 'Host' не добавляется Node, но обычно требуется для работы с сайтами.
 
-* Sending a 'Connection: keep-alive' will notify Node that the connection to
-  the server should be persisted until the next request.
+* Отправка заголовка 'Connection: keep-alive' сообщает Node о необходимости
+  сохранять соединения для последующих запросов.
 
-* Sending a 'Content-length' header will disable the default chunked encoding.
+* Отправка заголовка `'Content-length'` отключит 'chunked encoding'.
 
 * Sending an 'Expect' header will immediately send the request headers. 
   Usually, when sending 'Expect: 100-continue', you should both set a timeout
@@ -361,80 +348,83 @@ There are a few special headers that should be noted.
   information.
 
 
-### Event: 'upgrade'
+### Событие: 'upgrade'
 
 `function (request, socket, head)`
 
-Emitted each time a server responds to a request with an upgrade. If this event
-isn't being listened for, clients receiving an upgrade header will have their
-connections closed.
+Генерируется каждый раз когда сервер отвечает на запрос предложением улучшить
+соединение до безопасного. Если это событие не обрабатывается, клиент
+при получении заголовка `upgrade` будет закрывать соединение.
 
-See the description of the `upgrade` event for `http.Server` for further details.
+См. описание события `upgrade` для `http.Server`.
 
-### Event: 'continue'
+### Событие: 'continue'
 
 `function ()`
 
-Emitted when the server sends a '100 Continue' HTTP response, usually because
-the request contained 'Expect: 100-continue'. This is an instruction that
-the client should send the request body.
+Наступает если сервер отправляет ответ с кодом '100 Continue', обычно в случае
+если зщапрос включает заголовк 'Expect: 100-continue'. Это является указанием
+клиенту на необходимость начала отправки тела запроса.
 
 
 ### http.createClient(port, host='localhost', secure=false, [credentials])
 
-Constructs a new HTTP client. `port` and
-`host` refer to the server to be connected to. A
-stream is not established until a request is issued.
+Создаёт новый HTTP клиент. `port` и `host` относятся к серверу, к которому
+производится подключение. Поток не создаётся до отправки запроса.
 
-`secure` is an optional boolean flag to enable https support and `credentials` is an optional credentials object from the crypto module, which may hold the client's private key, certificate, and a list of trusted CA certificates.
+`secure` — дополнительный двоичный флаг для включения поддержки HTTPS,
+а `credentials` — необязательный объект параметров для crypto-модуля,
+хранящий private-ключ клиента, сертификат и список доверенных CA сертификатов.
 
-If the connection is secure, but no explicit CA certificates are passed in the credentials, then node.js will default to the publicly trusted list of CA certificates, as given in http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt
+Если соединение зашифровано, но в объекте параметров не переданы сертификаты CA,
+Node будет использовать публично доступный список CA, который представлен в
+<http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt>.
 
 ### client.request(method='GET', path, [request_headers])
 
-Issues a request; if necessary establishes stream. Returns a `http.ClientRequest` instance.
+Отправляет запрос; при необходимости инициирует соединение.
+Возвращает экземпляр `http.ClientRequest`.
 
-`method` is optional and defaults to 'GET' if omitted.
+`method` — необязательный параметр, по умолчанию принимает значение 'GET'.
 
-`request_headers` is optional.
-Additional request headers might be added internally
-by Node. Returns a `ClientRequest` object.
+`request_headers` необязательный параметр. Дополнительные заголовки запроса
+могут быть добавлены внутри Node. Возвращает объект `http.ClientRequest`.
 
-Do remember to include the `Content-Length` header if you
-plan on sending a body. If you plan on streaming the body, perhaps
-set `Transfer-Encoding: chunked`.
+Не забудьте включить заголовок `Content-Length` если планируете отправить тело
+запроса. Если вы хотите отправить тело запроса потоком, поставьте
+`Transfer-Encoding: chunked`.
 
-*NOTE*: the request is not complete. This method only sends the header of
-the request. One needs to call `request.end()` to finalize the request and
-retrieve the response.  (This sounds convoluted but it provides a chance for
-the user to stream a body to the server with `request.write()`.)
+*ВНИМАНИЕ:* запрос ещё не закончен. Этот метод только отсылает заголовки серверу.
+Необходимо вызвать `request.end()` чтобы отправить запрос целиком и получить ответ.
+(Это звучит сложно, но позволяет пользователю передавать тело запроса
+в потоковом режиме с помощью `request.write()`.)
 
 ### client.verifyPeer()
 
-Returns true or false depending on the validity of the server's certificate in the context of the defined or default list of trusted CA certificates.
+Возвращает true или false в зависимости от подлинности сертификата сервера
+соответственно списку доверенных сертификатов CA (переданному явно или используемому по умолчанию).
 
 ### client.getPeerCertificate()
 
-Returns a JSON structure detailing the server's certificate, containing a dictionary with keys for the certificate 'subject', 'issuer', 'valid\_from' and 'valid\_to'
+Возвращает JSON с деталями сертификата сервера, содержит поля `'subject'`, `'issuer'`, `'valid_from'` и `'valid_to'`.
 
 
 ## http.ClientRequest
 
-This object is created internally and returned from the `request()` method
-of a `http.Client`. It represents an _in-progress_ request whose header has
-already been sent.
+Объект создаётся внутри Node и возвращается методом `request()` объекта `http.Client`.
+Он представляет собой _незаконченный запрос_, заголовки которого уже отправлены.
 
-To get the response, add a listener for `'response'` to the request object.
-`'response'` will be emitted from the request object when the response
-headers have been received.  The `'response'` event is executed with one
-argument which is an instance of `http.ClientResponse`.
+Чтобы получить ответ, добавьте обработчик событию `'response'` объекта запроса.
+Событие `'response'` будет сгенерировано объектом запроса при получении
+заголовков ответа. Обработчик события `'response'` выполняется с одним
+аргументом — экземпляром `http.ClientResponse`.
 
-During the `'response'` event, one can add listeners to the
-response object; particularly to listen for the `'data'` event. Note that
-the `'response'` event is called before any part of the response body is received,
-so there is no need to worry about racing to catch the first part of the
-body. As long as a listener for `'data'` is added during the `'response'`
-event, the entire body will be caught.
+Во время события `'response'` можно добавлять обработчики к объекту ответа;
+в частности, чтобы получать части тела ответа надо добавить обработчик
+событию `'data'`. Заметьте что обработчик события `'response'` вызывается
+до того, как будут получены части тела ответа, поэтому не надо беспокоиться,
+что первая часть тела будет пропущена. Если обработчик `'data'` добавляется
+во время события `'response'`, то всё тело ответа будет получено наверняка.
 
 
     // Good
@@ -453,100 +443,96 @@ event, the entire body will be caught.
       }, 10);
     });
 
-This is a `Writable Stream`.
+Это `поток с возможностью записи`.
 
-This is an `EventEmitter` with the following events:
+Это экземпляр `EventEmitter` со следующими событиями:
 
-### Event 'response'
+### Событие: 'response'
 
 `function (response) { }`
 
-Emitted when a response is received to this request. This event is emitted only once. The
-`response` argument will be an instance of `http.ClientResponse`.
+Генерируется когда на запрос приходит ответ. Это событие генерируется только
+один раз. Аргументом обработчика `response` будет экземпляр `http.ClientResponse`.
 
 
 ### request.write(chunk, encoding='utf8')
 
-Sends a chunk of the body.  By calling this method
-many times, the user can stream a request body to a
-server--in that case it is suggested to use the
-`['Transfer-Encoding', 'chunked']` header line when
-creating the request.
+Отправляет часть тела запроса. Вызывая этот метод несколько раз, пользователь
+может отправлять тело ответа серверу в потоковом режиме — в таком случае
+предпочтительно добавлять в заголовки `['Transfer-Encoding', 'chunked']`
+при создании запроса.
 
-The `chunk` argument should be an array of integers
-or a string.
+Аргумент `chunk` должен быть массивом чисел или строкой.
 
-The `encoding` argument is optional and only
-applies when `chunk` is a string.
-
+Аргумент `encoding` необязателен и имеет значение только если `chunk` строка.
 
 ### request.end([data], [encoding])
 
-Finishes sending the request. If any parts of the body are
-unsent, it will flush them to the stream. If the request is
-chunked, this will send the terminating `'0\r\n\r\n'`.
+Завершает отправку запроса. Если какие то части тела запроса ещё не были
+отправлены, они отправляются. Если запрос разбит на части, будет послана
+завершающая последовательность `'0\r\n\r\n'`.
 
-If `data` is specified, it is equivalent to calling `request.write(data, encoding)`
-followed by `request.end()`.
-
+Если задан аргумент `data`, то этот вызов эквивалентен поледовательному вызову
+`request.write(data, encoding)` и `request.end()`.
 
 ## http.ClientResponse
 
-This object is created when making a request with `http.Client`. It is
-passed to the `'response'` event of the request object.
+Этот объект создаётся при создании запроса с помощью `http.Client`.
+Он передаётся обработчику события `'response'` объекта запроса.
 
-The response implements the `Readable Stream` interface.
+Объект ответа — `поток с возможностью чтения`.
 
-### Event: 'data'
+### Событие: 'data'
 
 `function (chunk) {}`
 
-Emitted when a piece of the message body is received.
+Часть тела сообщения передаётся обработчику в качестве единственного аргуметна.
+Строка уже преобразована из кодировки с помощью которой осуществлялась передача.
+Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела
+сообщения задаётся `response.setBodyEncoding()`.
 
-    Example: A chunk of the body is given as the single
-    argument. The transfer-encoding has been decoded.  The
-    body chunk a String.  The body encoding is set with
-    `response.setBodyEncoding()`.
-
-### Event: 'end'
+### Событие: 'end'
 
 `function () {}`
 
-Emitted exactly once for each message. No arguments. After
-emitted no other events will be emitted on the response.
+Генерируется только однажды для каждого сообщения. Обработчик вызывается
+без аргументов. После этого сообщение не будет генерировать никаких событий.
 
 ### response.statusCode
 
-The 3-digit HTTP response status code. E.G. `404`.
+Код статуса HTTP из трёх цифр, например `404`.
 
 ### response.httpVersion
 
-The HTTP version of the connected-to server. Probably either
-`'1.1'` or `'1.0'`.
-Also `response.httpVersionMajor` is the first integer and
-`response.httpVersionMinor` is the second.
+Версия HTTP для текущего соединения. Скорее всего либо `'1.1'`, либо `'1.0'`.
+Также `response.httpVersionMajor` — первая цифра версии,
+а `response.httpVersionMinor` — вторая.
+
 
 ### response.headers
 
-The response headers object.
+Заголовки ответа.
 
 ### response.trailers
 
-The response trailers object. Only populated after the 'end' event.
+См. описание выше.
 
 ### response.setEncoding(encoding=null)
 
-Set the encoding for the response body. Either `'utf8'`, `'ascii'`, or `'base64'`.
-Defaults to `null`, which means that the `'data'` event will emit a `Buffer` object..
+Задаёт кодировку тела ответа. Может принимать значения `'utf8'`, `'ascii'`
+или `'base64'`. По умолчанию используется `null`, что означает что в обработчик
+события `'data'` поступает буфер.
 
 ### response.pause()
 
-Pauses response from emitting events.  Useful to throttle back a download.
+Приостанавливает генерацию событий ответом.
+Можно использовать для ускорения закачки файла.
 
 ### response.resume()
 
-Resumes a paused response.
+Возобновляет генерацию событий ответом.
 
 ### response.client
 
-A reference to the `http.Client` that this response belongs to.
+Ссылка на `http.Client` которому принадлежит ответ.
+
