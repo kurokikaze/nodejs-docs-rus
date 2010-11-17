@@ -1,56 +1,57 @@
 ## URL
 
-This module has utilities for URL resolution and parsing.
-Call `require('url')` to use it.
+В это модуле собраны инструменты для разрешения и разбора URL.
+Вызовите `require('url')` чтобы его использовать.
 
-Parsed URL objects have some or all of the following fields, depending on
-whether or not they exist in the URL string. Any parts that are not in the URL
-string will not be in the parsed object. Examples are shown for the URL
+Объекты разобранного URL имеют либо все либо некоторые из перечисленных полей,
+в зависимости от их присутствия в строке URL. Части которых не было в URL
+не будут присутствовать в объекте. Примеры показаны для URL
 
 `'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'`
 
-* `href`: The full URL that was originally parsed. 
+* `href`: Полный URL который был разобран.
   
-  Example: `'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'`
-* `protocol`: The request protocol.
+  Пример: `'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'`
+* `protocol`: Протокол запроса.
   
-  Example: `'http:'`
-* `host`: The full host portion of the URL, including port and authentication information. 
+  Пример: `'http:'`
+* `host`: Полный host, включая порт и информацию аутентификации.
   
-  Example: `'user:pass@host.com:8080'`
-* `auth`: The authentication information portion of a URL.
+  Пример: `'user:pass@host.com:8080'`
+* `auth`: Информация для аутентификации.
   
-  Example: `'user:pass'`
-* `hostname`: Just the hostname portion of the host.
+  Пример: `'user:pass'`
+* `hostname`: Имя хоста.
 
-  Example: `'host.com'`
-* `port`: The port number portion of the host.
+  Пример: `'host.com'`
+* `port`: Номер порта.
 
-  Example: `'8080'`
-* `pathname`: The path section of the URL, that comes after the host and before the query, including the initial slash if present.
+  Пример: `'8080'`
+* `pathname`: Секция пути, которая идёт после хоста и перед строкой параметров, включая начальный слеш если он есть.
 
-  Example: `'/p/a/t/h'`
-* `search`: The 'query string' portion of the URL, including the leading question mark.
+  Пример: `'/p/a/t/h'`
+* `search`: Строка запроса, включая ведущий знак вопроса.
 
-  Example: `'?query=string'`
-* `query`: Either the 'params' portion of the query string, or a querystring-parsed object.
+  Пример: `'?query=string'`
+* `query`: Параметры из строки запроса, либо уже разобранный объект с параметрами.
 
-  Example: `'query=string'` or `{'query':'string'}`
-* `hash`: The 'fragment' portion of the URL including the pound-sign.
+  Пример: `'query=string'` or `{'query':'string'}`
+* `hash`: "Якорь" URL, включая знак решётки.
 
-  Example: `'#hash'`
+  Пример: `'#hash'`
 
-The following methods are provided by the URL module:
+Модуль URL предоставляет следующие методы:
 
 ### url.parse(urlStr, parseQueryString=false)
 
-Take a URL string, and return an object.  Pass `true` as the second argument to also parse
-the query string using the `querystring` module.
+Получает строку URL и возвращает объект. Передайте `true` вторым аргументом
+чтобы одновременно разобрать строку запроса модулем `querystring`.
 
 ### url.format(urlObj)
 
-Take a parsed URL object, and return a formatted URL string.
+Получает объект URL и возвращает отформатированный URL в виде строки.
 
 ### url.resolve(from, to)
 
-Take a base URL, and a href URL, and resolve them as a browser would for an anchor tag.
+Получает базовый URL и относительный URL, и разрешает их как это сделал бы браузер для гиперссылки.
+

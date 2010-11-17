@@ -1,48 +1,50 @@
-## Streams
+## Потоки
 
-A stream is an abstract interface implemented by various objects in Node.
-For example a request to an HTTP server is a stream, as is stdout. Streams
-are readable, writable, or both. All streams are instances of `EventEmitter`.
+Поток — это абстрактный интерфейс, реализуемый многими объектами в Node.
+Например, запрос к HTTP-серверу является потоком, также как stdout. Потоки
+могут быть с возможностью чтения, записи или и того и другого. Все потоки
+являются экземплярами `EventEmitter`.
 
-## Readable Stream
 
-A `Readable Stream` has the following methods, members, and events.
+## Поток с возможностью чтения
+
+`Поток с возможностью чтения` имеет следующие методы, свойства и события.
 
 ### Event: 'data'
 
 `function (data) { }`
 
-The `'data'` event emits either a `Buffer` (by default) or a string if
-`setEncoding()` was used.
+Событие `'data'` передаёт обработчику либо `Buffer` (по умолчанию),
+либо строку, если предварительно был вызван `setEncoding()`.
 
 ### Event: 'end'
 
 `function () { }`
 
-Emitted when the stream has received an EOF (FIN in TCP terminology).
-Indicates that no more `'data'` events will happen. If the stream is also
-writable, it may be possible to continue writing.
+Генерируется когда поток получает символ конца файла EOF (FIN в терминологии TCP).
+Означает что событий `'data'` больше не предвидится. Если поток также имеет
+возможность записи, писать данные можно и дальше.
 
 ### Event: 'error'
 
 `function (exception) { }`
 
-Emitted if there was an error receiving data.
+Генерируется если при приёме данных произошла ошибка.
 
 ### Event: 'close'
 
 `function () { }`
 
-Emitted when the underlying file descriptor has be closed. Not all streams
-will emit this.  (For example, an incoming HTTP request will not emit
-`'close'`.)
+Генерируется когда соответствующий потоку файловый дескриптор закрывается.
+Не все потоки генерируют это событие. Например, входящий HTTP запрос
+не генерирует `'close'`.
 
 ### Event: 'fd'
 
 `function (fd) { }`
 
-Emitted when a file descriptor is received on the stream. Only UNIX streams
-support this functionality; all others will simply never emit this event.
+Генерируется когда поток получает файловый дескриптор. Только UNIX потоки
+поддерживают этот функционал; остальные никогда не генерируют это событие.
 
 ### stream.readable
 
@@ -50,82 +52,83 @@ A boolean that is `true` by default, but turns `false` after an `'error'`
 occured, the stream came to an `'end'`, or `destroy()` was called.
 
 ### stream.setEncoding(encoding)
-Makes the data event emit a string instead of a `Buffer`. `encoding` can be
-`'utf8'`, `'ascii'`, or `'base64'`.
+Заставляет событие `'data'` передавать обработчику строку вместо буфера.
+`encoding` может быть `'utf8'`, `'ascii'` или `'base64'`.
 
 ### stream.pause()
 
-Pauses the incoming `'data'` events.
+Прекращает поступление событий `'data'`.
 
 ### stream.resume()
 
-Resumes the incoming `'data'` events after a `pause()`.
+Возобновляет поступление событий `'data'` после `pause()`.
 
 ### stream.destroy()
 
-Closes the underlying file descriptor. Stream will not emit any more events.
+Закрывает соответствующий потоку файловый дескриптор.
+Поток больше не будет генерировать событий.
 
 
+## Поток с возможностью записи
 
-## Writable Stream
-
-A `Writable Stream` has the following methods, members, and events.
+У `потока с возможностью записи` есть следующие методы, свойства и события.
 
 ### Event: 'drain'
 
 `function () { }`
 
-Emitted after a `write()` method was called that returned `false` to
-indicate that it is safe to write again.
+Генерируется после вызова метода `write()` вернувшего `false` — сигнал о том,
+что можно писать дальше.
 
 ### Event: 'error'
 
 `function (exception) { }`
 
-Emitted on error with the exception `exception`.
+Генерируется при ошибке с исключением `exception`.
 
 ### Event: 'close'
 
 `function () { }`
 
-Emitted when the underlying file descriptor has been closed.
+Генерируется когда закрывается соответствующий потоку дескриптор.
 
 ### stream.writeable
 
-A boolean that is `true` by default, but turns `false` after an `'error'`
-occurred or `end()` / `destroy()` was called.
+Булево свойство, по умолчанию `true`, но становящиеся `false` после наступления
+события `'error'` или вызова `end()` / `destroy()`.
 
 ### stream.write(string, encoding='utf8', [fd])
 
-Writes `string` with the given `encoding` to the stream.  Returns `true` if
-the string has been flushed to the kernel buffer.  Returns `false` to
-indicate that the kernel buffer is full, and the data will be sent out in
-the future. The `'drain'` event will indicate when the kernel buffer is
-empty again. The `encoding` defaults to `'utf8'`.
+Записывает строку `string` в указанной кодировке `encoding` в поток. Возвращает
+`true` если строка попала в буфер ядра. Возвращает `false` если буфер ядра полон
+и данные будут отправлены позже. Когда данные будут отправлены и буфер ядра опустеет,
+будет сгенерировано событие `'drain'`. Кодировка по умолчанию — `'utf8'`.
 
-If the optional `fd` parameter is specified, it is interpreted as an integral
-file descriptor to be sent over the stream. This is only supported for UNIX
-streams, and is silently ignored otherwise. When writing a file descriptor in
-this manner, closing the descriptor before the stream drains risks sending an
-invalid (closed) FD.
+Если указан необязательный параметр `fd`, он интерпретируется как файловый
+дескриптор для отправки в поток. Это поддерживается только в UNIX потоках,
+и просто игнорируется в другом окружении. Когда дескриптор пересылается таким
+образом, если он будет закрыт до события 'drain' потока, может быть отправлен
+повреждённый (закрытый) дескриптор.
 
 ### stream.write(buffer)
 
-Same as the above except with a raw buffer.
+То же что и выше, но с использованием буфера.
 
 ### stream.end()
 
-Terminates the stream with EOF or FIN.
+Закрывает поток отправкой EOF или FIN.
 
 ### stream.end(string, encoding)
 
-Sends `string` with the given `encoding` and terminates the stream with EOF
-or FIN. This is useful to reduce the number of packets sent.
+Посылает строку `string` в указанной кодировке `encoding` и закрывает поток
+отправкой EOF или FIN. Так можно уменьшить общее число отправленных пакетов.
 
 ### stream.end(buffer)
 
-Same as above but with a `buffer`.
+То же что выше но с использованием буфера.
 
 ### stream.destroy()
 
-Closes the underlying file descriptor. Stream will not emit any more events.
+Закрывает соответствующий потоку файловый дескриптор.
+Поток больше не будет генерировать событий.
+

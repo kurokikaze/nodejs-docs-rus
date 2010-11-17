@@ -1,7 +1,7 @@
-## Synopsis
+## Краткий обзор
 
-An example of a [web server](http.html) written with Node which responds with 'Hello
-World':
+Пример [web сервера]((http.html)), написанного с помощью Node
+и отвечающего строкой 'Hello World':
 
     var http = require('http');
 
@@ -12,10 +12,11 @@ World':
 
     console.log('Server running at http://127.0.0.1:8124/');
 
-To run the server, put the code into a file called `example.js` and execute
-it with the node program
+Чтобы запустить сервер, поместите код в файл с названием `example.js`
+и выполните его программой `node`:
 
     > node example.js
     Server running at http://127.0.0.1:8124/
 
-All of the examples in the documentation can be run similarly.
+Все примеры в этом руководстве можно запустить таким же образом.
+

@@ -22,7 +22,7 @@
 * [URL](url.html)
 * [Разбор строки запроса](querystring.html)
 * [Readline](readline.html)
-* [REPL](repl.html)
+* [Интерактивная консоль (REPL)](repl.html)
 * [VM](vm.html)
 * [Дочерние процессы](child_processes.html)
 * [Тестирование (asserts)](assert.html)

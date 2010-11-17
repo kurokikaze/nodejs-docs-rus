@@ -1,12 +1,14 @@
-## Query String
+## Разбор строки запроса
 
-This module provides utilities for dealing with query strings.  It provides the following methods:
+Этот модуль предоставляет инструменты для работы со строкой запроса.
+Используйте `require('querystring')` чтобы получить доступ к функциям модуля.
+
 
 ### querystring.stringify(obj, sep='&', eq='=')
 
-Serialize an object to a query string.  Optionally override the default separator and assignment characters.
+Сериализует объект в строку запроса. Можно менять символы разделителя и присваивания.
 
-Example:
+Пример:
 
     querystring.stringify({foo: 'bar'})
     // returns
@@ -18,9 +20,9 @@ Example:
 
 ### querystring.parse(str, sep='&', eq='=')
 
-Deserialize a query string to an object.  Optionally override the default separator and assignment characters.
+Десериализует строку запроса в объект. Можно менять символы разделителя и присваивания.
 
-Example:
+Пример:
 
     querystring.parse('a=b&b=c')
     // returns
@@ -30,8 +32,11 @@ Example:
 
 ### querystring.escape
 
-The escape function used by `querystring.stringify`, provided so that it could be overridden if necessary.
+Функция экранирования, используемая в `querystring.stringify`,
+предоставляется для того чтобы проще было заменить её собственной.
 
 ### querystring.unescape
 
-The unescape function used by `querystring.parse`, provided so that it could be overridden if necessary.
+Функция декодирования, используемая `querystring.parse`,
+предоставляется для того чтобы проще было заменить её собственной.
+

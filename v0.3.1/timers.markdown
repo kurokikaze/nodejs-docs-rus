@@ -1,21 +1,21 @@
-## Timers
+## Таймеры
 
 ### setTimeout(callback, delay, [arg], [...])
 
-To schedule execution of `callback` after `delay` milliseconds. Returns a
-`timeoutId` for possible use with `clearTimeout()`. Optionally, you can
-also pass arguments to the callback.
+Позволяет выполнить переданный `callback` через `delay` миллисекунд.
+Возвращает ID таймаута — `timeoutId` для последующего использования с `clearTimeout()`.
 
 ### clearTimeout(timeoutId)
 
-Prevents a timeout from triggering.
+Отменяет установленный таймаут.
 
 ### setInterval(callback, delay, [arg], [...])
 
-To schedule the repeated execution of `callback` every `delay` milliseconds.
-Returns a `intervalId` for possible use with `clearInterval()`. Optionally,
-you can also pass arguments to the callback.
+Позволяет выполнять переданный `callback` каждые `delay` миллисекунд.
+Возвращает ID интервала — `intervalId` для использования с `clearInterval()`.
+Кроме того, можно передавать аргументы callback'у.
 
 ### clearInterval(intervalId)
 
-Stops a interval from triggering.
+Прекращает действие интервального таймера.
+

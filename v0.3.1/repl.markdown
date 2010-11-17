@@ -1,12 +1,12 @@
-## REPL
+## Интерактивная консоль (REPL)
 
-A Read-Eval-Print-Loop (REPL) is available both as a standalone program and easily
-includable in other programs.  REPL provides a way to interactively run
-JavaScript and see the results.  It can be used for debugging, testing, or
-just trying things out.
+Интерактивная консоль (Read-Eval-Print-Loop, REPL) доступна как самостоятельная
+программа и может включаться в другие скрипты. REPL предоставляет возможность
+интерактивно выполнять JavaScript и сразу видеть результат. Он может использоваться
+для отладки, тестирования, и просто знакомства с системой.
 
-By executing `node` without any arguments from the command-line you will be
-dropped into the REPL. It has simplistic emacs line-editing.
+Выполняя `node` без аргументов из командной строки вы попадёте прямо в REPL.
+В нём есть простое редактирование строк по образцу emacs.
 
     mjr:~$ node
     Type '.help' for options.
@@ -19,24 +19,26 @@ dropped into the REPL. It has simplistic emacs line-editing.
     2
     3
 
-For advanced line-editors, start node with the environmental variable `NODE_NO_READLINE=1`.
-This will start the REPL in canonical terminal settings which will allow you to use with `rlwrap`.
+Чтобы использовать продвинутые редакторы, запустите Node с переменной окружения
+`NODE_NO_READLINE=1`. Это запустит REPL с обычными терминальными настройками,
+позволяющими использовать `rlwrap`.
 
-For example, you could add this to your bashrc file:
+К примеру, можно добавить следующее к Вашему файлу bashrc:
 
     alias node="env NODE_NO_READLINE=1 rlwrap node"
 
 
 ### repl.start(prompt='node> ', stream=process.openStdin())
 
-Starts a REPL with `prompt` as the prompt and `stream` for all I/O.  `prompt`
-is optional and defaults to `node> `.  `stream` is optional and defaults to 
-`process.openStdin()`.
+Запускает REPL с `prompt` в качестве приглашения и потоком `stream` для ввода/вывода.
+Параметр `prompt` необязателен и по умолчанию принимает значение `'node>'`.
+Параметр `stream` также необязателен и по умолчанию принимает значение `process.openStdin()`.
 
-Multiple REPLs may be started against the same running instance of node.  Each
-will share the same global object but will have unique I/O.
+В одном экземпляре node могут быть запущены несколько консолей REPL.
+Все будут использовать один глобальный объект но разный ввод-вывод.
 
-Here is an example that starts a REPL on stdin, a Unix socket, and a TCP socket:
+Вот пример, запускающий консоль REPL на стандартном потоке ввода-вывода,
+сокете Unix, и TCP-сокете:
 
     var net = require("net"),
         repl = require("repl");
@@ -55,20 +57,20 @@ Here is an example that starts a REPL on stdin, a Unix socket, and a TCP socket:
       repl.start("node via TCP socket> ", socket);
     }).listen(5001);
 
-Running this program from the command line will start a REPL on stdin.  Other
-REPL clients may connect through the Unix socket or TCP socket. `telnet` is useful
-for connecting to TCP sockets, and `socat` can be used to connect to both Unix and
-TCP sockets.
+Запуск этой программы из командной строки запустит консоль на `stdin`. Другие
+клиенты могут подключаться через Unix-сокет или TCP-сокет. Для подключения
+к TCP сокетам можно использовать `telnet`, a `socat` можно использовать
+для обоих типов сокетов.
 
-By starting a REPL from a Unix socket-based server instead of stdin, you can 
-connect to a long-running node process without restarting it.
+Запуская REPL на сокете вместо стандартного ввода-вывода Вы можете подключаться
+к работающему процессу node не перезапуская его.
 
 
-### REPL Features
+### Возможности REPL
 
-Inside the REPL, Control+D will exit.  Multi-line expressions can be input.
+Внутри REPL Control+D завершает его работу. Можно вводить многострочные выражения.
 
-The special variable `_` (underscore) contains the result of the last expression.
+Специальная переменная `_` (знак подчёркивания) содержит результат последнего выражения.
 
     node> [ "a", "b", "c" ]
     [ 'a', 'b', 'c' ]
@@ -77,9 +79,9 @@ The special variable `_` (underscore) contains the result of the last expression
     node> _ += 1
     4
 
-The REPL provides access to any variables in the global scope. You can expose a variable 
-to the REPL explicitly by assigning it to the `context` object associated with each
-`REPLServer`.  For example:
+REPL предоставляет доступ к любым переменным глобальной области видимости.
+Вы можете явно передать переменную в REPL, присвоив её объекту `context`,
+ассоциированному с каждым экземпляром `REPLServer`. Например:
 
     // repl_test.js
     var repl = require("repl"),
@@ -87,17 +89,17 @@ to the REPL explicitly by assigning it to the `context` object associated with e
 
     repl.start().context.m = msg;
 
-Things in the `context` object appear as local within the REPL:
+Свойства объекта `context` выглядят внутри REPL как локальные:
 
-    mjr:~$ node repl_test.js 
+    mjr:~$ node repl_test.js
     node> m
     'message'
 
-There are a few special REPL commands:
+В REPL есть несколько специальных команд:
 
-  - `.break` - While inputting a multi-line expression, sometimes you get lost or just don't care 
-  about completing it.  `.break` will start over.
-  - `.clear` - Resets the `context` object to an empty object and clears any multi-line expression.
-  - `.exit` - Close the I/O stream, which will cause the REPL to exit.
-  - `.help` - Show this list of special commands.
+  - `.break` - При вводе многострочного выражения иногда можно ошибиться,
+    либо совсем отказаться от его ввода. `.break` начнёт ввод заново.
+  - `.clear` - Сбрасывает объект `context` в пустой и очищает введённое многострочное выражение.
+  - `.exit` - Закрывает потоки ввода-вывода, принуждая REPL завершиться.
+  - `.help` - Показывает список специальных команд.
 
