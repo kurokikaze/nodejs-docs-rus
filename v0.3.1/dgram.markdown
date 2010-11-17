@@ -54,14 +54,15 @@
 
 ### dgram.send(buf, offset, length, port, address, [callback])
 
-For UDP sockets, the destination port and IP address must be specified.  A string
-may be supplied for the `address` parameter, and it will be resolved with DNS.  An 
-optional callback may be specified to detect any DNS errors and when `buf` may be
-re-used.  Note that DNS lookups will delay the time that a send takes place, at
-least until the next tick.  The only way to know for sure that a send has taken place
-is to use the callback.
+Для UDP сокета, адрес назначения представляет port and IP-адрес. В качетве
+аргумента `address` может быть передана строка, которая может быть разрешена
+с помощью DNS. Принимает необязательную функцию, которая будет вызвана после
+завершения разрешения DNS имени и когда буфер можно будет использовать заново.
+Следует иметь в виду, что DNS запросы требуют времени, по крайне мере
+до следующего витка цикола событий. Единственный способ узнать, что отправка
+состоялась — использовать callback.
 
-Example of sending a UDP packet to a random port on `localhost`;
+Пример отправки UDP-пакета на произвольный порт `localhost`:
 
     var dgram = require('dgram');
     var message = new Buffer("Some bytes");
@@ -72,11 +73,10 @@ Example of sending a UDP packet to a random port on `localhost`;
 
 ### dgram.bind(path)
 
-For Unix domain datagram sockets, start listening for incoming datagrams on a
-socket specified by `path`. Note that clients may `send()` without `bind()`,
-but no datagrams will be received without a `bind()`.
+Для Unix-сокета задаёт путь `path`. Имейте в виду, что клиент может вызывать
+`send()` перед `bind()`, но данные не будут отправлены до вызова `bind()`.
 
-Example of a Unix domain datagram server that echoes back all messages it receives:
+Пример сервера на Unix-сокете, который отправляет обратно поступающие сообщения:
 
     var dgram = require("dgram");
     var serverPath = "/tmp/dgram_server_sock";
@@ -93,7 +93,7 @@ Example of a Unix domain datagram server that echoes back all messages it receiv
 
     server.bind(serverPath);
 
-Example of a Unix domain datagram client that talks to this server:
+Пример клиента на Unix-сокете, обращающегося к серверу:
 
     var dgram = require("dgram");
     var serverPath = "/tmp/dgram_server_sock";
@@ -116,10 +116,11 @@ Example of a Unix domain datagram client that talks to this server:
 
 ### dgram.bind(port, [address])
 
-For UDP sockets, listen for datagrams on a named `port` and optional `address`.  If
-`address` is not specified, the OS will try to listen on all addresses.
+Для UDP сокетов задаёт порт `port` и необязательный адрес `address`
+для прослушивания. Если `address` не задан, то будет предпринята попытка
+прослушивания всех адресов.
 
-Example of a UDP server listening on port 41234:
+Пример UDP-сервера, слушающего на 41234 порту:
 
     var dgram = require("dgram");
 
@@ -143,28 +144,26 @@ Example of a UDP server listening on port 41234:
 
 ### dgram.close()
 
-Close the underlying socket and stop listening for data on it.  UDP sockets 
-automatically listen for messages, even if they did not call `bind()`.
+Закрывает сокет и прекращает приём данных.
 
 ### dgram.address()
 
-Returns an object containing the address information for a socket.  For UDP sockets, 
-this object will contain `address` and `port`.  For Unix domain sockets, it will contain
-only `address`.
+Возвращает объект с информацией об адресе, на который настроен сокет. Для UDP
+сокетов этот объект содержит свойства `address` и `port`, а для Unix-сокетов
+только свойство `address`.
 
 ### dgram.setBroadcast(flag)
 
-Sets or clears the `SO_BROADCAST` socket option.  When this option is set, UDP packets
-may be sent to a local interface's broadcast address.
+Устанавливает или сбрасывает опцию `SO_BROADCAST` сокета. если эта опция установлена,
+то UDP пакеты могут оправляться по широковещательному адресу локального интерфейса.
 
 ### dgram.setTTL(ttl)
 
-Sets the `IP_TTL` socket option.  TTL stands for "Time to Live," but in this context it
-specifies the number of IP hops that a packet is allowed to go through.  Each router or 
-gateway that forwards a packet decrements the TTL.  If the TTL is decremented to 0 by a
-router, it will not be forwarded.  Changing TTL values is typically done for network 
-probes or when multicasting.
+Устанавливает опуцию `IP_TTL` сокета.  TTL означает "время жизни", и его значение
+определяет количество IP, сквозь которые может быть передан пакет. Каждый роутер
+или шлюз на пути пакета уменьшают TTL. Как только он станет равным нуля, пакет уничтожится.
+Изменение TTL может быть полезно для тестирования сети или широковещательной рассылки.
 
-The argument to `setTTL()` is a number of hops between 1 and 255.  The default on most
-systems is 64.
+Аргументом `setTTL()` является число от 1 до 255. По умолчанию на большинстве
+систем ипользуется 64.
 

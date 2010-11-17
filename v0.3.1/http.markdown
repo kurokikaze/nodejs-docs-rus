@@ -342,10 +342,11 @@ HTTP-клиент создаётся принимая адрес сервера 
 
 * Отправка заголовка `'Content-length'` отключит 'chunked encoding'.
 
-* Sending an 'Expect' header will immediately send the request headers. 
-  Usually, when sending 'Expect: 100-continue', you should both set a timeout
-  and listen for the `continue` event. See RFC2616 Section 8.2.3 for more
-  information.
+* Отправка заголовка 'Expect' немедленно приведёт к отправке всех заголовков.
+  Обычно, при отправке 'Expect: 100-continue', вы должны установить таймаут
+  и установить обработчик события `continue`.
+  См. [RFC2616 Section 8.2.3](http://tools.ietf.org/html/rfc2616#section-8.2.3)
+  для дополнительной информации.
 
 
 ### Событие: 'upgrade'
