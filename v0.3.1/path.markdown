@@ -1,13 +1,13 @@
 ## Path
 
-This module contains utilities for dealing with file paths.  Use
-`require('path')` to use it.  It provides the following methods:
+Этот модуль содержит средства для работы с путями.
+Используйте `require('path')` чтобы получить к нему доступ.
 
 ### path.join([path1], [path2], [...])
 
-Join all arguments together and resolve the resulting path.
+Соединяет все аргументы и обрабатывает получившийся путь.
 
-Example:
+Пример:
 
     node> require('path').join(
     ...   '/foo', 'bar', 'baz/asdf', 'quux', '..')
@@ -15,9 +15,9 @@ Example:
 
 ### path.normalizeArray(arr)
 
-Normalize an array of path parts, taking care of `'..'` and `'.'` parts.
+Нормализует массив частей пути, обрабатывая `'..'` и `'.'`.
 
-Example:
+Пример:
 
     path.normalizeArray(['', 
       'foo', 'bar', 'baz', 'asdf', 'quux', '..'])
@@ -26,9 +26,9 @@ Example:
 
 ### path.normalize(p)
 
-Normalize a string path, taking care of `'..'` and `'.'` parts.
+Нормализует строку пути, обрабатывая `'..'` и `'.'`.
 
-Example:
+Пример:
 
     path.normalize('/foo/bar/baz/asdf/quux/..')
     // returns
@@ -36,9 +36,9 @@ Example:
 
 ### path.dirname(p)
 
-Return the directory name of a path.  Similar to the Unix `dirname` command.
+Возвращает имя директории для пути. Действует как Unix-команда `dirname`.
 
-Example:
+Пример:
 
     path.dirname('/foo/bar/baz/asdf/quux')
     // returns
@@ -46,9 +46,9 @@ Example:
 
 ### path.basename(p, [ext])
 
-Return the last portion of a path.  Similar to the Unix `basename` command.
+Возвращает последнюю часть пути. Действует как Unix-команда `basename`.
 
-Example:
+Пример:
 
     path.basename('/foo/bar/baz/asdf/quux.html')
     // returns
@@ -60,9 +60,10 @@ Example:
 
 ### path.extname(p)
 
-Return the extension of the path.  Everything after the last '.' in the last portion
-of the path.  If there is no '.' in the last portion of the path or the only '.' is
-the first character, then it returns an empty string.  Examples:
+Возвращает расширение пути. Учитывается всё после последней '.' в последней части пути.
+Если в последней части нет '.' или '.' единственный символ, возвращает пустую строку.
+
+Пример:
 
     path.extname('index.html')
     // returns 
@@ -74,8 +75,12 @@ the first character, then it returns an empty string.  Examples:
 
 ### path.exists(p, [callback])
 
-Test whether or not the given path exists.  Then, call the `callback` argument with either true or false.  Example:
+Проверяет, существует ли данный путь. Вызывает переданный обработчик
+с аргументом `true` или `false`.
+
+Пример:
 
     path.exists('/etc/passwd', function (exists) {
       util.debug(exists ? "it's there" : "no passwd!");
     });
+

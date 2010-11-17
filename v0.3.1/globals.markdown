@@ -1,49 +1,50 @@
-## Global Objects
+## Глобальные объекты
 
-These object are available in the global scope and can be accessed from anywhere.
+Эти объекты доступны в глобальной области видимости
+и могут быть использованы в любом месте кода.
 
 ### global
 
-The global namespace object.
+Глобальный объект.
 
 ### process
 
-The process object. See the `'process object'` section.
+Объект процесса. Большая часть данных процесса находится именно здесь.
+См. секцию `'process'` ниже.
 
 ### require()
 
-To require modules. See the `'Modules'` section.
+Подключает модули. См. секцию `'Модули'`.
 
 ### require.resolve()
 
-Use the internal `require()` machinery to look up the location of a module,
-but rather than loading the module, just return the resolved filename.
+Использует внутреннюю логику `require()` для определение местоположения модуля,
+но не загружает его, а возвращает имя файла, содержащего модуль.
 
 ### require.paths
 
-An array of search paths for `require()`.  This array can be modified to add
-custom paths.
+Массив путей поиска для `require()`. Этот массив может быть изменён
+для добавления пользовательских путей.
 
-Example: add a new path to the beginning of the search list
+Пример: добавить новый путь в начало массива.
 
     require.paths.unshift('/usr/local/node');
 
 
 ### __filename
 
-The filename of the script being executed.  This is the absolute path, and not necessarily
-the same filename passed in as a command line argument.
+Имя исполняемого скрипта. Это абсолютный путь, и не всегда это будет то же имя, которое было передано в аргументе командной строки.
 
-Example: running `node example.js` from `/Users/mjr`
+Пример: запускаем `node example.js` из папки `/Users/mjr`.
 
     console.log(__filename);
     // /Users/mjr/example.js
 
 ### __dirname
 
-The dirname of the script being executed.
+Имя директории исполняемого скрипта.
 
-Example: running `node example.js` from `/Users/mjr`
+Пример: запускаем `node example.js` из папки `/Users/mjr`.
 
     console.log(__dirname);
     // /Users/mjr
@@ -51,6 +52,6 @@ Example: running `node example.js` from `/Users/mjr`
 
 ### module
 
-A reference to the current module (of type `process.Module`). In particular
-`module.exports` is the same as the `exports` object. See `src/process.js`
-for more information.
+Ссылка на текущий модуль (типа `process.Module`). В частности, `module.exports` —
+то же самое, что и объект `exports`. См. `src/process.js` для подробной информации.
+

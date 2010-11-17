@@ -1,31 +1,31 @@
-## Standard Modules
+## Стандартные модули
 
-Node comes with a number of modules that are compiled in to the process,
-most of which are documented below.  The most common way to use these modules
-is with `require('name')` and then assigning the return value to a local
-variable with the same name as the module.
+Вместе с Node поставляется несколько стандартных встроенных модулей,
+большинство из которых описано ниже. Стандартный способ использования этих
+модулей — вызов `require('name')` и сохранение возвращаемого объекта в локальной
+переменной с именем, совпадающим с именем модуля.
 
-Example:
+Пример:
 
     var util = require('util');
-    
-It is possible to extend node with other modules.  See `'Modules'`
 
-## Modules
+Также возможно расширение Node другими модулями. См. `'Модули'`.
 
-Node uses the CommonJS module system.
+## Модули
 
-Node has a simple module loading system.  In Node, files and modules are in
-one-to-one correspondence.  As an example, `foo.js` loads the module
-`circle.js` in the same directory.
+Node использует систему модулей CommonJS.
 
-The contents of `foo.js`:
+Node имеет простую систему загрузки модулей, файлы и модули являются,
+в каком-то смысле, синонимами. В примере `foo.js` загружает модуль `circle.js`,
+находящийся в той же директории.
+
+Содержимое `foo.js`:
 
     var circle = require('./circle');
     console.log( 'The area of a circle of radius 4 is '
                + circle.area(4));
 
-The contents of `circle.js`:
+Содержимое `circle.js`:
 
     var PI = 3.14;
 
@@ -88,3 +88,4 @@ before.
 
 To get the exact filename that will be loaded when `require()` is called, use
 the `require.resolve()` function.
+

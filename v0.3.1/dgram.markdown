@@ -1,45 +1,45 @@
 ## dgram
 
-Datagram sockets are available through `require('dgram')`.  Datagrams are most commonly 
-handled as IP/UDP messages, but they can also be used over Unix domain sockets.
+Сокеты для датаграмм доступны при включении `require('dgram')`. Датаграммы
+чаще всего обрабатываются как сообщения IP/UDP, но они могут быть использованы
+и с доменными сокетами Unix.
 
-### Event: 'message'
+### Событие: 'message'
 
 `function (msg, rinfo) { }`
 
-Emitted when a new datagram is available on a socket.  `msg` is a `Buffer` and `rinfo` is
-an object with the sender's address information and the number of bytes in the datagram.
+Генерируется когда новая датаграмма доступна на сокете. `msg` это `Buffer`,
+а `rinfo` это объект с информацией об адресе отправителя и количестве байт в датаграмме.
 
-### Event: 'listening'
-
-`function () { }`
-
-Emitted when a socket starts listening for datagrams.  This happens as soon as UDP sockets
-are created.  Unix domain sockets do not start listening until calling `bind()` on them.
-
-### Event: 'close'
+### Событие: 'listening'
 
 `function () { }`
 
-Emitted when a socket is closed with `close()`.  No new `message` events will be emitted
-on this socket.
+Генеритуется когда сокет начинает приём датаграмм. Для UDP-сокета это происходит
+при создании. Сокеты Unix не начинают приём до вызова для них `bind()`.
+
+### Событие: 'close'
+
+`function () { }`
+
+Генерируется когда сокет закрывается с помощью `close()`.
+События `message` на этом сокете больше не будут генерироваться.
 
 ### dgram.createSocket(type, [callback])
 
-Creates a datagram socket of the specified types.  Valid types are:
-`udp4`, `udp6`, and `unix_dgram`.  
+Создаёт сокет для датаграмм заданного типа. Доступные типы: `udp4`, `udp6` и `unix_dgram`.
 
-Takes an optional callback which is added as a listener for `message` events.
+Принимает необязательную функцию, которая добавляется обработчиком событий `message`.
 
 ### dgram.send(buf, offset, length, path, [callback])
 
-For Unix domain datagram sockets, the destination address is a pathname in the filesystem.
-An optional callback may be supplied that is invoked after the `sendto` call is completed
-by the OS.  It is not safe to re-use `buf` until the callback is invoked.  Note that 
-unless the socket is bound to a pathname with `bind()` there is no way to receive messages
-on this socket.
+Для датаграмм на Unix-сокетах адрес назначения это путь в файловой системе.
+Принимает необязательную функцию, которая будет вызвана после завершения
+вызова `sendto` операционной системой. Пока идёт вызов, повторное использование
+буфера `buf` небезопасно. Заметьте, что если сокет не привязан к пути в файловой
+системе с помощью `bind()`, на нём невозможно получать сообщения.
 
-Example of sending a message to syslogd on OSX via Unix domain socket `/var/run/syslog`:
+Пример отправки сообщения демону syslogd в OSX через Unix-сокет `/var/run/syslog`:
 
     var dgram = require('dgram');
     var message = new Buffer("A message to log.");
