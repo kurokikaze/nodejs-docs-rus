@@ -97,6 +97,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 2.55em;
   line-height: 1.375em;
+  margin: 0 0 0.67em;
 }
 
 h2 {
@@ -167,14 +168,13 @@ code.pre {
 
 #container {
   position: relative;
-  padding: 6em;
+  padding: 0 0 0 6em;
   max-width: 50em;
   text-align: left;
 }
 
 #container header {
   margin: 1.25em -0.5em 1.3em;
-  padding: 0 0.5em 0.225em;
 }
 
 hr {

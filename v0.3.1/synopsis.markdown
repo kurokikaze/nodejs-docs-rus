@@ -1,6 +1,6 @@
 ## Краткий обзор
 
-Пример [web сервера]((http.html)), написанного с помощью Node
+Пример [web сервера](http.html), написанного с помощью Node
 и отвечающего строкой 'Hello World':
 
     var http = require('http');
