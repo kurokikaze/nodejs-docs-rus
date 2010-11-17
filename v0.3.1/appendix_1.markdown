@@ -28,9 +28,8 @@
 
 - Парсинг HTML: [Apricot](https://github.com/silentrob/Apricot)
 
-- Отладка: [ndb](https://github.com/smtlaissezfaire/ndb) &mdash; консольный
-  отладчик, [inspector](https://github.com/dannycoates/node-inspector) &mdash;
-  web-based инструмент.
+- Отладка: [ndb](https://github.com/smtlaissezfaire/ndb) — консольный отладчик,
+  [inspector](https://github.com/dannycoates/node-inspector) — web-based инструмент.
 
 - [pcap binding](https://github.com/mranney/node_pcap)
 

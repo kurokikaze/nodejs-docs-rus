@@ -8,5 +8,3 @@
     and listen for the `continue` event. See RFC2616 Section 8.2.3 for more
     information.
 
-* Fix &mdash;
-
