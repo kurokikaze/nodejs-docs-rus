@@ -12,3 +12,4 @@ all.html: $(apidoc_markdown)
 clean:
 	rm -f ./*.html
 
+.PHONY: all clean
