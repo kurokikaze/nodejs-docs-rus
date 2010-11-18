@@ -1,11 +1,14 @@
-Документация по Node.js v0.1.100
-================================
+Документация по Node.js, русская версия
+=======================================
+
+На данный момент переведена документация для v0.1.100 и v0.3.1.
 
 Оригинальную документацию можно прочесть [на сайте](http://nodejs.org/api.html) или скачать с [GitHub](http://github.com/ry/node/tree/master/doc/).
 
+Node.JS API documentation in Russian
+====================================
 
-Node.JS v0.1.100 API documentation in Russian
-=============================================
+We translated v0.1.100 and v0.3.1 docs for this moment.
 
 Original documentation lives at [nodejs.org/api.html](http://nodejs.org/api.html) and in [GitHub repo](http://github.com/ry/node/tree/master/doc/).
 
@@ -15,7 +18,7 @@ Original documentation lives at [nodejs.org/api.html](http://nodejs.org/api.html
 Node is the evented I/O for V8 javascript.
 Node's goal is to provide an easy way to build scalable network programs,
 it is similar in design to and influenced by systems like Ruby's Event Machine or Python's Twisted.
-Website: http://nodejs.org
+Website: <http://nodejs.org>.
 
 
 ## Russian translation contributors
