@@ -2388,14 +2388,10 @@ client.send(message, 0, message.length, "/var/run/syslog",
  
 <h3>dgram.send(buf, offset, length, port, address, [callback])</h3> 
  
-<p>For UDP sockets, the destination port and IP address must be specified.  A string
-may be supplied for the <code>address</code> parameter, and it will be resolved with DNS.  An 
-optional callback may be specified to detect any DNS errors and when <code>buf</code> may be
-re-used.  Note that DNS lookups will delay the time that a send takes place, at
-least until the next tick.  The only way to know for sure that a send has taken place
-is to use the callback.</p> 
+<p>Для UDP сокетов должен быть указан IP-адрес и порт назначения. В качестве адреса <code>address</code> может 
+быть передана строка, она будет преобразована в адрес через DNS. Принимает необязательную функцию, которая определит произошли ли ошибки при использовании DNS и можно ли повторно использовать <code>buf</code>. Заметьте, что обращение к DNS для разрешения адреса отложит отправку пакета как минимум до следующей итерации event loop. Единственный способ убедиться что пакет действительно отправлен &mdash; использование фунции-обработчика.</p> 
  
-<p>Example of sending a UDP packet to a random port on <code>localhost</code>;</p> 
+<p>Пример отправки UDP пакета на случайный порт локальной машины:</p> 
  
 <pre><code>var dgram = require('dgram');
 var message = new Buffer("Some bytes");
@@ -2405,11 +2401,10 @@ client.close();</code></pre>
  
 <h3>dgram.bind(path)</h3> 
  
-<p>For Unix domain datagram sockets, start listening for incoming datagrams on a
-socket specified by <code>path</code>. Note that clients may <code>send()</code> without <code>bind()</code>,
-but no datagrams will be received without a <code>bind()</code>.</p> 
+<p>Для Unix-сокетов датаграмм, начинает приём сообшений на сокете, путь к которому передаётся в аргументе <code>path</code>. Заметьте что клиенты могут использовать <code>send()</code> без вызова <code>bind()</code>,
+но никакие сообщения не будут приняты пока <code>bind()</code> не будет вызван.</p> 
  
-<p>Example of a Unix domain datagram server that echoes back all messages it receives:</p> 
+<p>Пример Unix-сервера пакетов, отправляющего обратно все принятые сообщения:</p> 
  
 <pre><code>var dgram = require("dgram");
 var serverPath = "/tmp/dgram_server_sock";
@@ -2426,7 +2421,7 @@ server.on("listening", function () {
  
 server.bind(serverPath);</code></pre> 
  
-<p>Example of a Unix domain datagram client that talks to this server:</p> 
+<p>Пример Unix-клиента для приема пакетов, работающего с этим сервером:</p> 
  
 <pre><code>var dgram = require("dgram");
 var serverPath = "/tmp/dgram_server_sock";
@@ -2449,10 +2444,10 @@ client.bind(clientPath);</code></pre>
  
 <h3>dgram.bind(port, [address])</h3> 
  
-<p>For UDP sockets, listen for datagrams on a named <code>port</code> and optional <code>address</code>.  If
-<code>address</code> is not specified, the OS will try to listen on all addresses.</p> 
+<p>Для UDP-сокетов, начинает приём сообщений на заданном порту <code>port</code> и опционально на адресе <code>address</code>.  Если
+<code>address</code> не указан, ОС будет слушать все доступные адреса.</p> 
  
-<p>Example of a UDP server listening on port 41234:</p> 
+<p>Пример UDP сервера слушающего порт 41234:</p> 
  
 <pre><code>var dgram = require("dgram");
  
@@ -2475,30 +2470,24 @@ server.bind(41234);
  
 <h3>dgram.close()</h3> 
  
-<p>Close the underlying socket and stop listening for data on it.  UDP sockets 
-automatically listen for messages, even if they did not call <code>bind()</code>.</p> 
+<p>Закрывает соответствующий сокет и прекращает приём данных на нём. UDP сокеты автоматически начинают принимать сообщения, даже без вызова <code>bind()</code>.</p> 
  
 <h3>dgram.address()</h3> 
  
-<p>Returns an object containing the address information for a socket.  For UDP sockets, 
-this object will contain <code>address</code> and <code>port</code>.  For Unix domain sockets, it will contain
-only <code>address</code>.</p> 
+<p>Возвращает объект в котором содержится информация об адресе сокета. Для UDP сокетов этот объект будет содержать поля 
+<code>address</code> и <code>port</code>. Для сокетов Unix он будет содержать только <code>address</code>.</p> 
  
 <h3>dgram.setBroadcast(flag)</h3> 
  
-<p>Sets or clears the <code>SO_BROADCAST</code> socket option.  When this option is set, UDP packets
-may be sent to a local interface's broadcast address.</p> 
+<p>Устанавливает или снимает флаг <code>SO_BROADCAST</code> в настройках сокета.  Когда этот флаг установлен, пакеты UDP
+могут быть отправлены на широковещательный адрес локального интерфейса.</p> 
  
 <h3>dgram.setTTL(ttl)</h3> 
  
-<p>Sets the <code>IP_TTL</code> socket option.  TTL stands for "Time to Live," but in this context it
-specifies the number of IP hops that a packet is allowed to go through.  Each router or 
-gateway that forwards a packet decrements the TTL.  If the TTL is decremented to 0 by a
-router, it will not be forwarded.  Changing TTL values is typically done for network 
-probes or when multicasting.</p> 
+<p>Задаёт значение параметра <code>IP_TTL</code>.  TTL это "время жизни" пакета ("Time to Live"), но в этом контексте оно означает 
+количество IP узлов которое может пройти пакет. Каждый роутер или шлюз, перенаправляющие пакет дальше, снижают это значение на единицу. Если TTL снижается до 0 на одном из узлов, пакет не будет передан дальше. TTL обычно изменяют для диагностики сети или ограничения действия широковещательных пакетов.</p> 
  
-<p>The argument to <code>setTTL()</code> is a number of hops between 1 and 255.  The default on most
-systems is 64.</p> 
+<p>Аргумент к <code>setTTL()</code> это число узлов от 1 до 255.  На большинстве систем значение по умолчанию 64.</p> 
 
 <H2 id="assert-260">Assert</H2>
 
