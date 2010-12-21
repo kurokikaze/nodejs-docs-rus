@@ -1,295 +1,12 @@
 <!DOCTYPE html>
-<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<TITLE>node(1) -- Synopsis for V8 JavaScript</TITLE>
-	<STYLE type="text/css">
-		*{
-			margin: 0;padding: 0;
-		}
-		html,body
-		{
-			height: 100%;
-		}
-		body
-		{
-			font-family:helvetica, arial, sans serif;
-			background:#22252a;
-			color:#eee;
-			font-size:16px;
-			line-height:1.3;
-			position:relative;
-			min-width: 690px;
-		}
-		a
-		{
-			color:#CD5;
-		}
-		a:focus
-		{
-			outline: none;
-			-moz-outline: none;
-		}
-		pre
-		{
-			overflow: hidden;
-		}
-		li
-		{
-			list-style: inside;
-		}
-		#man,#man code,#man pre,#man tt,#man kbd,#man samp
-		{
-			line-height:1.6;
-			color:#eee;
-			background:#22252a;
-		}
-
-		#man
-		{
-			margin: 0;
-			position: absolute;
-			top:0;
-			bottom:0;
-			left: 225px;
-			right: 0;
-			overflow: auto;
-		}
-		#man-content
-		{
-			padding: 0 20px;
-			max-width: 650px;
-		}
-		#man h1,#man h2,#man h3
-		{
-			color:#DCDDDE;
-			clear:left;
-		}
-
-		#man h1
-		{
-			background:url("http://nodejs.org/logo.png") no-repeat scroll center 0 transparent;
-			height:111px;
-			margin:15px 0 20px;
-			text-align:center;
-			text-indent:-2000px;
-		}
-
-		#man h2
-		{
-			font-size:18px;
-			background:#000;
-			color:#CD5;
-			margin:10px 0;
-			padding:5px 10px;
-		}
-
-		#man h3
-		{
-			font-size:16px;
-			margin:0 0 0 0ex;
-		}
-
-		#man p,#man ul,#man ol,#man dl,#man pre
-		{
-			margin:0 0 18px;
-		}
-
-		#man pre
-		{
-			color:#CCCDCE;
-			background:#121314;
-			border-left:2ex solid #222;
-			margin:0 0 20px;
-			padding:5px 7px;
-		}
-
-		#man pre + h2,#man pre + h3
-		{
-			margin-top:22px;
-		}
-
-		#man h2 + pre,#man h3 + pre
-		{
-			margin-top:5px;
-		}
-
-		#man > p,#man > ul,#man > ol,#man > dl,#man > pre
-		{
-			margin-left:5%;
-		}
-
-		#man dt
-		{
-			clear:left;
-			margin:0;
-		}
-
-		#man dt.flush
-		{
-			float:left;
-			width:8ex;
-		}
-
-		#man dd
-		{
-			margin:0 0 0 9ex;
-		}
-
-		#man code,#man strong,#man b
-		{
-			font-weight:bold;
-			color:#ECEDEE;
-		}
-
-		#man pre code
-		{
-			font-weight:normal;
-			color:#DCDDDE;
-			background:inherit;
-		}
-
-		#man em,var,u
-		{
-			font-style:normal;
-			color:#CCCDCE;
-			border-bottom:1px solid #999;
-		}
-
-		#man ol.man,#man ol.man li
-		{
-			float:left;
-			width:33%;
-			list-style-type:none;
-			text-transform:uppercase;
-			font-size:18px;
-			color:#666;
-			letter-spacing:1px;
-			margin:2px 0 10px;
-			padding:0;
-		}
-
-		#man ol.man
-		{
-			width:100%;
-		}
-
-		#man ol.man li.tl
-		{
-			text-align:left;
-		}
-
-		#man ol.man li.tc
-		{
-			text-align:center;
-			letter-spacing:4px;
-		}
-
-		#man ol.man li.tr
-		{
-			text-align:right;
-		}
-
-		#man ol.man a
-		{
-			color:#666;
-		}
-
-		#man ol.man a:hover
-		{
-			color:#CCCDCE;
-		}
-
-		#toc
-		{
-			position: absolute;
-			top:0;
-			bottom:0;
-			left: 0;
-			padding-left: 30px;
-			width: 195px;
-			overflow: auto;
-			overflow-x: hidden;
-			font-size: 15px;
-		}
-		#toc li
-		{
-			text-wrap: word-wrap;
-		}
-		#toc a
-		{
-			display: inline-block;
-			width: 100%;
-			color: #fff;
-			text-decoration:none;
-		}
-		#toc > a:hover
-		{
-			color: rgba(255,255,255,0.7);
-		}
-		#toc > ul > li
-		{
-			border-bottom:1px solid #0f1214;
-			padding:5px 0 5px 5px;
-			list-style: none;
-			line-height: 1.3;
-		}
-		#toc ul ul
-		{
-			display: none;
-		}
-		#toc ul ul > li
-		{
-			border-top:1px solid rgba(0, 0, 0, 0.1);
-			color:#FFFFFF;
-			font-size:85%;
-			line-height:1.3;
-			list-style:disc outside none;
-			margin-left:25px;
-			max-width:165px;
-			padding:3px 0 5px 5px;
-		}
-		#toc li.active > a
-		{
-			color:#CD5;
-		}
-
-		.sh_sourceCode
-		{
-			font-family: monospace;
-			overflow:hidden;
-		}
-
-		#toc .toggler
-		{
-			-moz-user-select:none;
-			background:none repeat scroll 0 0 #000000;
-			color:#FFFFFF;
-			display:inline-block;
-			font-weight:bold;
-			height:31px;
-			line-height:32px;
-			margin:-5px 8px -18px -33px;
-			outline:medium none;
-			padding:0;
-			text-align:center;
-			width:25px;
-		}
-		.current-section
-		{
-			position: fixed;
-			top: 0;
-			margin: 0 !important;
-		}
-		#toctitle
-		{
-			background:none repeat scroll 0 0 #000000;
-			color:#CCDD55;
-			font-size:18px;
-			margin: 0 0 10px -30px;
-			padding: 10px;
-		}
-	</STYLE>
-<LINK rel="stylesheet" href="api-files/sh_vim-dark.css" type="text/css">
-</HEAD><BODY>
+	<LINK rel="stylesheet" href="assets/style.css" type="text/css" />
+	<LINK rel="stylesheet" href="assets/sh_vim-dark.css" type="text/css" />
+</HEAD>
+<BODY>
 
 <DIV id="toc">
 	<DIV id="toctitle">Node v0.2.5</DIV>
@@ -523,10 +240,10 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>Класс <CODE class="sh_sourceCode">EventEmitter</CODE> находится в модуле <SPAN class="sh_string">'events'</SPAN>: 
 <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">events'</SPAN><SPAN class="sh_symbol">).</SPAN>EventEmitter</CODE>.</P>
 
-<P>Все источники событий генерируют событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'newListener'</SPAN></CODE> когда к ним добавляются новые обработчики.</P>
+<P>Все источники событий генерируют событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'newListener'</SPAN></CODE>, когда к ним добавляются новые обработчики.</P>
 
 <P>Когда источник событий сталкивается с ошибкой, типичное поведение &mdash; сгенерировать событие
-ошибки <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>.  События ошибки особенные &mdash; если им не назначен обработчик они выдают на экран текущий стек (stack trace) и завершают программу.</P>
+ошибки <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE>.  События ошибки особенные &mdash; если им не назначен обработчик, то они выводят на экран стек вызовов (stack trace) и завершают программу.</P>
 
 <H3 id="event-newlistener-15">Событие: 'newListener'</H3>
 
@@ -572,7 +289,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <H2 id="streams-22">Потоки</H2>
 
 <P>Поток &mdash; это абстрактный интерфейс, реализуемый многими объектами в Node.
-Например, запрос к HTTP-серверу это поток, также как stdout. Потоки
+Например, запрос к HTTP-серверу является потоком, также как stdout. Потоки
 могут быть с возможностью чтения, записи или и того и другого. Все потоки являются экземплярами <CODE class="sh_sourceCode">EventEmitter</CODE>.</P>
 
 <H2 id="readable-stream-23">Поток с возможностью чтения</H2>
@@ -583,7 +300,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>data<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
-<P>Событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> передаёт обработчику либо <CODE class="sh_sourceCode">Buffer</CODE> (по умолчанию) либо строку если предварительно был вызван <CODE class="sh_sourceCode"><SPAN class="sh_function">setEncoding</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
+<P>Событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> передаёт обработчику либо <CODE class="sh_sourceCode">Buffer</CODE> (по умолчанию), либо строку, если предварительно был вызван <CODE class="sh_sourceCode"><SPAN class="sh_function">setEncoding</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="event-end-25">Событие: 'end'</H3>
 
@@ -604,8 +321,8 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">()</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
 <P>Генерируется когда соответствующий потоку файловый дескриптор закрывается. Не все потоки
-генерируют это событие. (Например, входящий HTTP запрос не генерирует
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'close'</SPAN></CODE>.)</P>
+генерируют это событие. Например, входящий HTTP запрос не генерирует
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'close'</SPAN></CODE>.</P>
 
 <H3 id="event-fd-28">Событие: 'fd'</H3>
 
@@ -621,7 +338,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <H3 id="stream-setencoding-29">stream.setEncoding(encoding)</H3>
 
 <P>Заставляет событие 'data' передавать обработчику строку вместо буфера. <CODE class="sh_sourceCode">encoding</CODE> может быть
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, или <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE> или <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
 <H3 id="stream-pause-30">stream.pause()</H3>
 
@@ -673,7 +390,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="stream-write-38">stream.write(buffer)</H3>
 
-<P>То же что выше, но с использованием буфера.</P>
+<P>То же что и выше, но с использованием буфера.</P>
 
 <H3 id="stream-end-39">stream.end()</H3>
 
@@ -702,17 +419,17 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="process-45">process</H3>
 
-<P>Объект процесса. Большая часть данных процесса находится именно здесь. См. секцию <CODE class="sh_sourceCode"><SPAN class="sh_string">'process object'</SPAN></CODE>.</P>
+<P>Объект процесса. Большая часть данных процесса находится именно здесь. См. секцию <CODE class="sh_sourceCode"><SPAN class="sh_string">'process'</SPAN></CODE> ниже.</P>
 
 <H3 id="require-46">require()</H3>
 
-<P>Подключение модулей. См. секцию <CODE class="sh_sourceCode"><SPAN class="sh_string">'Modules'</SPAN></CODE>.</P>
+<P>Подключение модулей. См. секцию <CODE class="sh_sourceCode"><SPAN class="sh_string">'Модули'</SPAN></CODE>.</P>
 
 <H3 id="require-paths-47">require.paths</H3>
 
 <P>Массив путей поиска для <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.  Этот массив может быть изменён для добавления пользовательских путей.</P>
 
-<P>Пример: добавить новый путь в начало массива</P>
+<P>Пример: добавить новый путь в начало массива.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">require<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>paths<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">unshift</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/usr/local/node'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>require<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>paths<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -728,7 +445,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Имя директории исполняемого скрипта.</P>
 
-<P>Пример: запускаем <CODE class="sh_sourceCode">node example<SPAN class="sh_symbol">.</SPAN>js</CODE> bp папки <CODE class="sh_sourceCode"><SPAN class="sh_regexp">/Users/mjr</SPAN></CODE></P>
+<P>Пример: запускаем <CODE class="sh_sourceCode">node example<SPAN class="sh_symbol">.</SPAN>js</CODE> из папки <CODE class="sh_sourceCode"><SPAN class="sh_regexp">/Users/mjr</SPAN></CODE>.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>__filename<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">log</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>__dirname<SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
@@ -738,8 +455,8 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="module-50">module</H3>
 
-<P>Ссылка на текущий модуль (типа <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>Module</CODE>). В частности
-<CODE class="sh_sourceCode">module<SPAN class="sh_symbol">.</SPAN>exports</CODE> то же самое что объект <CODE class="sh_sourceCode">exports</CODE>. См. <CODE class="sh_sourceCode"><SPAN class="sh_normal">src</SPAN><SPAN class="sh_symbol">/</SPAN>process<SPAN class="sh_symbol">.</SPAN>js</CODE>
+<P>Ссылка на текущий модуль (типа <CODE class="sh_sourceCode">process<SPAN class="sh_symbol">.</SPAN>Module</CODE>). В частности,
+<CODE class="sh_sourceCode">module<SPAN class="sh_symbol">.</SPAN>exports</CODE> &mdash; то же самое, что и объект <CODE class="sh_sourceCode">exports</CODE>. См. <CODE class="sh_sourceCode"><SPAN class="sh_normal">src</SPAN><SPAN class="sh_symbol">/</SPAN>process<SPAN class="sh_symbol">.</SPAN>js</CODE>
 для подробной информации.</P>
 
 <H2 id="process-51">process</H2>
@@ -1082,9 +799,9 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Возвращает объект <CODE class="sh_sourceCode">object</CODE> в виде строки, очень удобно для отладки.</P>
 
-<P>Если <CODE class="sh_sourceCode">showHidden</CODE> имеет значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, non-numerable свойства тоже будут показаны.</P>
+<P>Если <CODE class="sh_sourceCode">showHidden</CODE> имеет значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE>, неперечисляемые свойства тоже будут показаны.</P>
 
-<P>Если передан параметр <CODE class="sh_sourceCode">depth</CODE>, он сообщает <CODE class="sh_sourceCode">inspect</CODE> на какую глубину просмотреть объект прежде чем выдавать результат. Это полезно для больших сложных объектов.</P>
+<P>Параметр <CODE class="sh_sourceCode">depth</CODE> сообщает <CODE class="sh_sourceCode">inspect</CODE> на какую глубину просмотреть объект, прежде чем выдавать результат. Это полезно для больших сложных объектов.</P>
 
 <P>По умолчанию принята глубина просмотра 2.  Чтобы просмотреть объект на неограниченную глубину, передайте
 <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE> в качестве значения <CODE class="sh_sourceCode">depth</CODE>.</P>
@@ -1098,7 +815,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="sys-pump-79">sys.pump(readableStream, writeableStream, [callback])</H3>
 
-<P>Экспериментальный метод</P>
+<P>Экспериментальный метод.</P>
 
 <P>Читает данные из потока <CODE class="sh_sourceCode">readableStream</CODE> и посылает потоку <CODE class="sh_sourceCode">writableStream</CODE>.
 Когда <CODE class="sh_sourceCode">writeableStream<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">(</SPAN>data<SPAN class="sh_symbol">)</SPAN></CODE> возвращает <CODE class="sh_sourceCode"><SPAN class="sh_keyword">false</SPAN></CODE> <CODE class="sh_sourceCode">readableStream</CODE> приостанавливается
@@ -1109,7 +826,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H3 id="settimeout-81">setTimeout(callback, delay, [arg, ...])</H3>
 
-<P>Позволяет выполнить переданный <CODE class="sh_sourceCode">callback</CODE> после <CODE class="sh_sourceCode">delay</CODE> миллисекунд. Возвращает ID таймаута &mdash;
+<P>Позволяет выполнить переданный <CODE class="sh_sourceCode">callback</CODE> через <CODE class="sh_sourceCode">delay</CODE> миллисекунд. Возвращает ID таймаута &mdash;
 <CODE class="sh_sourceCode">timeoutId</CODE> для последующего использования с <CODE class="sh_sourceCode"><SPAN class="sh_function">clearTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="cleartimeout-82">clearTimeout(timeoutId)</H3>
@@ -1131,16 +848,16 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Node предоставляет tri-directional <CODE class="sh_sourceCode"><SPAN class="sh_function">popen</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">3</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> в классе <CODE class="sh_sourceCode">ChildProcess</CODE>.</P>
 
-<P>С дочерним потоком можно обмениваться данными через <CODE class="sh_sourceCode">stdin</CODE>, <CODE class="sh_sourceCode">stdout</CODE>, и <CODE class="sh_sourceCode">stderr</CODE> в полностью неблокирующем стиле.</P>
+<P>С дочерним потоком можно обмениваться данными через <CODE class="sh_sourceCode">stdin</CODE>, <CODE class="sh_sourceCode">stdout</CODE> и <CODE class="sh_sourceCode">stderr</CODE> в полностью неблокирующем стиле.</P>
 
 <P>Для создания дочернего процесса используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'child_process'</SPAN><SPAN class="sh_symbol">).</SPAN><SPAN class="sh_function">spawn</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
-<P>С дочерним процессом всегда ассоциированы три потока. <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdin</CODE>,
-<CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdout</CODE>, и <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stderr</CODE>.</P>
+<P>С дочерним процессом всегда ассоциированы три потока: <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdin</CODE>,
+<CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stdout</CODE> и <CODE class="sh_sourceCode">child<SPAN class="sh_symbol">.</SPAN>stderr</CODE>.</P>
 
 <P>Чтобы дочерний поток мог продолжать работу после остановки родительского, он должен обрабатывать сигнал SIGHUP.</P>
 
-<P><CODE class="sh_sourceCode">ChildProcess</CODE> &mdash; экземпляр EventEmitter.</P>
+<P><CODE class="sh_sourceCode">ChildProcess</CODE> &mdash; экземпляр <CODE class="sh_sourceCode">EventEmitter</CODE>.</P>
 
 <H3 id="event-exit-86">Событие:  'exit'</H3>
 
@@ -1150,7 +867,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>После генерации события 'exit' события <CODE class="sh_sourceCode"><SPAN class="sh_string">'output'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'error'</SPAN></CODE> больше не будут генерироваться.</P>
 
-<P>See <CODE class="sh_sourceCode"><SPAN class="sh_function">waitpid</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
+<P>См. также: <CODE class="sh_sourceCode"><SPAN class="sh_function">waitpid</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
 <H3 id="child_process-spawn-87">child_process.spawn(command, args, env)</H3>
 
@@ -1192,7 +909,7 @@ child<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stderr<SPAN 
 
 <H3 id="child-kill-88">child.kill(signal)</H3>
 
-<P>Отправляет сигнал дочернему процессу. Если аргументы не переданы, процессу будет
+<P>Отправляет сигнал дочернему процессу. Если аргументы не переданы, то процессу будет
 отправлен сигнал <CODE class="sh_sourceCode"><SPAN class="sh_string">'SIGTERM'</SPAN></CODE>. См. <CODE class="sh_sourceCode"><SPAN class="sh_function">signal</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">7</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> для списка возможных имён сигналов.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1206,10 +923,10 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">kill</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'SIGHUP'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Заметьте, что хотя функция называется <CODE class="sh_sourceCode">kill</CODE>, сигнал отправляемый дочернему процессу
+<P>Заметьте, что хотя функция называется <CODE class="sh_sourceCode">kill</CODE>, сигнал, отправляемый дочернему процессу,
 не обязательно его завершит. Метод <CODE class="sh_sourceCode">kill</CODE> просто отправляет сигналы.</P>
 
-<P>См. <CODE class="sh_sourceCode"><SPAN class="sh_function">kill</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE></P>
+<P>См. также: <CODE class="sh_sourceCode"><SPAN class="sh_function">kill</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_number">2</SPAN><SPAN class="sh_symbol">)</SPAN></CODE></P>
 
 <H3 id="child-pid-89">child.pid</H3>
 
@@ -1230,7 +947,7 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stdin<SPAN cl
 и указывает кодировку: его возможные значения <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'ascii'</SPAN></CODE>, и
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
-<P>ример: достаточно сложный способ выполнить 'ps ax | grep ssh'</P>
+<P>Пример: достаточно сложный способ выполнить 'ps ax | grep ssh'</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys   <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
     spawn <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'child_process'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN>spawn<SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN>
@@ -1285,7 +1002,7 @@ grep<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN>stdin<SPAN cl
 
 <H3 id="child_process-exec-92">child_process.exec(command, [options, ] callback)</H3>
 
-<P>Высокоуровневый способ выполнить команду в качестве дочернего процесса, сохраняя весь её вывод, и
+<P>Высокоуровневый способ выполнить команду в качестве дочернего процесса, сохранить весь её вывод, и
 передать его в callback.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> sys   <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'sys'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
@@ -1302,9 +1019,9 @@ child <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN clas
   <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Функция-callback получает аргументы <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>error<SPAN class="sh_symbol">,</SPAN> stdout<SPAN class="sh_symbol">,</SPAN> stderr<SPAN class="sh_symbol">)</SPAN></CODE>. При удачном выполнении, в <CODE class="sh_sourceCode">error</CODE>
-будет <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>.  При ошибке, <CODE class="sh_sourceCode">error</CODE> будет экземпляром <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE>, <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>code</CODE>
-будет кодом завершения дочернего процесса, и в <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>signal</CODE> будет содержаться имя сигнала, завершившего процесс.</P>
+<P>Функция-callback получает аргументы <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>error<SPAN class="sh_symbol">,</SPAN> stdout<SPAN class="sh_symbol">,</SPAN> stderr<SPAN class="sh_symbol">)</SPAN></CODE>. При удачном выполнении в <CODE class="sh_sourceCode">error</CODE>
+будет <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>.  При ошибке <CODE class="sh_sourceCode">error</CODE> будет экземпляром <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE>, <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>code</CODE>
+будет кодом завершения дочернего процесса, а в <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>signal</CODE> будет содержаться имя сигнала, завершившего процесс.</P>
 
 <P>Вторым аргументом могут быть переданы параметры. По умолчанию они будут такими</P>
 
@@ -1315,10 +1032,10 @@ child <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN clas
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Если <CODE class="sh_sourceCode">timeout</CODE> больше 0, процесс будет завершён если он
-выполняется дольше чем <CODE class="sh_sourceCode">timeout</CODE> миллисекунд. Дочерний процесс завершается с помощью
-сигнала <CODE class="sh_sourceCode">killSignal</CODE> (default: <CODE class="sh_sourceCode"><SPAN class="sh_string">'SIGKILL'</SPAN></CODE>). В <CODE class="sh_sourceCode">maxBuffer</CODE> указывается максимальный объём данных
-разрешённый на stdout или stderr &mdash; если этот объём будет превышен, дочерний процесс будет завершён.</P>
+<P>Если <CODE class="sh_sourceCode">timeout</CODE> больше 0, процесс будет завершён, если он
+выполняется дольше, чем <CODE class="sh_sourceCode">timeout</CODE> миллисекунд. Дочерний процесс завершается с помощью
+сигнала <CODE class="sh_sourceCode">killSignal</CODE>. В <CODE class="sh_sourceCode">maxBuffer</CODE> указывается максимальный объём данных,
+разрешённый на stdout или stderr &mdash; если этот объём будет превышен, то дочерний процесс будет завершён.</P>
 
 <H2 id="script-93">Script</H2>
 
@@ -1451,7 +1168,7 @@ console<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <H2 id="file-system-99">Файловая система</H2>
 
-<P>Файловый вводювывод обеспечивается с помощью простой обертки вокруг стандартных функций POSIX.
+<P>Файловый ввод/вывод обеспечивается с помощью простой обертки вокруг стандартных функций POSIX.
 Используйте <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'fs'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE> чтобы получить к ним доступ.
 Все эти методы имеют асинхронную и синхронную версии.</P>
 
@@ -1490,7 +1207,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 </CODE></PRE>
 
 <P>Вполне возможно что <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>stat</CODE> выполнится до <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>rename</CODE>.
-Правильный способ сделать то же самое: выполнение этих методов по цепочке.</P>
+Правильный способ сделать то же самое — выполнение этих методов по цепочке.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">rename</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/tmp/hello'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'/tmp/world'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
   <SPAN class="sh_keyword"><SPAN class="sh_keyword">if</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>err<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">throw</SPAN></SPAN> err<SPAN class="sh_symbol"><SPAN class="sh_symbol">;</SPAN></SPAN>
@@ -1531,7 +1248,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="fs-stat-106">fs.stat(path, callback), fs.lstat(path, callback), fs.fstat(fd, callback)</H3>
 
-<P>Асинхронные stat(2), lstat(2) или fstat(2). Обработчик получает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> stats<SPAN class="sh_symbol">)</SPAN></CODE> где <CODE class="sh_sourceCode">stats</CODE> это объект <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE>. Он выглядит примерно так:</P>
+<P>Асинхронные stat(2), lstat(2) или fstat(2). Обработчик получает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> stats<SPAN class="sh_symbol">)</SPAN></CODE>, где <CODE class="sh_sourceCode">stats</CODE> это объект <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>Stats</CODE>. Он выглядит примерно так:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN> dev<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">2049</SPAN></SPAN>
 <SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> ino<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN class="sh_number"><SPAN class="sh_number">305352</SPAN></SPAN>
@@ -1557,7 +1274,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="fs-link-108">fs.link(srcpath, dstpath, callback)</H3>
 
-<P>Асинхронный link(2). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
+<P>Асинхронное создание ссылки (link(2)). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-linksync-109">fs.linkSync(dstpath, srcpath)</H3>
 
@@ -1565,7 +1282,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="fs-symlink-110">fs.symlink(linkdata, path, callback)</H3>
 
-<P>Асинхронное создание ссылки (symlink(2)). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
+<P>Асинхронное создание символической ссылки (symlink(2)). Передаваемой функции не передаётся ничего кроме возможного исключения.</P>
 
 <H3 id="fs-symlinksync-111">fs.symlinkSync(linkdata, path)</H3>
 
@@ -1614,7 +1331,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <H3 id="fs-readdir-122">fs.readdir(path, callback)</H3>
 
 <P>Асинхронное чтение содержимого директории (readdir(3)).
-Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> files<SPAN class="sh_symbol">)</SPAN></CODE> где <CODE class="sh_sourceCode">files</CODE> это массив имён файлов в директории исключая <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE>.</P>
+Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> files<SPAN class="sh_symbol">)</SPAN></CODE>, где <CODE class="sh_sourceCode">files</CODE> это массив имён файлов в директории исключая <CODE class="sh_sourceCode"><SPAN class="sh_string">'.'</SPAN></CODE> и <CODE class="sh_sourceCode"><SPAN class="sh_string">'..'</SPAN></CODE>.</P>
 
 <H3 id="fs-readdirsync-123">fs.readdirSync(path)</H3>
 
@@ -1646,7 +1363,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <P>Позиция <CODE class="sh_sourceCode">position</CODE> задаёт смещение от начала файла куда должны быть записаны данные. Если <CODE class="sh_sourceCode">position</CODE> равна <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>, данные записываются с текущей позиции.
 См. pwrite(2).</P>
 
-<P>Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> written<SPAN class="sh_symbol">)</SPAN></CODE> где <CODE class="sh_sourceCode">written</CODE>
+<P>Обработчик принимает два аргумента <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> written<SPAN class="sh_symbol">)</SPAN></CODE>, где <CODE class="sh_sourceCode">written</CODE>
 указывает сколько <EM>байт</EM> было записано в файл.</P>
 
 <H3 id="fs-writesync-129">fs.writeSync(fd, data, position, encoding)</H3>
@@ -1655,15 +1372,15 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="fs-read-130">fs.read(fd, buffer, offset, length, position, callback)</H3>
 
-<P>читает данные из файла, указанного дескриптором <CODE class="sh_sourceCode">fd</CODE>.</P>
+<P>Читает данные из файла, указанного дескриптором <CODE class="sh_sourceCode">fd</CODE>.</P>
 
-<P><CODE class="sh_sourceCode">buffer</CODE> это буфер, в который будут помещены прочитанные данные.</P>
+<P><CODE class="sh_sourceCode">buffer</CODE> &mdash; буфер, в который будут помещены прочитанные данные.</P>
 
-<P><CODE class="sh_sourceCode">offset</CODE> это смещение внутри буфера с которого начнётся запись.</P>
+<P><CODE class="sh_sourceCode">offset</CODE> &mdash; смещение внутри буфера с которого начнётся запись.</P>
 
-<P><CODE class="sh_sourceCode">length</CODE> это число байт для чтения.</P>
+<P><CODE class="sh_sourceCode">length</CODE> &mdash; число байт для чтения.</P>
 
-<P><CODE class="sh_sourceCode">position</CODE> это число означающее позицию, с которой начнётся чтение файла.
+<P><CODE class="sh_sourceCode">position</CODE> &mdash; число означающее позицию, с которой начнётся чтение файла.
 Если <CODE class="sh_sourceCode">position</CODE> принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_keyword">null</SPAN></CODE>, данные будут прочитаны с текущей позиции.</P>
 
 <P>Функция-обработчик принимает два аргумента, <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> bytesRead<SPAN class="sh_symbol">)</SPAN></CODE>.</P>
@@ -1682,7 +1399,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">}</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Обработчику передаются два аргумента: <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> data<SPAN class="sh_symbol">)</SPAN></CODE>, где <CODE class="sh_sourceCode">data</CODE> это содержимое файла.</P>
+<P>Обработчику передаются два аргумента: <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> data<SPAN class="sh_symbol">)</SPAN></CODE>, где <CODE class="sh_sourceCode">data</CODE> &mdash; содержимое файла.</P>
 
 <P>Если кодировка не указана, возвращается буфер.</P>
 
@@ -1690,7 +1407,7 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <P>Синхронная версия <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN>readFile</CODE>. Возвращает содержимое файла <CODE class="sh_sourceCode">filename</CODE>.</P>
 
-<P>Если указана кодировка <CODE class="sh_sourceCode">encoding</CODE> функция возвращает строку. Иначе &mdash; возвращает буфер.</P>
+<P>Если указана кодировка <CODE class="sh_sourceCode">encoding</CODE>, то функция возвращает строку. Иначе &mdash; возвращает буфер.</P>
 
 <H3 id="fs-writefile-134">fs.writeFile(filename, data, encoding='utf8', callback)</H3>
 
@@ -1708,9 +1425,9 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H3 id="fs-watchfile-136">fs.watchFile(filename, [options,] listener)</H3>
 
-<P>Наблюдает за изменениями файла <CODE class="sh_sourceCode">filename</CODE>. Обработчик <CODE class="sh_sourceCode">listener</CODE> вызывается каждый раз при изменении содержимого файла.</P>
+<P>Наблюдает за изменениями файла <CODE class="sh_sourceCode">filename</CODE>. Обработчик <CODE class="sh_sourceCode">listener</CODE> вызывается каждый раз при изменении файла.</P>
 
-<P>Второй аргумент необязателен. Объект <CODE class="sh_sourceCode">options</CODE> если он передан должен содержать два свойства: двоичное <CODE class="sh_sourceCode">persistent</CODE>, и <CODE class="sh_sourceCode">interval</CODE>, задержку между проверками файла в миллисекундах. Значение по умолчанию: <CODE class="sh_sourceCode"><SPAN class="sh_cbracket">{</SPAN>persistent<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_keyword">true</SPAN><SPAN class="sh_symbol">,</SPAN> interval<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">0</SPAN><SPAN class="sh_cbracket">}</SPAN></CODE>.</P>
+<P>Второй аргумент необязателен. Объект <CODE class="sh_sourceCode">options</CODE>, если он передан, должен содержать два свойства: двоичное <CODE class="sh_sourceCode">persistent</CODE>, и <CODE class="sh_sourceCode">interval</CODE>, задержку между проверками файла в миллисекундах. Значение по умолчанию: <CODE class="sh_sourceCode"><SPAN class="sh_cbracket">{</SPAN>persistent<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_keyword">true</SPAN><SPAN class="sh_symbol">,</SPAN> interval<SPAN class="sh_symbol">:</SPAN> <SPAN class="sh_number">0</SPAN><SPAN class="sh_cbracket">}</SPAN></CODE>.</P>
 
 <P>Обработчик <CODE class="sh_sourceCode">listener</CODE> принимает два аргумента: текущий объект stat и предыдущий объект stat:</P>
 
@@ -1728,14 +1445,14 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <H2 id="fs-stats-138">fs.Stats</H2>
 
-<P>Объекты, возвращаемые <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">stat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> и <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">lstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> являются экземплярами этого класса.</P>
+<P>Объекты, возвращаемые <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">stat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>, <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">lstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> и <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">fstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> являются экземплярами этого класса.</P>
 
 <UL>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isFile</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isDirectory</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isBlockDevice</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isCharacterDevice</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
-<LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isSymbolicLink</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> (only valid with  <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">lstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>)</LI>
+<LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isSymbolicLink</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> (доступно только после <CODE class="sh_sourceCode">fs<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">lstat</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>)</LI>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isFIFO</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
 <LI><CODE class="sh_sourceCode">stats<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">isSocket</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></LI>
 </UL>
@@ -1813,10 +1530,10 @@ fs<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh
 
 <P>Для использования клиента и сервера HTTP необходимо подключить соответствующий модуль с помощью <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'http'</SPAN><SPAN class="sh_symbol">)</SPAN></CODE>.</P>
 
-<P>Интерфейс HTTP спроектирован в Node таким образом чтобы поддерживать
+<P>Интерфейс HTTP спроектирован в Node таким образом, чтобы поддерживать
 многие возможности протокола, которые традиционно было довольно сложно использовать.
-В частности, большие сообщения с возможной chunk-encoding. Интерфейс никогда
-не сохраняет в буфере целиком запрос или ответ, давая пользователю возможность 
+В частности, большие сообщения с возможным chunk-encoding. Интерфейс никогда
+не сохраняет в буфере целиком запрос или ответ, давая пользователю возможность
 принимать и отправлять данные в потоковом режиме.</P>
 
 <P>Заголовки сообщения HTTP представлены примерно таким объектом:</P>
@@ -1845,7 +1562,7 @@ Node разбирает HTTP-сообщение на заголовки и те�
 <P><CODE class="sh_sourceCode"><SPAN class="sh_keyword">function</SPAN> <SPAN class="sh_symbol">(</SPAN>request<SPAN class="sh_symbol">,</SPAN> response<SPAN class="sh_symbol">)</SPAN> <SPAN class="sh_cbracket">{</SPAN> <SPAN class="sh_cbracket">}</SPAN></CODE></P>
 
 <P>Объект <CODE class="sh_sourceCode">request</CODE> &mdash; экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerRequest</CODE>, объект <CODE class="sh_sourceCode">response</CODE> &mdash;
- экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerResponse</CODE></P>
+ экземпляр <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ServerResponse</CODE>.</P>
 
 <H3 id="event-connection-154">Событие: 'connection'</H3>
 
@@ -1919,7 +1636,7 @@ Node разбирает HTTP-сообщение на заголовки и те�
 
 <P>Включает поддержку HTTPS для сервера, с параметрами для криптографического модуля: private-ключом и сертификатом сервера; также можно передать CA-сертификат для аутентификации клиентов.</P>
 
-<P>Если в параметрах указан один или несколько CA-сертификатов, сервер запросит у клиента его сертификат при установке HTTPS-соединения. Достоверность и содержимое сертификата могут быть проверены с помощью методов verifyPeer() and getPeerCertificate() объекта request.connection сервера.</P>
+<P>Если в параметрах указан один или несколько CA-сертификатов, сервер запросит у клиента его сертификат при установке HTTPS-соединения. Достоверность и содержимое сертификата могут быть проверены с помощью методов verifyPeer() и getPeerCertificate() объекта request.connection сервера.</P>
 
 <H3 id="server-close-163">server.close()</H3>
 
@@ -1976,7 +1693,7 @@ Accept<SPAN class="sh_symbol"><SPAN class="sh_symbol">:</SPAN></SPAN> <SPAN clas
 </CODE></PRE>
 
 <P>Если вам нужно извлечь параметры из строки запроса, можно использовать функцию
-you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'querystring'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE> , или передать
+<CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'querystring'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE> , или передать
 <CODE class="sh_sourceCode"><SPAN class="sh_keyword">true</SPAN></CODE> в качестве второго аргумента <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">(</SPAN><SPAN class="sh_string">'url'</SPAN><SPAN class="sh_symbol">).</SPAN>parse</CODE>.  Пример:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'url'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">).</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">parse</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/status?name=ryan'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">true</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
@@ -1995,12 +1712,12 @@ you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</S
 
 <P>Версия протокола HTTP в виде строки. Только чтение. Пример:
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE>, <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
-Также <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> это первое число и
+Также <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> содержит первое число и
 <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> &mdash; второе.</P>
 
 <H3 id="request-setencoding-171">request.setEncoding(encoding='binary')</H3>
 
-<P>Задаёт кодировку тела запроса. Либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>. По умолчанию принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
+<P>Задаёт кодировку тела запроса. Либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'utf8'</SPAN></CODE>, либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>. По умолчанию принимает значение <CODE class="sh_sourceCode"><SPAN class="sh_string">'binary'</SPAN></CODE>.</P>
 
 <H3 id="request-pause-172">request.pause()</H3>
 
@@ -2012,7 +1729,7 @@ you can use the <CODE class="sh_sourceCode"><SPAN class="sh_function">require</S
 
 <H3 id="request-connection-174">request.connection</H3>
 
-<P>Объект соединения, экземпляр <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE></P>
+<P>Объект соединения, экземпляр <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE>.</P>
 
 <P>Если включена поддержка HTTPS, используйте request.connection.verifyPeer() и
 request.connection.getPeerCertificate() чтобы получить сведения об аутентификации клиента.</P>
@@ -2025,7 +1742,7 @@ request.connection.getPeerCertificate() чтобы получить сведен
 <H3 id="response-writehead-176">response.writeHead(statusCode[, reasonPhrase] , headers)</H3>
 
 <P>Отправляет заголовки ответа клиенту. <CODE class="sh_sourceCode"><SPAN class="sh_string">statusCode</SPAN></CODE> это три цифры кода статуса HTTP, например <CODE class="sh_sourceCode"><SPAN class="sh_number">404</SPAN></CODE>. Последний аргумент, <CODE class="sh_sourceCode">headers</CODE>, это заголовки ответа.
-Также вторым аргументом можно передать фразу <CODE class="sh_sourceCode">reasonPhrase</CODE> в качестве второго аргумента.</P>
+Также вторым аргументом можно передать фразу <CODE class="sh_sourceCode">reasonPhrase</CODE>.</P>
 
 <P>Пример:</P>
 
@@ -2088,9 +1805,9 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>Создаёт новый HTTP клиент. <CODE class="sh_sourceCode">port</CODE> и
 <CODE class="sh_sourceCode">host</CODE> относятся к серверу, к которому производится подключение. Поток не создаётся до отправки запроса.</P>
 
-<P><CODE class="sh_sourceCode">secure</CODE> &mdash; дополнительный двоичный флаг для включения поддержки https и <CODE class="sh_sourceCode">credentials</CODE> &mdash; необязательный объект параметров для crypto-модуля, хранящий private-ключ клиента, сертификат и список доверенных CA сертификатов.</P>
+<P><CODE class="sh_sourceCode">secure</CODE> &mdash; дополнительный двоичный флаг для включения поддержки HTTPS, а <CODE class="sh_sourceCode">credentials</CODE> &mdash; необязательный объект параметров для crypto-модуля, хранящий private-ключ клиента, сертификат и список доверенных CA сертификатов.</P>
 
-<P>Если соединение зашифровано но в объекте параметров не переданы сертификаты CA, node.js будет использовать публично доступный список CA, как он представлен в http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</P>
+<P>Если соединение зашифровано, но в объекте параметров не переданы сертификаты CA, то Node будет использовать публично доступный список CA, который представлен в <a href="http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt">http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</a>.</P>
 
 <H3 id="client-request-182">client.request([method], path, [request_headers])</H3>
 
@@ -2103,7 +1820,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Не забудьте включить заголовок <CODE class="sh_sourceCode">Content<SPAN class="sh_symbol">-</SPAN>Length</CODE> если планируете отправить тело запроса. Если вы хотите отправить тело запроса потоком, поставьте <CODE class="sh_sourceCode">Transfer<SPAN class="sh_symbol">-</SPAN>Encoding<SPAN class="sh_symbol">:</SPAN> chunked</CODE>.</P>
 
-<P><EM>ВНМАНИЕ</EM>: запрос ещё не закончен. Этот метод только отсылает заголовки серверу. Необходимо вызвать <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> чтобы отправить запрос целиком и получить ответ.  (Это звучит сложно, но позволяет пользователю передавать тело запроса в потоковом режиме с помощью <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.)</P>
+<P><EM>ВНИМАНИЕ</EM>: запрос ещё не закончен. Этот метод только отсылает заголовки серверу. Необходимо вызвать <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> чтобы отправить запрос целиком и получить ответ.  (Это звучит сложно, но позволяет пользователю передавать тело запроса в потоковом режиме с помощью <CODE class="sh_sourceCode">request<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">write</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.)</P>
 
 <H3 id="client-verifypeer-183">client.verifyPeer()</H3>
 
@@ -2121,8 +1838,8 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <P>Чтобы получить ответ, добавьте обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> объекта запроса.
 Событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> будет сгенерировано объектом запроса при получении заголовков ответа. Обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> выполняется с одним аргументом &mdash; экземпляром <CODE class="sh_sourceCode">http<SPAN class="sh_symbol">.</SPAN>ClientResponse</CODE>.</P>
 
-<P>Во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> можно добавлять обработчики к объекту ответа; в частности, чтобы получать части тела ответа надо добавить обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE>. Заметьте что обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> вызывается до того как будут получены части тела ответа, поэтому не надо беспокоиться что первая часть тела будет пропущена.
-Если обработчик <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> добавляется во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> всё тело ответа будет получено наверняка.</P>
+<P>Во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> можно добавлять обработчики к объекту ответа; в частности, чтобы получать части тела ответа надо добавить обработчик событию <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE>. Заметьте что обработчик события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE> вызывается до того, как будут получены части тела ответа, поэтому не надо беспокоиться, что первая часть тела будет пропущена.
+Если обработчик <CODE class="sh_sourceCode"><SPAN class="sh_string">'data'</SPAN></CODE> добавляется во время события <CODE class="sh_sourceCode"><SPAN class="sh_string">'response'</SPAN></CODE>, то всё тело ответа будет получено наверняка.</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_comment"><SPAN class="sh_comment">// Good</SPAN></SPAN>
 request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">addListener</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'response'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_keyword"><SPAN class="sh_keyword">function</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>response<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN> <SPAN class="sh_cbracket"><SPAN class="sh_cbracket">{</SPAN></SPAN>
@@ -2177,7 +1894,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 
 <P>Генерирется при получении части тела сообщения.</P>
 
-<P>Часть тела сообщения передаётся обработчику в качестве единственного аргумета. Строка уже преобразована из кодировки с помощью которой осуществлялась передача. Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела сообщения задаётся response.setBodyEncoding().</P>
+<P>Часть тела сообщения передаётся обработчику в качестве единственного аргумента. Строка уже преобразована из кодировки с помощью которой осуществлялась передача. Часть тела сообщения передаётся обработчику в виде строки. Кодировка тела сообщения задаётся response.setBodyEncoding().</P>
 
 <H3 id="event-end-191">Событие: 'end'</H3>
 
@@ -2192,7 +1909,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 <H3 id="response-httpversion-193">response.httpVersion</H3>
 
 <P>Версия HTTP для текущего соединения. Скорее всего либо 
-<CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE> либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
+<CODE class="sh_sourceCode"><SPAN class="sh_string">'1.1'</SPAN></CODE>, либо <CODE class="sh_sourceCode"><SPAN class="sh_string">'1.0'</SPAN></CODE>.
 Также <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMajor</CODE> &mdash; первая цифра версии,
 <CODE class="sh_sourceCode">response<SPAN class="sh_symbol">.</SPAN>httpVersionMinor</CODE> &mdash; вторая.</P>
 
@@ -2240,7 +1957,7 @@ request<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN clas
 server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">listen</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_number"><SPAN class="sh_number">8124</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">,</SPAN></SPAN> <SPAN class="sh_string"><SPAN class="sh_string">'localhost'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Чтобы слушать сокет <CODE class="sh_sourceCode"><SPAN class="sh_string">'/tmp/echo.sock'</SPAN></CODE>, последнюю линию надо заменить на</P>
+<P>Чтобы слушать сокет <CODE class="sh_sourceCode"><SPAN class="sh_string">'/tmp/echo.sock'</SPAN></CODE>, последнюю строку надо заменить на</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="sh_function"><SPAN class="sh_function">listen</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">'/tmp/echo.sock'</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">);</SPAN></SPAN>
 </CODE></PRE>
@@ -2325,7 +2042,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Генерируется если поток долгое время не используется. Это просто уведомление о длительной неактивности потока. Пользователь должен сам закрыть соединение.</P>
 
-<P>См. также: <CODE class="sh_sourceCode">stream<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">setTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE></P>
+<P>См. также: <CODE class="sh_sourceCode">stream<SPAN class="sh_symbol">.</SPAN><SPAN class="sh_function">setTimeout</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.</P>
 
 <H3 id="event-drain-213">Событие: 'drain'</H3>
 
@@ -2415,7 +2132,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Устанавливает таймаут в <CODE class="sh_sourceCode">timeout</CODE> миллисекунд бездействия потока. По умолчанию <CODE class="sh_sourceCode">net<SPAN class="sh_symbol">.</SPAN>Stream</CODE> не имеет таймаута.</P>
 
-<P>Если поток не будет проявлять активности указанное количество миллисекунд будет сгенерировано событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'timeout'</SPAN></CODE> но само соединение не будет затронуто. пользователь должен самостоятельно вызвать <CODE class="sh_sourceCode"><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>
+<P>Если поток не будет проявлять активности указанное количество миллисекунд будет сгенерировано событие <CODE class="sh_sourceCode"><SPAN class="sh_string">'timeout'</SPAN></CODE>, но само соединение не будет затронуто. Пользователь должен самостоятельно вызвать <CODE class="sh_sourceCode"><SPAN class="sh_function">end</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>
 или <CODE class="sh_sourceCode"><SPAN class="sh_function">destroy</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> для закрытия потока.</P>
 
 <P>Если в качестве <CODE class="sh_sourceCode">timeout</CODE> передан 0, существующий таймаут перестаёт действовать.</P>
@@ -2441,20 +2158,20 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Создаёт объект данных аутентификации, может принимать параметром объект со следующими свойствами:</P>
 
-<P><CODE class="sh_sourceCode">key</CODE> : строка с PEM-закодированным приватным ключом</P>
+<P><CODE class="sh_sourceCode">key</CODE> : строка с PEM-закодированным приватным ключом,</P>
 
-<P><CODE class="sh_sourceCode">cert</CODE> : строка с PEM-закодированным сертификатом</P>
+<P><CODE class="sh_sourceCode">cert</CODE> : строка с PEM-закодированным сертификатом,</P>
 
 <P><CODE class="sh_sourceCode">ca</CODE> : строка или список строк PEM-закодированных доверенных корневых сертификатов.</P>
 
-<P>Если корневые сертификаты не указаны, node.js будет использовать список доверенных сертификатов, расположенный по адресу <a href="http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt">http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</a></P>
+<P>Если корневые сертификаты не указаны, node.js будет использовать список доверенных сертификатов, расположенный по адресу <a href="http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt">http://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt</a>.</P>
 
 <H3 id="crypto-createhash-234">crypto.createHash(algorithm)</H3>
 
 <P>Создает и возвращает объект <CODE class="sh_sourceCode">hash</CODE>, который может быть использован для создания криптографических хэшей по заданному алгоритму.</P>
 
 <P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в той версии OpenSSL, которая у вас установлена. Например, это может быть 'sha1', 'md5' и т.д.
-В последней версии можно было узнать список поддерживаемых алгоритмов с помощью команды
+В последней версии OpenSSL список поддерживаемых алгоритмов можно было узнать с помощью команды
 <CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN>message<SPAN class="sh_symbol">-</SPAN>digest<SPAN class="sh_symbol">-</SPAN>algorithms</CODE>.</P>
 
 <H3 id="hash-update-235">hash.update(data)</H3>
@@ -2470,7 +2187,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 <P>Создает и возвращает объект <CODE class="sh_sourceCode">hmac</CODE>, который может быть использован для создания хеш-кода идентификации сообщений (HMAC) по заданному алгоритму и ключу.</P>
 
 <P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в OpenSSL, см. описание для <CODE class="sh_sourceCode">crypto.createHash()</CODE> выше.
-<CODE class="sh_sourceCode">key</CODE> определяет используемый ключа.</P>
+<CODE class="sh_sourceCode">key</CODE> определяет используемый ключ.</P>
 
 <H3 id="hmac-update-238">hmac.update(data)</H3>
 
@@ -2485,7 +2202,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 <P>Создает и возвращает объект <CODE class="sh_sourceCode">cipher</CODE>, который может быть использован для шифрования по заданному алгоритму и ключу.</P>
 
 <P>Возможные значения для <CODE class="sh_sourceCode">algorithm</CODE> зависят от доступных алгоритмах в той версии OpenSSL, которая у вас установлена. Например, это может быть 'aes192', 'blowfish' и т.д.
-В последней версии можно было узнать список поддерживаемых алгоритмов с помощью команды
+В последней версии OpenSSL список поддерживаемых алгоритмов можно было узнать
 <CODE class="sh_sourceCode">openssl list<SPAN class="sh_symbol">-</SPAN>cipher<SPAN class="sh_symbol">-</SPAN>algorithms</CODE>.</P>
 
 <H3 id="cipher-update-241">cipher.update(data, input_encoding, output_encoding)</H3>
@@ -2526,7 +2243,7 @@ server<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class
 
 <P>Вычисляет подпись для всех данных. <CODE class="sh_sourceCode">private_key</CODE> задаёт закрытый ключ в формате PEM.</P>
 
-<P>Возвращает подпись в формате <CODE class="sh_sourceCode">output_format</CODE>, который может равняться 'binary', 'hex' или 'base64'</P>
+<P>Возвращает подпись в формате <CODE class="sh_sourceCode">output_format</CODE>, который может равняться 'binary', 'hex' или 'base64'.</P>
 
 <H3 id="crypto-createverify-249">crypto.createVerify(algorithm)</H3>
 
@@ -2572,11 +2289,11 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 
 <H3 id="dns-resolve-253">dns.resolve(domain, rrtype = 'A', callback)</H3>
 
-<P>разрешает домен (например <CODE class="sh_sourceCode"><SPAN class="sh_string">'google.com'</SPAN></CODE>) в массив записей типа, указанного в rrtype. Допустимые значения rrtypes: <CODE class="sh_sourceCode">A</CODE> (адреса IPV4), <CODE class="sh_sourceCode">AAAA</CODE> (адреса IPV6), <CODE class="sh_sourceCode">MX</CODE> (записи mail exchange), <CODE class="sh_sourceCode">TXT</CODE> (текстовые записи), <CODE class="sh_sourceCode">SRV</CODE> (записи SRV), и <CODE class="sh_sourceCode">PTR</CODE> (используются для запросов домена по IP).</P>
+<P>Разрешает домен (например <CODE class="sh_sourceCode"><SPAN class="sh_string">'google.com'</SPAN></CODE>) в массив записей типа, указанного в rrtype. Допустимые значения rrtypes: <CODE class="sh_sourceCode">A</CODE> (адреса IPV4), <CODE class="sh_sourceCode">AAAA</CODE> (адреса IPV6), <CODE class="sh_sourceCode">MX</CODE> (записи mail exchange), <CODE class="sh_sourceCode">TXT</CODE> (текстовые записи), <CODE class="sh_sourceCode">SRV</CODE> (записи SRV), и <CODE class="sh_sourceCode">PTR</CODE> (используются для запросов домена по IP).</P>
 
 <P>Обработчик принимает аргументы <CODE class="sh_sourceCode"><SPAN class="sh_symbol">(</SPAN>err<SPAN class="sh_symbol">,</SPAN> addresses<SPAN class="sh_symbol">)</SPAN></CODE>.  Тип каждого элемента <CODE class="sh_sourceCode">addresses</CODE> определяется типом записи, и описан в документации по соответствующим методам запроса ниже.</P>
 
-<P>При ошибке <CODE class="sh_sourceCode">err</CODE> будет экземпляром объекта <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE>, где <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>errno</CODE> &mdash; один из кодов ошибки перечисленных ниже и <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>message</CODE> строка, содержащая описание ошибки на английском.</P>
+<P>При ошибке <CODE class="sh_sourceCode">err</CODE> будет экземпляром объекта <CODE class="sh_sourceCode"><SPAN class="sh_predef_func">Error</SPAN></CODE>, где <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>errno</CODE> &mdash; один из кодов ошибки, перечисленных ниже, а <CODE class="sh_sourceCode">err<SPAN class="sh_symbol">.</SPAN>message</CODE> &mdash; строка, содержащая описание ошибки на английском.</P>
 
 <H3 id="dns-resolve4-254">dns.resolve4(domain, callback)</H3>
 
@@ -2615,7 +2332,7 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 <P>Каждый запрос к DNS может вернуть код ошибки.</P>
 
 <UL>
-<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>TEMPFAIL</CODE>: таймаут, SERVFAIL или похожее.</LI>
+<LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>TEMPFAIL</CODE>: таймаут, SERVFAIL или что-то подобное.</LI>
 <LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>PROTOCOL</CODE>: получен повреждённый ответ.</LI>
 <LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NXDOMAIN</CODE>: домен не существует.</LI>
 <LI><CODE class="sh_sourceCode">dns<SPAN class="sh_symbol">.</SPAN>NODATA</CODE>: домен существует, но нет данных требуемого типа.</LI>
@@ -2631,7 +2348,7 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
  
 <p><code>function (msg, rinfo) { }</code></p> 
  
-<p>Генерируется когда новая датаграмма доступна на сокете.  <code>msg</code> это <code>Buffer</code> и <code>rinfo</code> это
+<p>Генерируется когда новая датаграмма доступна на сокете.  <code>msg</code> это <code>Buffer</code>, а <code>rinfo</code> это
 объект с информацией об адресе отправителя и количестве байт в датаграмме.</p> 
  
 <h3>Событие: 'listening'</h3> 
@@ -2639,7 +2356,7 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
 <p><code>function () { }</code></p> 
  
 <p>Генеритуется когда сокет начинает приём датаграмм. Для UDP-сокета это происходит при создании.
- Сокеты Unix не начинают приём до вызова на них <code>bind()</code>.</p> 
+ Сокеты Unix не начинают приём до вызова для них <code>bind()</code>.</p> 
  
 <h3>Событие: 'close'</h3> 
  
@@ -2656,7 +2373,7 @@ dns<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="s
  
 <p>Для датаграмм на Unix-сокетах адрес назначения это путь в файловой системе. Принимает необязательную функцию, которая будет вызвана после завершения вызова <code>sendto</code> операционной системой.  Пока идёт вызов, повторное использование буфера <code>buf</code> небезопасно. Заметьте, что если сокет не привязан к пути в файловой системе с помощью <code>bind()</code>, на нём невозможно получать сообщения.</p> 
  
-<p>Пример отправки сообщения демону syslogd в OSX через сокет Unix <code>/var/run/syslog</code>:</p> 
+<p>Пример отправки сообщения демону syslogd в OSX через Unix-сокет <code>/var/run/syslog</code>:</p> 
  
 <pre><code>var dgram = require('dgram');
 var message = new Buffer("A message to log.");
@@ -2671,14 +2388,10 @@ client.send(message, 0, message.length, "/var/run/syslog",
  
 <h3>dgram.send(buf, offset, length, port, address, [callback])</h3> 
  
-<p>For UDP sockets, the destination port and IP address must be specified.  A string
-may be supplied for the <code>address</code> parameter, and it will be resolved with DNS.  An 
-optional callback may be specified to detect any DNS errors and when <code>buf</code> may be
-re-used.  Note that DNS lookups will delay the time that a send takes place, at
-least until the next tick.  The only way to know for sure that a send has taken place
-is to use the callback.</p> 
+<p>Для UDP сокетов должен быть указан IP-адрес и порт назначения. В качестве адреса <code>address</code> может 
+быть передана строка, она будет преобразована в адрес через DNS. Принимает необязательную функцию, которая определит произошли ли ошибки при использовании DNS и можно ли повторно использовать <code>buf</code>. Заметьте, что обращение к DNS для разрешения адреса отложит отправку пакета как минимум до следующей итерации event loop. Единственный способ убедиться что пакет действительно отправлен &mdash; использование фунции-обработчика.</p> 
  
-<p>Example of sending a UDP packet to a random port on <code>localhost</code>;</p> 
+<p>Пример отправки UDP пакета на случайный порт локальной машины:</p> 
  
 <pre><code>var dgram = require('dgram');
 var message = new Buffer("Some bytes");
@@ -2688,11 +2401,10 @@ client.close();</code></pre>
  
 <h3>dgram.bind(path)</h3> 
  
-<p>For Unix domain datagram sockets, start listening for incoming datagrams on a
-socket specified by <code>path</code>. Note that clients may <code>send()</code> without <code>bind()</code>,
-but no datagrams will be received without a <code>bind()</code>.</p> 
+<p>Для Unix-сокетов датаграмм, начинает приём сообшений на сокете, путь к которому передаётся в аргументе <code>path</code>. Заметьте что клиенты могут использовать <code>send()</code> без вызова <code>bind()</code>,
+но никакие сообщения не будут приняты пока <code>bind()</code> не будет вызван.</p> 
  
-<p>Example of a Unix domain datagram server that echoes back all messages it receives:</p> 
+<p>Пример Unix-сервера пакетов, отправляющего обратно все принятые сообщения:</p> 
  
 <pre><code>var dgram = require("dgram");
 var serverPath = "/tmp/dgram_server_sock";
@@ -2709,7 +2421,7 @@ server.on("listening", function () {
  
 server.bind(serverPath);</code></pre> 
  
-<p>Example of a Unix domain datagram client that talks to this server:</p> 
+<p>Пример Unix-клиента для приема пакетов, работающего с этим сервером:</p> 
  
 <pre><code>var dgram = require("dgram");
 var serverPath = "/tmp/dgram_server_sock";
@@ -2732,10 +2444,10 @@ client.bind(clientPath);</code></pre>
  
 <h3>dgram.bind(port, [address])</h3> 
  
-<p>For UDP sockets, listen for datagrams on a named <code>port</code> and optional <code>address</code>.  If
-<code>address</code> is not specified, the OS will try to listen on all addresses.</p> 
+<p>Для UDP-сокетов, начинает приём сообщений на заданном порту <code>port</code> и опционально на адресе <code>address</code>.  Если
+<code>address</code> не указан, ОС будет слушать все доступные адреса.</p> 
  
-<p>Example of a UDP server listening on port 41234:</p> 
+<p>Пример UDP сервера слушающего порт 41234:</p> 
  
 <pre><code>var dgram = require("dgram");
  
@@ -2758,30 +2470,24 @@ server.bind(41234);
  
 <h3>dgram.close()</h3> 
  
-<p>Close the underlying socket and stop listening for data on it.  UDP sockets 
-automatically listen for messages, even if they did not call <code>bind()</code>.</p> 
+<p>Закрывает соответствующий сокет и прекращает приём данных на нём. UDP сокеты автоматически начинают принимать сообщения, даже без вызова <code>bind()</code>.</p> 
  
 <h3>dgram.address()</h3> 
  
-<p>Returns an object containing the address information for a socket.  For UDP sockets, 
-this object will contain <code>address</code> and <code>port</code>.  For Unix domain sockets, it will contain
-only <code>address</code>.</p> 
+<p>Возвращает объект в котором содержится информация об адресе сокета. Для UDP сокетов этот объект будет содержать поля 
+<code>address</code> и <code>port</code>. Для сокетов Unix он будет содержать только <code>address</code>.</p> 
  
 <h3>dgram.setBroadcast(flag)</h3> 
  
-<p>Sets or clears the <code>SO_BROADCAST</code> socket option.  When this option is set, UDP packets
-may be sent to a local interface's broadcast address.</p> 
+<p>Устанавливает или снимает флаг <code>SO_BROADCAST</code> в настройках сокета.  Когда этот флаг установлен, пакеты UDP
+могут быть отправлены на широковещательный адрес локального интерфейса.</p> 
  
 <h3>dgram.setTTL(ttl)</h3> 
  
-<p>Sets the <code>IP_TTL</code> socket option.  TTL stands for "Time to Live," but in this context it
-specifies the number of IP hops that a packet is allowed to go through.  Each router or 
-gateway that forwards a packet decrements the TTL.  If the TTL is decremented to 0 by a
-router, it will not be forwarded.  Changing TTL values is typically done for network 
-probes or when multicasting.</p> 
+<p>Задаёт значение параметра <code>IP_TTL</code>.  TTL это "время жизни" пакета ("Time to Live"), но в этом контексте оно означает 
+количество IP узлов которое может пройти пакет. Каждый роутер или шлюз, перенаправляющие пакет дальше, снижают это значение на единицу. Если TTL снижается до 0 на одном из узлов, пакет не будет передан дальше. TTL обычно изменяют для диагностики сети или ограничения действия широковещательных пакетов.</p> 
  
-<p>The argument to <code>setTTL()</code> is a number of hops between 1 and 255.  The default on most
-systems is 64.</p> 
+<p>Аргумент к <code>setTTL()</code> это число узлов от 1 до 255.  На большинстве систем значение по умолчанию 64.</p> 
 
 <H2 id="assert-260">Assert</H2>
 
@@ -2952,7 +2658,7 @@ path<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN class="
 <CODE class="sh_sourceCode"><SPAN class="sh_string">'query=string'</SPAN></CODE> или <CODE class="sh_sourceCode"><SPAN class="sh_cbracket">{</SPAN><SPAN class="sh_string">'query'</SPAN><SPAN class="sh_symbol">:</SPAN><SPAN class="sh_string">'string'</SPAN><SPAN class="sh_cbracket">}</SPAN></CODE></P></LI>
 <LI><P><CODE class="sh_sourceCode">hash</CODE></P>
 
-<P>"Фрагмент" URL, включая знак решётки. Пример: <CODE class="sh_sourceCode"><SPAN class="sh_string">'#hash'</SPAN></CODE></P></LI>
+<P>"Якорь" URL, включая знак решётки. Пример: <CODE class="sh_sourceCode"><SPAN class="sh_string">'#hash'</SPAN></CODE></P></LI>
 </UL>
 
 
@@ -3030,7 +2736,7 @@ querystring<SPAN class="sh_symbol"><SPAN class="sh_symbol">.</SPAN></SPAN><SPAN 
 
 <P>Функция декодирования, используемая <CODE class="sh_sourceCode">querystring<SPAN class="sh_symbol">.</SPAN>parse</CODE>, предоставляется для того чтобы проще было заменить её собственной.</P>
 
-<!--<H2 id="repl-289">REPL</H2>
+<H2 id="repl-289">REPL</H2>
 
 <P>Интерактивная консоль (Read-Eval-Print-Loop, REPL) доступна как самостоятельная программа и может включаться в другие скрипты. REPL предоставляет возможность интерактивно выполнять JavaScript и сразу видеть результат. Он может использоваться для отладки, тестирования, и просто знакомства с системой.</P>
 
@@ -3100,7 +2806,7 @@ node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> _ <SPAN c
 <SPAN class="sh_number"><SPAN class="sh_number">4</SPAN></SPAN>
 </CODE></PRE>
 
-<P>REPL предоставляет доступ к любым переменным глобальной области видимости. Вы можете явно передать переменную в REPL, присвоив её объекту <CODE class="sh_sourceCode">scope</CODE> ассоциированному с каждым экземпляром <CODE class="sh_sourceCode">REPLServer</CODE>.  Например:</P>
+<P>REPL предоставляет доступ к любым переменным глобальной области видимости. Вы можете явно передать переменную в REPL, присвоив её объекту <CODE class="sh_sourceCode">scope</CODE> ассоциированному, с каждым экземпляром <CODE class="sh_sourceCode">REPLServer</CODE>.  Например:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode"><SPAN class="sh_comment"><SPAN class="sh_comment">// repl_test.js</SPAN></SPAN>
 <SPAN class="sh_keyword"><SPAN class="sh_keyword">var</SPAN></SPAN> repl <SPAN class="sh_symbol"><SPAN class="sh_symbol">=</SPAN></SPAN> <SPAN class="sh_function"><SPAN class="sh_function">require</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN><SPAN class="sh_string"><SPAN class="sh_string">"repl"</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">),</SPAN></SPAN>
@@ -3119,14 +2825,14 @@ node<SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> m
 <P>В REPL есть несколько специальных команд:</P>
 
 <UL>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> - При вводе многострочного выражения иногда можно потеряться либо совсем отказаться от его ввода.  <CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> начнёт ввод заново.</P></LI>
-<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>clear</CODE> - Сбрасывает объект <CODE class="sh_sourceCode">scope</CODE> object в пустой и очищает введённое многострочное выражение.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> - При вводе многострочного выражения иногда можно ошибиться, либо совсем отказаться от его ввода.  <CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN><SPAN class="sh_keyword">break</SPAN></CODE> начнёт ввод заново.</P></LI>
+<LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>clear</CODE> - Сбрасывает объект <CODE class="sh_sourceCode">scope</CODE> в пустой и очищает введённое многострочное выражение.</P></LI>
 <LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>exit</CODE> - Закрывает потоки ввода-вывода, принуждая REPL завершиться.</P></LI>
 <LI><P><CODE class="sh_sourceCode"><SPAN class="sh_symbol">.</SPAN>help</CODE> - Показывает список специальных команд.</P></LI>
 </UL>
 
 
-<H2 id="modules-292">Modules</H2>
+<!--<H2 id="modules-292">Modules</H2>
 
 <P>Node uses the CommonJS module system.</P>
 
@@ -3160,7 +2866,7 @@ object.  (Alternatively, one can use <CODE class="sh_sourceCode"><SPAN class="sh
 local to the module will be private. In this example the variable <CODE class="sh_sourceCode">PI</CODE> is
 private to <CODE class="sh_sourceCode">circle<SPAN class="sh_symbol">.</SPAN>js</CODE>. The function <CODE class="sh_sourceCode"><SPAN class="sh_function">puts</SPAN><SPAN class="sh_symbol">()</SPAN></CODE> comes from the module <CODE class="sh_sourceCode"><SPAN class="sh_string">'sys'</SPAN></CODE>,
 which is a built-in module. Modules which are not prefixed by <CODE class="sh_sourceCode"><SPAN class="sh_string">'./'</SPAN></CODE> are
-built-in module--more about this later.</P>
+built-in module &mdash; more about this later.</P>
 
 <P>A module prefixed with <CODE class="sh_sourceCode"><SPAN class="sh_string">'./'</SPAN></CODE> is relative to the file calling <CODE class="sh_sourceCode"><SPAN class="sh_function">require</SPAN><SPAN class="sh_symbol">()</SPAN></CODE>.
 That is, <CODE class="sh_sourceCode">circle<SPAN class="sh_symbol">.</SPAN>js</CODE> must be in the same directory as <CODE class="sh_sourceCode">foo<SPAN class="sh_symbol">.</SPAN>js</CODE> for
@@ -3202,10 +2908,9 @@ variable (which should be a list of paths, colon separated).</P>-->
 <LI><P>libev, библиотеку обработки цикла событий на C. Каждый раз, когда вам потребуется подождать пока файловый дескриптор станет доступен для чтения,
 подождать вызова таймера или поступления сигнала, вы будете испльзовать вызовы из libev. Соответственно, вам придётся использовать  libev для любых операций ввода/вывода. Node использует цикл событий <CODE class="sh_sourceCode">EV_DEFAULT</CODE>. Документация доступна на <A HREF="http:/cvs.schmorp.de/libev/ev.html">сайте автора</A>.</P></LI>
 <LI><P>libeio, библиотеку пула потоков на C. Она используется для выполнения блокирующих вызовов POSIX асинхронно, в отдельных потоках. Для большинства вызовов существуют стандартные обёртки, которые вы можете найти в заголовочном файле
-<CODE class="sh_sourceCode"><SPAN class="sh_normal">src</SPAN><SPAN class="sh_symbol">/</SPAN>file<SPAN class="sh_symbol">.</SPAN>cc</CODE> so you will probably not need to use it. If you do need it,
-<CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">libeio</SPAN><SPAN class="sh_symbol">/</SPAN>eio<SPAN class="sh_symbol">.</SPAN>h</CODE>.</P></LI>
-<LI><P>Внутренние библиотеки Node. Наиюолее важная из них &mdash; класс <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">::</SPAN>ObjectWrap</CODE>, от которого будут наследоваться большинство ваших классов.</P></LI>
-<LI><P>Другое. Остальные доступные библиотеки вы можете найти впапке <CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN></CODE> дистрибутива Node.</P></LI>
+<CODE class="sh_sourceCode"><SPAN class="sh_normal">src</SPAN><SPAN class="sh_symbol">/</SPAN>file<SPAN class="sh_symbol">.</SPAN>cc</CODE> , так что скорее всего вам не понадобится использовать эту библиотеку. Внутренние функции libeio можно посмотреть в файле <CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_normal">libeio</SPAN><SPAN class="sh_symbol">/</SPAN>eio<SPAN class="sh_symbol">.</SPAN>h</CODE> дистрибутива Node.</P></LI>
+<LI><P>Внутренние библиотеки Node. Наиболее важная из них &mdash; класс <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">::</SPAN>ObjectWrap</CODE>, от которого будут наследоваться большинство ваших классов.</P></LI>
+<LI><P>Остальные доступные библиотеки вы можете найти впапке <CODE class="sh_sourceCode"><SPAN class="sh_normal">deps</SPAN><SPAN class="sh_symbol">/</SPAN></CODE> дистрибутива Node.</P></LI>
 </UL>
 
 
@@ -3253,24 +2958,24 @@ def <SPAN class="sh_function"><SPAN class="sh_function">build</SPAN></SPAN><SPAN
 <P>Теперь можно запустить команду <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf configure build</CODE>, которая создаст файл 
 <CODE class="sh_sourceCode"><SPAN class="sh_normal">build</SPAN><SPAN class="sh_symbol">/</SPAN><SPAN class="sh_keyword">default</SPAN><SPAN class="sh_symbol">/</SPAN>hello<SPAN class="sh_symbol">.</SPAN>node</CODE>, содержащий бинарную версию дополнения.</P>
 
-<P><CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> &mdash; расширение <A HREF="http://code.google.com/p/waf/">WAF</A>, системы сборки на Python. <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> включён в состав Node для упрощения процесса сборки дополнений.</P>
+<P><CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> &mdash; расширение <A HREF="http://code.google.com/p/waf/">WAF</A>, системы сборки на языке Python. <CODE class="sh_sourceCode">node<SPAN class="sh_symbol">-</SPAN>waf</CODE> включён в состав Node для упрощения процесса сборки дополнений.</P>
 
 <P>Каждое дополнение должно содержать функцию <CODE class="sh_sourceCode">init</CODE> со следующим интерфейсом:</P>
 
 <PRE class="sh_sourceCode"><CODE class="sh_sourceCode">extern <SPAN class="sh_string"><SPAN class="sh_string">'C'</SPAN></SPAN> void <SPAN class="sh_function"><SPAN class="sh_function">init</SPAN></SPAN> <SPAN class="sh_symbol"><SPAN class="sh_symbol">(</SPAN></SPAN>Handle<SPAN class="sh_symbol"><SPAN class="sh_symbol">&lt;</SPAN></SPAN><SPAN class="sh_predef_func"><SPAN class="sh_predef_func">Object</SPAN></SPAN><SPAN class="sh_symbol"><SPAN class="sh_symbol">&gt;</SPAN></SPAN> target<SPAN class="sh_symbol"><SPAN class="sh_symbol">)</SPAN></SPAN>
 </CODE></PRE>
 
-<P>Пока это вся документация по дополнениям. В качестве примера вы можете просмотреть код дополнения <A href="http://github.com/ry/node_postgres">http://github.com/ry/node_postgres</A>.</P>
+<P>На данный момент это вся документация по созданию дополнений. В качестве примера вы можете просмотреть код <A href="http://github.com/ry/node_postgres">http://github.com/ry/node_postgres</A>.</P>
 
 <p>Оригинальная документация: <a href="http://nodejs.org">nodejs.org</a>. Перевод: <a href="http://kuroikaze85.wordpress.com">Сергей Широков</a> и <a href="http://nodejs.ru">Nodejs.ru</a>.</p>
 
 <p>Поучаствовать в переводе можно <a href="http://github.com/kurokikaze/nodejs-docs-rus">на Github</a></p>
 </DIV>
 </DIV>
-<SCRIPT type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="http://nodejs.org/sh_main.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="http://nodejs.org/sh_javascript.min.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="http://nodejs.org/doc.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="assets/jquery.min.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="assets/sh_main.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="assets/sh_javascript.min.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="assets/doc.js"></SCRIPT>
 <!-- Yandex.Metrika --> 
 <script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript"></script> 
 <script type="text/javascript"> 
