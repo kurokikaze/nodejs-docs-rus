@@ -7,7 +7,7 @@ $(function(){
       , last_level = 0
       , toc = [
         '<div id="toc">',
-        '<h2>Сожержание <a id="toggler" href="#toc">Скрыть</a></h2>'
+        '<h2>Содержание <a id="toggler" href="#toc">Скрыть</a></h2>'
       ];
 
     for(var i=0, hl=$headings.size()+1; i < hl; i++) {
