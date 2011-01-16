@@ -80,6 +80,11 @@
     // node.js
 
 
+### Buffer.isBuffer(obj)
+
+Проверяет, является ли `obj` буфером.
+
+
 ### Buffer.byteLength(string, encoding='utf8')
 
 Возвращает количество байт в строке. Это не то же самое что `String.prototype.length`,
@@ -110,7 +115,7 @@
     // 1234
     // 1234
 
-### buffer.copy(targetBuffer, targetStart, sourceStart, sourceEnd=buffer.length)
+### buffer.copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
 
 Копирует данные между буферами с помощью memcpy().
 
@@ -119,7 +124,7 @@
 
     buf1 = new Buffer(26);
     buf2 = new Buffer(26);
-  
+
     for (var i = 0 ; i < 26 ; i++) {
       buf1[i] = i + 97; // 97 is ASCII a
       buf2[i] = 33; // ASCII !

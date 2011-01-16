@@ -11,11 +11,10 @@
 
 Заголовки сообщения HTTP представлены примерно таким объектом:
 
-    { 'content-length': '123'
-    , 'content-type': 'text/plain'
-    , 'connection': 'keep-alive'
-    , 'accept': '*/*'
-    }
+    { 'content-length': '123',
+      'content-type': 'text/plain',
+      'connection': 'keep-alive',
+      'accept': '*/*' }
 
 Ключи приводятся к нижнему регистру. Значения не изменяются.
 
@@ -115,17 +114,6 @@ HTTPS поддерживается если на целевой платформ
 будет вызвана когда сервер будет связан с сокетом.
 
 
-### server.setSecure(credentials)
-
-Включает поддержку HTTPS для сервера, с параметрами для криптографического модуля:
-private-ключом и сертификатом сервера; также можно передать CA-сертификат
-для аутентификации клиентов.
-
-Если в параметрах указан один или несколько CA-сертификатов, сервер запросит
-у клиента его сертификат при установке HTTPS-соединения. Достоверность
-и содержимое сертификата могут быть проверены с помощью методов `verifyPeer()`
-и `getPeerCertificate()` объекта `request.connection` сервера.
-
 ### server.close()
 
 Прекращает приём новых соединений сервером.
@@ -178,22 +166,20 @@ private-ключом и сертификатом сервера; также мо
 `require('url').parse(request.url)`. Пример:
 
     node> require('url').parse('/status?name=ryan')
-    { href: '/status?name=ryan'
-    , search: '?name=ryan'
-    , query: 'name=ryan'
-    , pathname: '/status'
-    }
+    { href: '/status?name=ryan',
+      search: '?name=ryan',
+      query: 'name=ryan',
+      pathname: '/status' }
 
 Если вам нужно извлечь параметры из строки запроса, можно использовать функцию
 `require('querystring').parse`, или передать `true` в качестве второго аргумента
 `require('url').parse`. Пример:
 
     node> require('url').parse('/status?name=ryan', true)
-    { href: '/status?name=ryan'
-    , search: '?name=ryan'
-    , query: { name: 'ryan' }
-    , pathname: '/status'
-    }
+    { href: '/status?name=ryan',
+      search: '?name=ryan',
+      query: { name: 'ryan' },
+      pathname: '/status' }
 
 
 ### request.headers
@@ -259,8 +245,7 @@ HTTP trailers (если есть). Только для чтения.
     var body = 'hello world';
     response.writeHead(200, {
       'Content-Length': body.length,
-      'Content-Type': 'text/plain'
-    });
+      'Content-Type': 'text/plain' });
 
 Этот метод должен быть вызван только однажды для каждого сообщения
 и должен быть вызван до `response.end()`.

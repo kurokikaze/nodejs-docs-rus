@@ -68,6 +68,34 @@ occured, the stream came to an `'end'`, or `destroy()` was called.
 Закрывает соответствующий потоку файловый дескриптор.
 Поток больше не будет генерировать событий.
 
+### stream.pipe(destination, [options])
+
+Соединяет поток с возможностью чтения с потоком `destination`, доступным для записи.
+Все читаемые этим поток данные будут записаны в `destination`. Для синхронизации
+вшуюсяпотоков можно использовать `stream.pause()` и `stream.resume()`.
+
+Пример эмуляции UNIX-команды `cat`:
+
+    process.stdin.resume();
+    process.stdin.pipe(process.stdout);
+
+
+По умолчанию при поступлдении события `end` у источника будет вызван метод `end()`
+у приёмника `destination` is no longer writable. Если в качестве `options`
+передать `{ end: false }`, то поток-приёмник останется открытым после закрытия потока-источника:
+
+    process.stdin.resume();
+
+    process.stdin.pipe(process.stdout, { end: false });
+
+    process.stdin.on("end", function() {
+      process.stdout.write("Goodbye\n");
+    });
+
+ПРИМЕЧАНИЕ: Если поток-источник не поддерживает `pause()` и `resume()`, эта функция
+одобалвяет в объект простую реализацию этих функцйи, вызывающую события
+`'pause'` и `'resume'`, соответственно.
+
 
 ## Поток с возможностью записи
 
@@ -132,3 +160,6 @@ occured, the stream came to an `'end'`, or `destroy()` was called.
 Закрывает соответствующий потоку файловый дескриптор.
 Поток больше не будет генерировать событий.
 
+### stream.destroySoon()
+
+Закрывает соответствующий потоку файловый дескриптор после того, как очередь записи окажется пустой.

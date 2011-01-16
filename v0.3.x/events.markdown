@@ -30,7 +30,7 @@
 Добавляет обработчик в конец массива обработчиков указанного события.
 
     server.on('connection', function (stream) {
-        console.log('someone connected!');
+      console.log('someone connected!');
     });
 
 #### emitter.once(event, listener)
@@ -39,7 +39,7 @@
 один раз при первом наступлении события, после чего удаляется.
 
     server.once('connection', function (stream) {
-        console.log('Ah, we have our first user!');
+      console.log('Ah, we have our first user!');
     });
 
 #### emitter.removeListener(event, listener)
@@ -48,7 +48,7 @@
 **Внимание:** изменяет индексы в массиве обработчиков после указанного обработчика.
 
     var callback = function(stream) {
-        console.log('someone connected!');
+      console.log('someone connected!');
     };
     server.on('connection', callback);
     // ...
@@ -66,7 +66,7 @@
 использован, например, для удаления обработчиков.
 
     server.on('connection', function (stream) {
-        console.log('someone connected!');
+      console.log('someone connected!');
     });
     console.log(util.inspect(server.listeners('connection')); // [ [Function] ]
 

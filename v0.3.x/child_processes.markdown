@@ -57,10 +57,9 @@ Node предоставляет tri-directional popen(3) в классе `ChildP
 Третий аргумент функции используется для задания дополнительных опций
 со следующими значениями по умолчанию:
 
-    { cwd: undefined
-    , env: process.env,
-    , customFds: [-1, -1, -1]
-    }
+    { cwd: undefined,
+      env: process.env,
+      customFds: [-1, -1, -1] }
 
 `cwd` позволяет вам задать рабочую папку для дочернего процесса.
 Используйте `env` для определия переменных окружения, видимых дочернему процессу.
@@ -144,7 +143,7 @@ Node предоставляет tri-directional popen(3) в классе `ChildP
         exec  = require('child_process').exec,
         child;
 
-    child = exec('cat *.js bad_file | wc -l', 
+    child = exec('cat *.js bad_file | wc -l',
       function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
@@ -161,13 +160,12 @@ Node предоставляет tri-directional popen(3) в классе `ChildP
 Вторым аргументом могут быть переданы дополнительные опции
 со следующими значениями по умолчанию:
 
-    { encoding: 'utf8'
-    , timeout: 0
-    , maxBuffer: 200*1024
-    , killSignal: 'SIGTERM'
-    , cwd: null
-    , env: null
-    }
+    { encoding: 'utf8',
+      timeout: 0,
+      maxBuffer: 200*1024,
+      killSignal: 'SIGTERM',
+      cwd: null,
+      env: null }
 
 Если `timeout` больше 0, процесс будет завершён, если он выполняется дольше,
 чем `timeout` миллисекунд. Дочерний процесс завершается с помощью сигнала

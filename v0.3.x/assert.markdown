@@ -38,11 +38,45 @@
 
 ### assert.throws(block, [error], [message])
 
-Ожидает что блок кода `block` вызовет ошибку.
+Ожидает что блок кода `block` вызовет ошибку `error`.
+`error` может быть конструкторов, регулярным выражением или функцией валидации.
+
+Проверка ошибки по типу конструктора:
+
+    assert.throws(
+      function() {
+        throw new Error("Wrong value");
+      },
+      Error
+    );
+
+Проверка ошибки с помощью регулярного выражения:
+
+    assert.throws(
+      function() {
+        throw new Error("Wrong value");
+      },
+      /value/
+    );
+
+Произвольная проверка с помощью функции валидации:
+
+    assert.throws(
+      function() {
+        throw new Error("Wrong value");
+      },
+      function(err) {
+        if ( (err instanceof Error) && /value/.test(err) ) {
+          return true;
+        }
+      },
+      "unexpected error"
+    );
 
 ### assert.doesNotThrow(block, [error], [message])
 
 Ожидает что блок кода `block` не вызовет ошибки.
+См. описание параметров для `assert.throws`.
 
 ### assert.ifError(value)
 

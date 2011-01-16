@@ -47,3 +47,34 @@
 `callback` вызывается после закрытия `writableStream`. `callback` принимает
 ошибку в случае если `writableStream` был закрыт или возникла ошибка.
 
+
+### util.inherits(constructor, superConstructor)
+
+Расширяет [конструктор](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/constructor)
+прототипа методами из другого прототипа. Прототип `constructor` будет новым объектом, созданным с помощью `superConstructor`.
+
+Также `superConstructor` будет доступен через свойство `constructor.super_`.
+
+    var util = require("util");
+    var events = require("events");
+
+    function MyStream() {
+        events.EventEmitter.call(this);
+    }
+
+    util.inherits(MyStream, events.EventEmitter);
+
+    MyStream.prototype.write = function(data) {
+        this.emit("data", data);
+    }
+
+    var stream = new MyStream();
+
+    console.log(stream instanceof events.EventEmitter); // true
+    console.log(MyStream.super_ === events.EventEmitter); // true
+
+    stream.on("data", function(data) {
+        console.log('Received data: "' + data + '"');
+    })
+    stream.write("It works!"); // Received data: "It works!"
+

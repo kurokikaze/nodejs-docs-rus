@@ -1,1 +1,6 @@
 * Translate 'about' section in index.htm
+* v0.3.x
+  * Translate debuger.markdown
+  * Translate tty.markdown
+  * Translate tls.markdown
+

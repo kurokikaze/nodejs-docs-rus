@@ -1,19 +1,18 @@
 ## Процесс
 
-The `process` object is a global object and can be accessed from anywhere.
-It is an instance of `EventEmitter`.
+Объект `process` — глобальный и может быть использован в любом месте кода.
+Является экземпляром `EventEmitter`.
 
 
-### Event: 'exit'
+### Событие: 'exit'
 
 `function () {}`
 
-Emitted when the process is about to exit.  This is a good hook to perform
-constant time checks of the module's state (like for unit tests).  The main
-event loop will no longer be run after the 'exit' callback finishes, so
-timers may not be scheduled.
+Генерируется перед тем как процесс завершится. Это хорошее место для проверок
+состояния модуля (например, юнит-тестов). Event loop не будет действовать
+после завершения обработчика `'exit'`, так что таймеры использовать нельзя.
 
-Example of listening for `exit`:
+Пример обработки события `'exit'`:
 
     process.on('exit', function () {
       process.nextTick(function () {
@@ -22,15 +21,15 @@ Example of listening for `exit`:
       console.log('About to exit.');
     });
 
-### Event: 'uncaughtException'
+### Событие: 'uncaughtException'
 
 `function (err) { }`
 
-Emitted when an exception bubbles all the way back to the event loop. If a
-listener is added for this exception, the default action (which is to print
-a stack trace and exit) will not occur.
+Генерируется, когда неперехваченное исключение достигает цикла обработки событий.
+Если этому событию назначен обработчик,
+стандартное действие (печать стека и выход) производиться не будет.
 
-Example of listening for `uncaughtException`:
+Пример обработки события `'uncaughtException'`:
 
     process.on('uncaughtException', function (err) {
       console.log('Caught exception: ' + err);
@@ -44,73 +43,74 @@ Example of listening for `uncaughtException`:
     nonexistentFunc();
     console.log('This will not run.');
 
-Note that `uncaughtException` is a very crude mechanism for exception
-handling.  Using try / catch in your program will give you more control over
-your program's flow.  Especially for server programs that are designed to
-stay running forever, `uncaughtException` can be a useful safety mechanism.
+Заметьте, что событие `'uncaughtException'` — это очень грубый механизм для управления исключениями.
+Использование try/catch даст вам больший контроль над выполнением вашего кода.
+Но для программ, предназначенных для постоянной работы,
+`'uncaughtException'` может быть очень полезным механизмом безопасности.
 
 
-### Signal Events
+### Сигнальные события
 
 `function () {}`
 
-Emitted when the processes receives a signal. See sigaction(2) for a list of
-standard POSIX signal names such as SIGINT, SIGUSR1, etc.
+Генерируются когда процесс получает сигнал.
+См. sigaction(2) для списка стандартных имён сигналов в POSIX,
+таких как `SIGINT`, `SIGUSR1` и т.д.
 
-Example of listening for `SIGINT`:
+Пример обработки сигнала `SIGINT`:
 
-    var stdin = process.openStdin();
+    // Start reading from stdin so we don't exit.
+    process.stdin.resume();
 
     process.on('SIGINT', function () {
       console.log('Got SIGINT.  Press Control-D to exit.');
     });
 
-An easy way to send the `SIGINT` signal is with `Control-C` in most terminal
-programs.
+Простой способ отправки сигнала `SIGINT`: `Control-C` в большинстве терминальных программ.
 
 
 ### process.stdout
 
-A `Writable Stream` to `stdout`.
+Поток с возможностью записи, представляющий стандартный поток вывода `stdout`.
 
-Example: the definition of `console.log`
+Пример (определение `console.log`):
 
     console.log = function (d) {
       process.stdout.write(d + '\n');
     };
 
 
-### process.openStdin()
+### process.stdin
 
-Opens the standard input stream, returns a `Readable Stream`.
+Стандартный поток ввода stdin. Этот поток по умолчанию не реагирует на события,
+для чтения из него нужно предварительно вызвать `process.stdin.resume()`.
 
-Example of opening standard input and listening for both events:
+Пример открытия стандартного потока ввода и обработки обоих событий:
 
-    var stdin = process.openStdin();
+    process.stdin.resume();
+    process.stdin.setEncoding('utf8');
 
-    stdin.setEncoding('utf8');
-
-    stdin.on('data', function (chunk) {
+    process.stdin.on('data', function (chunk) {
       process.stdout.write('data: ' + chunk);
     });
 
-    stdin.on('end', function () {
+    process.stdin.on('end', function () {
       process.stdout.write('end');
     });
 
 
 ### process.argv
 
-An array containing the command line arguments.  The first element will be
-'node', the second element will be the name of the JavaScript file.  The
-next elements will be any additional command line arguments.
+Массив, содержащий аргументы командной строки.
+Первым элементом будет 'node', вторым — имя JavaScript файла.
+Следующие элементы будут дополнительными аргументами скрипта.
 
     // print process.argv
     process.argv.forEach(function (val, index, array) {
       console.log(index + ': ' + val);
     });
 
-This will generate:
+В результате получим:
 
     $ node process-2.js one two=three four
     0: node
@@ -122,16 +122,17 @@ This will generate:
 
 ### process.execPath
 
-This is the absolute pathname of the executable that started the process.
+Абсолютный путь к приложению, запустившему процесс.
 
-Example:
+Пример:
 
     /usr/local/bin/node
 
 
 ### process.chdir(directory)
 
-Changes the current working directory of the process or throws an exception if that fails.
+Изменяет текущий рабочий каталог приложения либо генерирует исключение,
+если изменить каталог не удаётся.
 
     console.log('Starting directory: ' + process.cwd());
     try {
@@ -146,38 +147,41 @@ Changes the current working directory of the process or throws an exception if t
 
 ### process.cwd()
 
-Returns the current working directory of the process.
+Возвращает текущую рабочую директорию процесса.
 
     console.log('Current directory: ' + process.cwd());
 
 
 ### process.env
 
-An object containing the user environment. See environ(7).
+Объект, хранящий окружение пользователя. См. environ(7).
 
 
 ### process.exit(code=0)
 
-Ends the process with the specified `code`.  If omitted, exit uses the 
-'success' code `0`.
+Завершает процесс с указанным кодом `code`.
+Если код пропущен, завершает процесс со стандартным успешным кодом `0`.
 
-To exit with a 'failure' code:
+Чтобы выйти с ощибочным кодом, нужно вызвать:
 
     process.exit(1);
 
-The shell that executed node should see the exit code as 1.
+Оболочка, с помощью которой был запущен скрипт в node, должна получить код `1`.
 
 
 ### process.getgid()
 
-Gets the group identity of the process. (See getgid(2).)  This is the numerical group id, not the group name.
+Возвращает групповой индикатор процесса (см. setgid(2)). Это числовое значение id группы, а не её имя.
 
     console.log('Current gid: ' + process.getgid());
 
 
 ### process.setgid(id)
 
-Sets the group identity of the process. (See setgid(2).)  This accepts either a numerical ID or a groupname string.  If a groupname is specified, this method blocks while resolving it to a numerical ID.
+Устанавливает групповой индикатор процесса (см. setgid(2)).
+Функция принимает как числовое значение, так и его текстовый эквивалент.
+Если функции передано имя группы, то функция блокирует выполнение кода
+пока не разрешит имя в числовой идентификатор.
 
     console.log('Current gid: ' + process.getgid());
     try {
@@ -191,14 +195,17 @@ Sets the group identity of the process. (See setgid(2).)  This accepts either a 
 
 ### process.getuid()
 
-Gets the user identity of the process. (See getuid(2).)  This is the numerical userid, not the username.
+Возвращает индикатор пользователя-владельца процесса (см. setuid(2)). Это числовой идентификатор, а не имя пользователя.
 
     console.log('Current uid: ' + process.getuid());
 
 
 ### process.setuid(id)
 
-Sets the user identity of the process. (See setuid(2).)  This accepts either a numerical ID or a username string.  If a username is specified, this method blocks while resolving it to a numerical ID.
+Устанавливает индикатор пользователя-владельца процесса (см. setuid(2)).
+Функция принимает как числовое значение, так и его текстовый эквивалент.
+Если функции передано имя пользователя, то функция блокирует выполнение кода
+пока не разрешит имя в числовой идентификатор.
 
     console.log('Current uid: ' + process.getuid());
     try {
@@ -212,29 +219,30 @@ Sets the user identity of the process. (See setuid(2).)  This accepts either a n
 
 ### process.version
 
-A compiled-in property that exposes `NODE_VERSION`.
+Заданное при компиляции свойство, возвращающее версию Node (`NODE_VERSION`).
 
     console.log('Version: ' + process.version);
 
 ### process.installPrefix
 
-A compiled-in property that exposes `NODE_PREFIX`.
+Заданное при компиляции свойство, хранящее директорию,
+в которую устанавливали Node (`NODE_PREFIX`).
 
     console.log('Prefix: ' + process.installPrefix);
 
 
 ### process.kill(pid, signal='SIGINT')
 
-Send a signal to a process. `pid` is the process id and `signal` is the
-string describing the signal to send.  Signal names are strings like
-'SIGINT' or 'SIGUSR1'.  If omitted, the signal will be 'SIGINT'.
-See kill(2) for more information.
+Отправляет сигнал процессу. `pid` это идентификатор процесса, `signal` — строка,
+обозначающая отправляемый сигнал. Имена сигналов это строки вроде `'SIGINT'` или `'SIGUSR1'`.
+Если имя сигнала пропущено, отправлен будет сигнал `'SIGINT'`.
+См. kill(2) для более подробной информации.
 
-Note that just because the name of this function is `process.kill`, it is
-really just a signal sender, like the `kill` system call.  The signal sent
-may do something other than kill the target process.
+Заметьте, что хотя функция и называется `process.kill`,
+на самом деле она просто отправляет сигнал, как и системная команда `kill`.
+Отправляемый сигнал может не только завершать целевой процесс.
 
-Example of sending a signal to yourself:
+Пример процесса, отправляющего сигнал самому себе:
 
     process.on('SIGHUP', function () {
       console.log('Got SIGHUP signal.');
@@ -250,46 +258,44 @@ Example of sending a signal to yourself:
 
 ### process.pid
 
-The PID of the process.
+Идентификатор процесса (PID).
 
     console.log('This process is pid ' + process.pid);
 
 ### process.title
 
-Getter/setter to set what is displayed in 'ps'.
+свойство для определение/задания заголовка, отобращаемого в списке процессов.
 
 
 ### process.platform
 
-What platform you're running on. `'linux2'`, `'darwin'`, etc.
+Платформа, на которой выполняется node. `'linux2'`, `'darwin'` и т.д.
 
     console.log('This platform is ' + process.platform);
 
 
 ### process.memoryUsage()
 
-Returns an object describing the memory usage of the Node process.
+Возвращает объект, описывающий потребление памяти процессом Node.
 
     var util = require('util');
 
     console.log(util.inspect(process.memoryUsage()));
 
-This will generate:
+В результате получим:
 
-    { rss: 4935680
-    , vsize: 41893888
-    , heapTotal: 1826816
-    , heapUsed: 650472
-    }
+    { rss: 4935680,
+      vsize: 41893888,
+      heapTotal: 1826816,
+      heapUsed: 650472 }
 
-`heapTotal` and `heapUsed` refer to V8's memory usage.
+`heapTotal` и `heapUsed`     относятся к потреблению памяти движком V8.
 
 
 ### process.nextTick(callback)
 
-On the next loop around the event loop call this callback.
-This is *not* a simple alias to `setTimeout(fn, 0)`, it's much more
-efficient.
+На следующей итерации цикла обработки событий запустить указанный обработчик.
+Это *не* простой alias для `setTimeout(fn, 0)`, это намного более эффективный метод.
 
     process.nextTick(function () {
       console.log('nextTick callback');
@@ -298,9 +304,9 @@ efficient.
 
 ### process.umask([mask])
 
-Sets or reads the process's file mode creation mask. Child processes inherit
-the mask from the parent process. Returns the old mask if `mask` argument is
-given, otherwise returns the current mask.
+Задаёт и возвращает маску создания файлов процессом.
+Дочерние процессы наследуют эту маску от процесса-родителя.
+Если задан аргумент mask возвращает старую маску, иначе — возвращает текущую.
 
     var oldmask, newmask = 0644;
 

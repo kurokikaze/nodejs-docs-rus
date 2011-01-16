@@ -22,7 +22,7 @@
         <li><a href="#about">Описание</a></li>
         <li><a href="#links">Ссылки</a></li>
         <li><a href="#contributing">Участие в разработке</a></li>
-        <li><a href="v0.3.x/index.html">Документация по v0.3.1</a></li>
+        <li><a href="v0.3.x/index.html">Документация по v0.3.4</a></li>
         <li><a href="v0.2.x/index.html">Документация по v0.2.6</a></li>
       </ol>
     </div>
@@ -76,13 +76,13 @@ net.createServer(function (socket) {
         <a href="http://github.com/ry/node/tree/master">Git-репозиторий</a>
       </p>
       <p>
-        Стабильная вресия: 2010.11.16
-        <a href="http://nodejs.org/dist/node-v0.2.5.tar.gz">node-v0.2.5.tar.gz</a>
+        Стабильная версия: 2010.12.30
+        <a href="http://nodejs.org/dist/node-v0.2.6.tar.gz">node-v0.2.6.tar.gz</a>
       </p>
 
       <p>
         Последняя версия: 2010.11.16
-        <a href="http://nodejs.org/dist/node-v0.3.1.tar.gz">node-v0.3.1.tar.gz</a>
+        <a href="http://nodejs.org/dist/node-v0.3.4.tar.gz">node-v0.3.4.tar.gz</a>
         (<a href="v0.3.1/">документация на русском</a>)
       </p>
 
@@ -92,8 +92,8 @@ net.createServer(function (socket) {
 
       <p>
         Node протестирован на <b>Linux</b>, <b>Macintosh</b> и <b>Solaris</b>.
-        Также его можно запустить на <b>Windows/Cygwin</b>, <b>FreeBSD</b>
-        и <b>OpenBSD</b>. Для сборки необходим Python версии 2.4 или выше.
+        Также его можно запустить на <b><a href="https://github.com/ry/node/wiki/Building-node.js-on-Cygwin-(Windows)">Windows/Cygwin</a></b>,
+        <b>FreeBSD</b> и <b>OpenBSD</b>. Для сборки необходим Python версии 2.4 или выше.
         Движок V8, который используется в Node, поддерживает только архитектуры
         IA-32, x64 и ARM. V8 включён в дистрибутив Node. Для использования
         SSL/TLS необходимо установить OpenSSL и заголовки к нему.
@@ -112,14 +112,14 @@ make install</pre>
       <h2 id="about">Описание</h2>
 
       <p>
-        Цель проекта Node - предоставить лёгкий способ построения масштабируемых 
-		сетевых программ. In the "hello world" web server example above, many
+        Цель проекта Node - предоставить лёгкий способ построения масштабируемых
+        сетевых программ. In the "hello world" web server example above, many
         client connections can be handled concurrently.  Node tells the
         operating system (through <code>epoll</code>, <code>kqueue</code>,
         <code class="sh_none">/dev/poll</code>, or <code>select</code>)
         that it should be notified when a new connection is made, and 
         then it goes to sleep. If someone new connects, then it executes
-        the callback.  Each connection is only a small heap allocation.
+        the callback. Each connection is only a small heap allocation.
       </p>
 
       <p>
@@ -134,7 +134,7 @@ make install</pre>
         than systems which allocate 2mb thread stacks for each connection.
 
         Furthermore, users of Node are free from worries of dead-locking
-        the process&mdash;there are no locks.  Almost no function in Node
+        the process &mdash; there are no locks.  Almost no function in Node
         directly performs I/O, so the process never blocks. Because
         nothing blocks, less-than-expert programmers are able to develop
         fast systems.
@@ -144,7 +144,7 @@ make install</pre>
         Node is similar in design to and influenced by systems like Ruby's <a
         href="http://rubyeventmachine.com/">Event Machine</a> or Python's <a
         href="http://twistedmatrix.com/">Twisted</a>.  Node takes the event
-        model a bit further&mdash;it presents the event loop as a language
+        model a bit further &mdash; it presents the event loop as a language
         construct instead of as a library. In other systems there is always
         a blocking call to start the event-loop.  Typically one defines
         behavior through callbacks at the beginning of a script and at the
@@ -153,7 +153,7 @@ make install</pre>
         start-the-event-loop call.  Node simply enters the event loop after
         executing the input script. Node exits the event loop when there are
         no more callbacks to perform.  This behavior is like browser
-        javascript&mdash;the event loop is hidden from the user.
+        javascript &mdash; the event loop is hidden from the user.
       </p>
 
       <p>
@@ -173,7 +173,7 @@ make install</pre>
         </i>
         Processes are necessary to scale to multi-core computers, not
         memory-sharing threads. The fundamentals of scalable systems are
-        fast networking and non-blocking design&mdash;the rest is message
+        fast networking and non-blocking design &mdash; the rest is message
         passing.  In future versions, Node will be able to fork new
         processes (using the <a
         href="http://www.whatwg.org/specs/web-workers/current-work/"> Web
@@ -250,7 +250,7 @@ git config --global user.name "Ryan Dahl"
       </p>
 
       <p>
-        после этого вы должны прислать его в <a href="http://groups.google.com/group/nodejs-dev">список рассылки</a>
+        после этого вы должны прислать его в <a href="http://groups.google.com/group/nodejs-dev">список рассылки для разработчиков</a>
         аттачем или ссылкой на <a href="http://gist.github.com/">gist</a>.
       </p>
 
@@ -262,10 +262,13 @@ git config --global user.name "Ryan Dahl"
 
 
     <div style="padding-top: 10em; font-size: 8pt">
-      <a href="http://joyent.com/"><img style="border: 0; padding: 0;" src="assets/sponsored.png"/></a>
-      <br/>
-      <br/>
-
+      <a href="http://no.de/"><img src="assets.sponsored.png" height="58" width="120"/></a>
+      <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String"
+         title="JS String match"><img
+         src="http://static.jsconf.us/promotejsh.gif" height="150" width="180"
+         alt="JS String match"/></a>
+    </div>
+    <div style="clear: both; font-size: 8pt">
       Copyright 2010 Joyent, Inc
     </div>
     <script type="text/javascript">highlight(undefined, undefined, 'pre');</script>
