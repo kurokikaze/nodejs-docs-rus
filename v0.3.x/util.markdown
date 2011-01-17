@@ -37,12 +37,12 @@
     console.log(util.inspect(util, true, null));
 
 
-### util.pump(readableStream, writeableStream, [callback])
+### util.pump(readableStream, writableStream, [callback])
 
 Экспериментальный метод.
 
 Читает данные из потока `readableStream` и посылает потоку `writableStream`.
-Когда `writeableStream.write(data)` возвращает `false` `readableStream`
+Когда `writableStream.write(data)` возвращает `false` `readableStream`
 приостанавливается пока не произойдёт событие `drain` во `writableStream`.
 `callback` вызывается после закрытия `writableStream`. `callback` принимает
 ошибку в случае если `writableStream` был закрыт или возникла ошибка.

@@ -120,7 +120,7 @@ occured, the stream came to an `'end'`, or `destroy()` was called.
 
 Генерируется когда закрывается соответствующий потоку дескриптор.
 
-### stream.writeable
+### stream.writable
 
 Булево свойство, по умолчанию `true`, но становящиеся `false` после наступления
 события `'error'` или вызова `end()` / `destroy()`.
