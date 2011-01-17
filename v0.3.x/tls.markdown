@@ -31,7 +31,7 @@ TLS/SSL это инфраструктура с публичными ключами. Каждый клиент и каждый сервер д
 
   - `cert`: Строка или буфер содержащие ключ сертификата сервера в формате PEM.
 
-  - `ca`: Массив строк или буферов с Центрами Сертификации. Если этот массив пропущен, будут использованы "корневые" Центры Сертификации, например VeriSign. Они будут использованы для авторизации соединения.
+  - `ca`: Массив строк или буферов с доверенными сертификатами. Если этот массив пропущен, будут использованы "корневые" Центры Сертификации, например VeriSign. Они будут использованы для авторизации соединения.
 
 `tls.connect()` возвращает текстовый объект `CryptoStream`.
 
@@ -40,11 +40,9 @@ TLS/SSL это инфраструктура с публичными ключами. Каждый клиент и каждый сервер д
 
 ### tls.Server
 
-This class is a subclass of `net.Server` and has the same methods on it.
-Instead of accepting just raw TCP connections, this accepts encrypted
-connections using TLS or SSL.
+Этот класс - подкласс `net.Server` и имеет те же методы. Вместо приёма простых TCP соединений он принимает защищённые соединения с использованием TLS или SSL.
 
-Here is a simple example echo server:
+Простой пример эхо-сервера (возвращает полученные данные):
 
     var tls = require('tls');
     var fs = require('fs');
@@ -60,7 +58,7 @@ Here is a simple example echo server:
     }).listen(8000);
 
 
-You can test this server by connecting to it with `openssl s_client`:
+Вы можете проверить сервер, присоединившись к нему с помощью `openssl s_client`:
 
 
     openssl s_client -connect 127.0.0.1:8000
@@ -68,67 +66,46 @@ You can test this server by connecting to it with `openssl s_client`:
 
 #### tls.createServer(options, secureConnectionListener)
 
-This is a constructor for the `tls.Server` class. The options object
-has these possibilities:
+Это конструктор для класса `tls.Server`. Объект опций может содержать следующие значения:
 
-  - `key`: A string or `Buffer` containing the private key of the server in
-    PEM format. (Required)
+  - `key`:  Строка или буфер содержащие приватный ключ сервера в формате PEM (обязательно)
 
-  - `cert`: A string or `Buffer` containing the certificate key of the server in
-    PEM format. (Required)
+  - `cert`: Строка или буфер содержащие ключ сертификата сервера в формате PEM.
 
-  - `ca`: An array of strings or `Buffer`s of trusted certificates. If this is
-    omitted several well known "root" CAs will be used, like VeriSign.
-    These are used to authorize connections.
+  - `ca`: Массив строк или буферов с доверенными сертификатами. Если этот массив пропущен, будут использованы "корневые" Центры Сертификации, например VeriSign. Они будут использованы для авторизации соединения.
 
-  - `requestCert`: If `true` the server will request a certificate from
-    clients that connect and attempt to verify that certificate. Default:
-    `false`.
+  - `requestCert`: Если принимает значение `true` сервер будет запрашивать у клиентов сертификаты и пытаться проверять их подлинность. По умолчанию принимает значение `false`.
 
-  - `rejectUnauthorized`: If `true` the server will reject any connection
-    which is not authorized with the list of supplied CAs. This option only
-    has an effect if `requestCert` is `true`. Default: `false`.
+  - `rejectUnauthorized`: Если равно `true` сервер будет сбрасывать соединения сертификаты которых не подтверждены списком доверенных Центров Сертификации. Эта опция действует только если `requestCert` равен `true`. Значение по умолчанию: `false`.
 
 
-#### Event: 'secureConnection'
+#### Событие: 'secureConnection'
 
 `function (cleartextStream) {}`
 
-This event is emitted after a new connection has been successfully
-handshaked. The argument is a duplex instance of `stream.Stream`. It has all
-the common stream methods and events.
+Это событие генерируется при приёме нового соединения после успешного прохождения рукопожатия. Аргумент - экземпляр `stream.Stream` открытый на чтение и запись. Он имеет все методы и события обычного потока.
 
-`cleartextStream.authorized` is a boolean value which indicates if the
-client has verified by one of the supplied cerificate authorities for the
-server. If `cleartextStream.authorized` is false, then
-`cleartextStream.authorizationError` is set to describe how authorization
-failed. Implied but worth mentioning: depending on the settings of the TLS
-server, you unauthorized connections may be accepted.
+`cleartextStream.authorized` - двоичное значение, сообщающее что клиент был проверен одним из заданных для сервера доверенных Центров Сертификации. Если это свойство принимает значение `false`, в `cleartextStream.authorizationError` будет храниться ошибка авторизации. Стоит заметить что в зависимости от настроек TLS-сервера неавторизованные соединения могут приниматься либо сбрасываться.
 
 
 #### server.listen(port, [host], [callback])
 
-Begin accepting connections on the specified `port` and `host`.  If the
-`host` is omitted, the server will accept connections directed to any
-IPv4 address (`INADDR_ANY`).
+Начинает приём соединений на указанном порту и адресе. Если адрес не указан, сервер принимает соединения на любой адрес IPv4 (`INADDR_ANY`).
 
-This function is asynchronous. The last parameter `callback` will be called
-when the server has been bound.
+Эта функция асинхронна. Коллбек, переданный последним параметром, будет вызван когда сервер будет готов к приёму соединений.
 
-See `net.Server` for more information.
+См. `net.Server` для дальнейшей информации.
 
 
 #### server.close()
 
-Stops the server from accepting new connections. This function is
-asynchronous, the server is finally closed when the server emits a `'close'`
-event.
+Прекращает приём новых соединений сервером. Эта функция асинхронна, сервер окончательно закрывается когда генерируется событие `'close'`.
 
 
 #### server.maxConnections
 
-Set this property to reject connections when the server's connection count gets high.
+Задайте это свойство чтобы сбрасывать новые соединения как только количество одновременных соединений достигнет указанного значения.
 
 #### server.connections
 
-The number of concurrent connections on the server.
+Число одновременных соединений с сервером.
