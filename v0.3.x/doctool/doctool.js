@@ -18,6 +18,9 @@ var template = fs.readFileSync(argv[2], "utf8");
 function formatIdString(str) {
   str = str
     .replace(/\([^)}]*\)/gmi, "")
+    .replace(/[а-яё]+/gmi, function(rustring) {
+      return escape(rustring);
+    })
     .replace(/[^A-Za-z0-9_.]+/gmi, "_");
 
   return str.substr(0,1).toLowerCase() + str.substr(1);
@@ -32,7 +35,7 @@ function generateToc(data) {
       '<h2>Содержание</h2>'
     ];
 
-  data.replace(/(^#+)\W+([^$\n]+)/gmi, function(src, level, text) {
+  data.replace(/(^#+)[^a-zа-яё]+([^$\n]+)/gmi, function(src, level, text) {
     level = level.length;
 
     if (first_level == 0) first_level = level;

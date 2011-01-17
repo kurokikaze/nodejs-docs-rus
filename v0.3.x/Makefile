@@ -3,10 +3,10 @@ apidoc_html = $(apidoc_markdown:.markdown=.html)
 
 all: $(apidoc_html)
 
-%.html: %.markdown
+%.html: %.markdown ./doctool/doctool.js ./doctool/template.html
 	node ./doctool/doctool.js ./doctool/template.html $< > $@
 
-all.html: $(apidoc_markdown)
+all.html: $(apidoc_markdown) ./doctool/doctool.js ./doctool/template.html
 	node ./doctool/doctool.js ./doctool/template.html all.markdown > all.html
 
 clean:
