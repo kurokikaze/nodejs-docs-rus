@@ -1,27 +1,23 @@
 ## TLS (SSL)
 
-Use `require('tls')` to access this module.
+Используйте `require('tls')` чтобы получить доступ к функциям этого модуля.
 
-The `tls` module uses OpenSSL to provide Transport Layer Security and/or
-Secure Socket Layer: encrypted stream communication.
+Модуль `tls` использует OpenSSL чтобы предоставить Transport Layer Security и/или
+Secure Socket Layer (SSL): зашифрованные соединения.
 
-TLS/SSL is a public/private key infrastructure. Each client and each
-server must have a private key. A private key is created like this
+TLS/SSL это инфраструктура с публичными ключами. Каждый клиент и каждый сервер должны иметь собственный приватный ключ. Приватный ключ создаётся таким образом:
 
     openssl genrsa -out ryans-key.pem 1024
 
-All severs and some clients need to have a certificate. Certificates are public
-keys signed by a Certificate Authority or self-signed. The first step to
-getting a certificate is to create a "Certificate Signing Request" (CSR)
-file. This is done with:
+Все серверы и некоторые клиенты должны иметь сертификат. Сертификаты это публичные ключи подписанные Центром Сертификации или самим создателем сертификата. Первый шаг в получени сертификата: создание файла запроса на подпись сертификата (CSR, Certificate Signing Request). Это делается следующим образом:
 
     openssl req -new -key ryans-key.pem -out ryans-csr.pem
 
-To create a self-signed certificate with the CSR, do this:
+Чтобы создать самостоятельно подписанный сертификат CSR, сделайте:
 
     openssl x509 -req -in ryans-csr.pem -signkey ryans-key.pem -out ryans-cert.pem
 
-Alternatively you can send the CSR to a Certificate Authority for signing.
+Либо Вы можете отправить CSR в Центр Сертификации для подписи.
 
 (TODO: docs on creating a CA, for now interested users should just look at
 `test/fixtures/keys/Makefile` in the Node source code)
@@ -29,26 +25,17 @@ Alternatively you can send the CSR to a Certificate Authority for signing.
 
 ### s = tls.connect(port, [host], [options], callback)
 
-Creates a new client connection to the given `port` and `host`. (If `host`
-defaults to `localhost`.) `options` should be an object which specifies
+Создаёт новое соединение на выбранный порт и хост (хост по умолчанию - `localhost`). Опции `options` должны быть объектом, содержащим
 
-  - `key`: A string or `Buffer` containing the private key of the server in
-    PEM format. (Required)
+  - `key`: Строка или буфер содержащие приватный ключ сервера в формате PEM (обязательно)
 
-  - `cert`: A string or `Buffer` containing the certificate key of the server in
-    PEM format.
+  - `cert`: Строка или буфер содержащие ключ сертификата сервера в формате PEM.
 
-  - `ca`: An array of strings or `Buffer`s of trusted certificates. If this is
-    omitted several well known "root" CAs will be used, like VeriSign.
-    These are used to authorize connections.
+  - `ca`: Массив строк или буферов с Центрами Сертификации. Если этот массив пропущен, будут использованы "корневые" Центры Сертификации, например VeriSign. Они будут использованы для авторизации соединения.
 
-`tls.connect()` returns a cleartext `CryptoStream` object.
+`tls.connect()` возвращает текстовый объект `CryptoStream`.
 
-After the TLS/SSL handshake the `callback` is called. The `callback` will be
-called no matter if the server's certificate was authorized or not. It is up
-to the user to test `s.authorized` to see if the server certificate was
-signed by one of the specified CAs. If `s.authorized === false` then the error
-can be found in `s.authorizationError`.
+После рукопожатия TLS/SSL вызывается переданная функция. Вызов произойдёт независимо от того был ли авторизрван сертификат. Пользователь сам должен проверить значение `s.authorized` чтобы увидеть был ли сертификат подписан одним из указанных центров. Если `s.authorized === false` то в переменной `s.authorizationError` будет содержаться объект соответствующей ошибки.
 
 
 ### tls.Server
