@@ -1,27 +1,21 @@
-## Debugger
+﻿## Debugger
 
-V8 comes with an extensive debugger which is accessable out-of-process via a
-simple [TCP protocol](http://code.google.com/p/v8/wiki/DebuggerProtocol).
-Node has a built-in client for this debugger. To use this, start Node with the
-`debug` argument; a prompt will appear:
+Вместе с V8 идет мощный отладчик, доступный прямо в процессе выполнения через простой [TCP протокол](http://code.google.com/p/v8/wiki/DebuggerProtocol).
+В Node есть встроенный клиент для этого отладчика. Чтобы его использовать, запустите Node с ключом `debug`; появится следующее приглашение:
 
     % node debug myscript.js
     debug>
 
-At this point `myscript.js` is not yet running. To start the script, enter
-the command `run`. If everything works okay, the output should look like
-this:
+Пока `myscript.js` ещё не запущен. Чтобы запустить скрипт, введите команду `run`. Если всё в порядке, вывод будет выглядеть примерно так:
 
     % node debug myscript.js
     debug> run
     debugger listening on port 5858
     connecting...ok
 
-Node's debugger client doesn't support the full range of commands, but
-simple step and inspection is possible. By putting the statement `debugger;`
-into the source code of your script, you will enable a breakpoint.
+Отладчик Node не поддерживает полный набор команд но выполнение и просмотр окружения вполне возможны. Добавив строку `debugger;` в исходный код, вы добавляете точку остановки.
 
-For example, suppose `myscript.js` looked like this:
+Например, предположим что `myscript.js` выглядит так:
 
     // myscript.js
     x = 5;
@@ -31,7 +25,7 @@ For example, suppose `myscript.js` looked like this:
     }, 1000);
     console.log("hello");
 
-Then once the debugger is run, it will break on line 4.
+При запуске в режиме отладки остановка произойдёт на четвёртой строке.
 
     % ./node debug myscript.js
     debug> run
@@ -59,15 +53,11 @@ Then once the debugger is run, it will break on line 4.
     %
 
 
-The `print` command allows you to evaluate variables. The `next` command steps
-over to the next line. There are a few other commands available and more to
-come type `help` to see others.
+Команда `print` позволяет просматривать переменные. Команда `next` выполняет следующую строку скрипта. Кроме этого доступно ещё несколько команд, и ещё больше будут добавлены. Введите `help` чтобы увидеть остальные.
 
 
-### Advanced Usage
+### Продвинутое использование
 
-The V8 debugger can be enabled and accessed either by starting Node with
-the `--debug` command-line flag or by signaling an existing Node process
-with `SIGUSR1`.
+Отладчик V8 может быть включен и использован либо при запуске Node с ключом `--debug` или при передаче существующему процессу Node сигнала `SIGUSR1`.
 
 
