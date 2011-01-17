@@ -1,36 +1,30 @@
 ## TTY
 
-Use `require('tty')` to access this module.
+Используйте `require('tty')` чтобы получить доступ к этому модулю.
 
 
 ### tty.open(path, args=[])
 
-Spawns a new process with the executable pointed to by `path` as the session
-leader to a new pseudo terminal.
+Запускает новый процесс с исполняемымы файлом указанным в переменной path в новом псевдо-терминале.
 
-Returns an array `[slaveFD, childProcess]`. `slaveFD` is the file descriptor
-of the slave end of the pseudo terminal. `childProcess` is a child process
-object.
+Возвращает массив `[slaveFD, childProcess]`. `slaveFD` это файловый дескриптор конца псевдотерминала, принадлежащего потомку. `childProcess` это объект дочернего процесса.
 
 
 ### tty.isatty(fd)
 
-Returns `true` or `false` depending on if the `fd` is associated with a
-terminal.
+Возвращает `true` или `false` в зависимости от того принадлежит ли файловый дескриптор `fd` терминалу.
 
 
 ### tty.setRawMode(mode)
 
-`mode` should be `true` or `false`. This sets the properies of the current
-process's stdin fd to act either as a raw device or default.
+Переменная `mode` должна принимать значение `true` или `false`. Это задает режим работы потоков ввода-вывода текущего процесса: raw device или default.
 
 
 ### tty.getColumns()
 
-Returns the number of columns associated with the current process's TTY.
+Возвращает число столбцов в терминале текущего процесса.
 
-Note that each time this number is changed the process receives a `SIGWINCH`
-signal. So you can keep a cache of it like this:
+Заметьте что каждый раз когда это число меняется процесс получает сигнал `SIGWINCH`. Поэтому можно организовать такой кеш:
 
     var columns = tty.getColumns();
     process.on('SIGWINCH', function() {
