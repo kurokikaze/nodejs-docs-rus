@@ -18,17 +18,16 @@
     <div id="toc">
       <ol>
         <li><a href="#download">Загрузить</a></li>
-        <li><a href="#build">Собрать сомостоятельно</a></li>
+        <li><a href="https://github.com/ry/node/raw/master/ChangeLog">ChangeLog</a></li>
         <li><a href="#about">Описание</a></li>
-        <li><a href="#links">Ссылки</a></li>
-        <li><a href="#contributing">Участие в разработке</a></li>
-        <li><a href="v0.3.x/index.html">Документация по v0.3.5</a></li>
+        <li><a href="v0.3.x/index.html">Документация по v0.3.7</a></li>
         <li><a href="v0.2.x/index.html">Документация по v0.2.6</a></li>
+        <br/>
+        <li><b><a href="https://github.com/ry/node/wiki">Wiki</a></b></li>
       </ol>
     </div>
     <div id="content">
 
-      <!-- <h1><a href="http://nodejs.org/">Node</a></h1> -->
       <img id="logo" src="assets/logo.png" alt="node.js"/>
 
       <p id="introduction">
@@ -70,6 +69,10 @@ net.createServer(function (socket) {
 }).listen(8124, "127.0.0.1");
 </pre>
 
+      <p>
+        Вы может почерпнуть больше актуальной информации из <a href="https://github.com/ry/node/wiki">wiki</a> проекта.
+      </p>
+
       <h2 id="download">Загрузить</h2>
 
       <p>
@@ -81,33 +84,17 @@ net.createServer(function (socket) {
       </p>
 
       <p>
-        Последняя версия: 2011.01.16
-        <a href="http://nodejs.org/dist/node-v0.3.5.tar.gz">node-v0.3.5.tar.gz</a>
+        Последняя версия: 2011.01.27
+        <a href="http://nodejs.org/dist/node-v0.3.7.tar.gz">node-v0.3.7.tar.gz</a>
         (<a href="v0.3.1/">документация на русском</a>)
       </p>
 
       <p>Все версии: <a href="http://nodejs.org/dist">дистрибутивы</a>, <a href="http://nodejs.org/docs">документация на английском</a></p>
 
-      <h2 id="build">Собрать сомостоятельно</h2>
-
       <p>
-        Node протестирован на <b>Linux</b>, <b>Macintosh</b> и <b>Solaris</b>.
-        Также его можно запустить на <b><a href="https://github.com/ry/node/wiki/Building-node.js-on-Cygwin-(Windows)">Windows/Cygwin</a></b>,
-        <b>FreeBSD</b> и <b>OpenBSD</b>. Для сборки необходим Python версии 2.4 или выше.
-        Движок V8, который используется в Node, поддерживает только архитектуры
-        IA-32, x64 и ARM. V8 включён в дистрибутив Node. Для использования
-        SSL/TLS необходимо установить OpenSSL и заголовки к нему.
-        Других зависимостей нет.
+        Инструкции по сборке и список поддерживаемых ОС вы можете найти на странице
+        <a href="https://github.com/ry/node/wiki/Installation">https://github.com/ry/node/wiki/Installation</a>
       </p>
-
-      <pre class="sh_none">
-./configure
-make
-make install</pre>
-
-      <p>Для запуска тестов:</p>
-
-      <pre class="sh_none">make test</pre>
 
       <h2 id="about">Описание</h2>
 
@@ -187,75 +174,6 @@ make install</pre>
           <li><a href="http://nodejs.org/jsconf2010.pdf">слайды</a> с конференции JSConf 2010</li>
           <li><a href="http://www.yuiblog.com/blog/2010/05/20/video-dahl/">видео</a> с семинара в Yahoo, май 2010</li>
         </ul>
-      </p>
-
-
-      <h2 id="links">Ссылки</h2>
-
-      <ul>
-
-      <li>
-        <b>Демонстрационный</b> чат запущен по адресу <a href="http://chat.nodejs.org">chat.nodejs.org</a>.
-        его исходный код выможете посмотреть на <a href="http://github.com/ry/node_chat/tree/master">http://github.com/ry/node_chat</a>.
-        Чат может быть не стабилен и работать не все 24 часа в сутки.
-      </li>
-
-      <li>
-        Для обсуждения Node, подпишитесь на лист рассылки <a href="http://groups.google.com/group/nodejs">http://groups.google.com/group/nodejs</a>
-        или напимшите письмо на адрес <a href="mailto:nodejs+subscribe@googlegroups.com">nodejs+subscribe@googlegroups.com</a>.
-        Также можете зайти поболтать на канале irc.freenode.net <code>#node.js</code>.
-      </li>
-
-      <li>
-        <a href="http://nodejs.debuggable.com/">Логи IRC</a>
-      </li>
-
-      <li>
-        <a href="http://wiki.github.com/ry/node">Проекты/библиотеки, использующие Node.js</a>
-      </li>
-
-      <li>
-        <a href="http://buildbot.nodejs.org:8010/">Node.js buildbot</a>
-      </li>
-
-      </ul>
-
-      <h2 id="contributing">Участие в разработке</h2>
-      <p>
-        Если вы хотите сделать патч для Node, мы будем рады. Это очень легко:
-      </p>
-
-      <pre class="sh_none">
-git clone git://github.com/ry/node.git
-cd node
-(сделайте ваши изменения)
-./configure --debug
-make test-all # Проверьте, что ваш патч не привносит ошибок
-git commit -m "Хорошее описанеи вашего патча"
-git format-patch HEAD^
-</pre>
-
-      <p>
-        Проверьте, что ваш патч содержит ваше полное имя и верный адрес электронной почты.
-        Git можно сконфигурировать для этого следующим образом (не забудьте изменить на свои данные):
-<pre class="sh_none">
-git config --global user.email "ry@tinyclouds.org"
-git config --global user.name "Ryan Dahl"
-</pre>
-      </p>
-
-      <p>
-        Перед тем, как мы включим ваш патч в Node, вам нужно будет подписать
-        <a href="http://nodejs.org/cla.html">CLA</a>.
-      </p>
-
-      <p>
-        после этого вы должны прислать его в <a href="http://groups.google.com/group/nodejs-dev">список рассылки для разработчиков</a>
-        аттачем или ссылкой на <a href="http://gist.github.com/">gist</a>.
-      </p>
-
-      <p>
-        перед тем как делать большие изменения, стоит обсудить их в листе рассылки nodejs-dev.
       </p>
 
     </div>
