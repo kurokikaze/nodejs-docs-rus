@@ -19,6 +19,7 @@
 * [DNS](dns.html)
 * [Датаграммы](dgram.html)
 * [HTTP](http.html)
+* [HTTPS](https.html)
 * [URL](url.html)
 * [Разбор строки запроса](querystring.html)
 * [Модуль readline](readline.html)
