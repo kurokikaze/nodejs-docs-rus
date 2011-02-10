@@ -3,12 +3,13 @@ body {
   color: #eee;
   font-size: 14pt;
   line-height: 150%;
-  font-family: times, Times New Roman, times-roman, georgia, serif;
+  font-family: times, Times New Roman, times-roman, georgia, serif; 
   max-width: 30em;
   margin: 0 0 5em 9em;
 }
 img {
   padding: 5em 0;
+  border: 0;
 }
 #toc {
   position: absolute;
@@ -16,8 +17,7 @@ img {
   left: 0;
   width: 8em;
   font-size: 12pt;
-  line-height: 120%;
-  font-weight: bold;
+  line-height: 150%;
 }
 @media all and (min-height: 650px) { #toc { position: fixed; }}
 #toctitle {
@@ -32,7 +32,7 @@ img {
   padding-left: 1em;
 }
 #toc ol li {
-  margin: 0.6em 0;
+  margin: 0;
   padding: 0;
 }
 #toc a { color: #aaa; }
