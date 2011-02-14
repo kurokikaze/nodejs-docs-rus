@@ -1,0 +1,5 @@
+RewriteEngine on
+
+//301 Redirect Entire Directory
+RedirectMatch 301 v0.3.x(.*) v0.4.x/$1
+

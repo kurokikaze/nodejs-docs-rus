@@ -123,9 +123,9 @@ hash, hmac, cipher, decipher, sign и verify.
 
 Обновляет содержимое на `data`. Этот метод может быть вызван несколько раз.
 
-### verifier.verify(public_key, signature, signature_format='binary')
+### verifier.verify(cert, signature, signature_format='binary')
 
-Проверяет данные с помощью открытого ключа `public_key` в формате PEM и подписи
+Проверяет данные с помощью открытого ключа `cert` в формате PEM и подписи
 `signature` формата `signature_format` (может равняться `'binary'`, `'hex'` или `'base64'`.
 
 Возвращает `true` или `false` в зависимости от действительности подписи и публичного ключа.
