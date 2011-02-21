@@ -206,13 +206,13 @@
 
 Синхронный close(2).
 
-### fs.open(path, flags, mode=0666, [callback])
+### ### fs.open(path, flags, [mode], [callback])
 
 Асинхронное открытие файла. См. open(2).
 Флаги могут быть `'r'`, `'r+'`, `'w'`, `'w+'`, `'a'` или `'a+'`.
-Обработчик принимает два аргумента `(err, fd)`.
+По умолчанию `mode` равняется 0666. Обработчик принимает два аргумента: `(err, fd)`.
 
-### fs.openSync(path, flags, mode=0666)
+### fs.openSync(path, flags, [mode])
 
 Синхронный open(2).
 
