@@ -1,7 +1,7 @@
 ## Приложение 1 - Рекомендуемые сторонние модули
 
 Для Node есть множество модулей.
-Их список можно найти в [вики на GitHub](https://github.com/ry/node/wiki/modules).
+Их список можно найти в [вики на GitHub](https://github.com/joyent/node/wiki/modules).
 
 Это приложение предназначено для новичков, чтобы помочь им быстро найти
 качественные модули. Этот список не претендует на полноту. Мы будем рады
@@ -19,7 +19,7 @@
 
 - [mDNS/Zeroconf/Bonjour](https://github.com/agnat/node_mdns)
 
-- [RabbitMQ, AMQP](https://github.com/ry/node-amqp)
+- [RabbitMQ, AMQP](https://github.com/joyent/node-amqp)
 
 - MySQL: [на чистом Javascript](https://github.com/felixge/node-mysql),
   [на основе libmysqlclient](https://github.com/Sannis/node-mysql-libmysqlclient).

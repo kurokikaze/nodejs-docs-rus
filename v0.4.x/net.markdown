@@ -4,10 +4,16 @@
 методы для создания как серверов, так и клиентов (называемых потоками).
 Вы может использовать этот модуль вызвав `require("net")`.
 
-### net.createServer(connectionListener)
+### net.createServer([options], [connectionListener])
 
 Создаёт новый TCP сервер. Аргумент `connection_listener` автоматически
 становится обработчиком события `'connection'`.
+
+Параметр `options` содержит свойства сервера со следующими значениями по умолчанию:
+
+    { allowHalfOpen: false
+    }
+
 
 ### net.createConnection(arguments...)
 
