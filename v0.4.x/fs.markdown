@@ -349,8 +349,10 @@
 
     { flags: 'r',
       encoding: null,
+      fd: null,
       mode: 0666,
-      bufferSize: 4096 }
+      bufferSize: 64 * 1024
+    }
 
 Объект `options` может содержать поля `start` и `end` для чтения фрагмента файла
 вместо всего файла. И `start`, и `end` являются границами с включением

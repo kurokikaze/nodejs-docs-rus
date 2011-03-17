@@ -80,4 +80,5 @@
     extern 'C' void init (Handle<Object> target)
 
 На данный момент это вся документация по созданию дополнений. В качестве примера
-вы можете просмотреть код [node_postgres](http://github.com/ry/node_postgres).
+вы можете просмотреть код [node_postgres](http://github.com/joyent/node_postgres).
+

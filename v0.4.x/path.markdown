@@ -112,3 +112,7 @@
       util.debug(exists ? "it's there" : "no passwd!");
     });
 
+### path.existsSync(p)
+
+Синхронная версия `path.exists`.
+
