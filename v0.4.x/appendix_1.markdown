@@ -19,7 +19,7 @@
 
 - [mDNS/Zeroconf/Bonjour](https://github.com/agnat/node_mdns)
 
-- [RabbitMQ, AMQP](https://github.com/joyent/node-amqp)
+- [RabbitMQ, AMQP](https://github.com/ry/node-amqp)
 
 - MySQL: [на чистом Javascript](https://github.com/felixge/node-mysql),
   [на основе libmysqlclient](https://github.com/Sannis/node-mysql-libmysqlclient).
