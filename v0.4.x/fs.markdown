@@ -216,6 +216,18 @@
 
 Синхронный open(2).
 
+### fs.utimes(path, atime, mtime, callback)
+### fs.utimesSync(path, atime, mtime)
+
+Изменяет время доступа и модификации файла.
+
+### fs.futimes(path, atime, mtime, callback)
+### fs.futimesSync(path, atime, mtime)
+
+Изменяет время доступа и модификации файла. В отличие от fs.utime[Sync]
+не открепляет ссылку от файла если `path` -- ссылка.
+
+
 ### fs.write(fd, buffer, offset, length, position, [callback])
 
 Записывает буфер `buffer` в файл указанный дескриптором `fd`.
