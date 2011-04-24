@@ -2,6 +2,7 @@
 
 * [Краткий обзор](synopsis.html)
 * [Глобальные объекты](globals.html)
+* [Стандартный ввод/вывод](stdio.html)
 * [Таймеры](timers.html)
 * [Модули](modules.html)
 * [C/C++ дополнения](addons.html)
