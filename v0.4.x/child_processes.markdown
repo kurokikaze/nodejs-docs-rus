@@ -89,7 +89,7 @@ Node предоставляет tri-directional popen(3) в классе `ChildP
 
 Пример: достаточно сложный способ выполнить 'ps ax | grep ssh'.
 
-    var util   = require('util'),
+    var util  = require('util'),
         spawn = require('child_process').spawn,
         ps    = spawn('ps', ['ax']),
         grep  = spawn('grep', ['ssh']);
@@ -128,8 +128,9 @@ Node предоставляет tri-directional popen(3) в классе `ChildP
     var spawn = require('child_process').spawn,
         child = spawn('bad_command');
 
+    child.stderr.setEncoding('utf8');
     child.stderr.on('data', function (data) {
-      if (/^execvp\(\)/.test(data.asciiSlice(0,data.length))) {
+      if (/^execvp\(\)/.test(data)) {
         console.log('Failed to start child process.');
       }
     });
@@ -142,8 +143,8 @@ Node предоставляет tri-directional popen(3) в классе `ChildP
 Высокоуровневый способ выполнить команду в качестве дочернего процесса,
 сохранить весь её вывод, и передать его в callback.
 
-    var util   = require('util'),
-        exec  = require('child_process').exec,
+    var util = require('util'),
+        exec = require('child_process').exec,
         child;
 
     child = exec('cat *.js bad_file | wc -l',

@@ -170,3 +170,4 @@ occured, the stream came to an `'end'`, or `destroy()` was called.
 ### stream.destroySoon()
 
 Закрывает соответствующий потоку файловый дескриптор после того, как очередь записи окажется пустой.
+
