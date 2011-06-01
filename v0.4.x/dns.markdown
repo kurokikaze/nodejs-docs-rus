@@ -41,7 +41,8 @@ neccessarily the value initially passed to `lookup`).
 Разрешает домен (например `'google.com'`) в массив записей типа, указанного в `rrtype`.
 Допустимые значения rrtypes: `'A'` (адреса IPV4), `'AAAA'` (адреса IPV6),
 `'MX'` (записи mail exchange), `'TXT'` (текстовые записи), `'SRV'` (записи SRV)
-и `'PTR'` (используются для запросов домена по IP).
+и `'PTR'` (используются для запросов домена по IP), `NS` (записи серверов имён)
++and `CNAME` (канонические записи)..
 
 Обработчик принимает аргументы `(err, addresses)`. Тип каждого элемента `addresses`
 определяется типом записи и описан в документации по соответствующим методам запроса ниже.
@@ -68,13 +69,13 @@ neccessarily the value initially passed to `lookup`).
 
 ### dns.resolveTxt(domain, callback)
 
-То же что `dns.resolve()`, но только для текстовых записей (тип записи TXT).
+То же что `dns.resolve()`, но только для текстовых записей (тип записи `TXT`).
 `addresses` это массив текстовых записей, доступных для домена `domain`
 (например `['v=spf1 ip4:0.0.0.0 ~all']`).
 
 ### dns.resolveSrv(domain, callback)
 
-То же, что `dns.resolve()`, но только для service records (записей SRV).
+То же, что `dns.resolve()`, но только для service records (записей `SRV`).
 `addresses` это массив SRV записей, доступных для домена `domain`.
 Свойства SRV записей: `priority`, `weight`, `port`, и `name`
 (например, `[{'priority': 10, {'weight': 5, 'port': 21223, 'name': 'service.example.com'}, ...]`).
@@ -84,6 +85,19 @@ neccessarily the value initially passed to `lookup`).
 Обратно разрешает IP-адрес в массив доменных имён.
 
 Аргументы обработчика: `(err, domains)`.
+
+### dns.resolveNs(domain, callback)
+
+То же, что `dns.resolve()`, но для записей серверов имён (`NS` записей).
+`addresses` это массив NS записей, доступных для домена `domain`.
+(например, `['ns1.example.com', 'ns2.example.com']`).
+
+### dns.resolveCname(domain, callback)
+
+То же, что `dns.resolve()`, но для канонических записей (`CNAME`
+записей). `addresses` это массив канонических записей, доступных для домена
+`domain` (например, `['bar.example.com']`).
+
 
 Если произошла ошибка, err будет ненулевым экземпляром объекта `Error`.
 

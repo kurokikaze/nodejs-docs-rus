@@ -4,7 +4,15 @@ HTTPS представляет из себя HTTP протокол с испол
 для передачи данных. Node включает отдельный модуль для HTTP.
 
 ## https.Server
-## https.createServer
+
+Этот клас является потомком `tls.Server` и вызывает события как `http.Server`.
+См. описание `http.Server` для большей информации.
+
+## https.createServer(options, [requestListener])
+
+Возвращает новый объект HTTPS веб сервера. Параметры `options` такие же,
+как у `tls.createServer()`. Функция `requestListener` будет автоматически
+добавлена в качетве обработччика события `'request'`.
 
 Пример:
 

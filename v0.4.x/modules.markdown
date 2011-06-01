@@ -160,7 +160,7 @@ x.js:
       module.exports = { a: "hello" };
     }, 0);
 
-y.js
+y.js:
 
     var x = require('./x');
     console.log(x.a);
@@ -174,11 +174,11 @@ y.js
 Учитывая всё вышесказанное, можно составить следующий высокоуровневый псевдокод
 для `require()`:
 
-    require(X)
+    require(X) from module at path Y
     1. If X is a core module,
        a. return the core module
        b. STOP
-    2. If X begins with `./` or `/`,
+    2. If X begins with `./` or `/` or '../'
        a. LOAD_AS_FILE(Y + X)
        b. LOAD_AS_DIRECTORY(Y + X)
     3. LOAD_NODE_MODULES(X, dirname(Y))
@@ -211,6 +211,7 @@ y.js
        a. if PARTS[I] = "node_modules" CONTINUE
        c. DIR = path join(PARTS[0 .. I] + "node_modules")
        b. DIRS = DIRS + DIR
+       c. let I = I - 1
     6. return DIRS
 
 ### Загрузка из папок `require.paths`
@@ -241,11 +242,10 @@ y.js
 
 #### **Примечание:** Пожалуйста, избегайте изменения `require.paths`
 
-Из-за обеспечения совместимости, `require.paths` имеет приоритет в процессе
-поиска модулей. Однако, это может быть изменено в будущих релизах.
+В будущих релизах `require.paths` может исчезнуть.
 
 На данный момент это выглядит разумно и представляет простор для экспериментов.
-Но на практике изменение `require.paths` часто язвяется причиной проблем и головной боли.
+Но на практике изменение `require.paths` часто является причиной проблем и головной боли.
 
 ##### Присвоение `require.paths` другой переменной ничего не изменяет.
 
