@@ -70,7 +70,7 @@ net.createServer(function (socket) {
 </pre>
 
       <p>
-        Вы может почерпнуть больше актуальной информации из <a href="https://github.com/joyent/node/wiki">wiki</a> проекта.
+        Вы можете почерпнуть больше актуальной информации из <a href="https://github.com/joyent/node/wiki">wiki</a> проекта (<a href="http://forum.nodejs.ru/wiki/index.php/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0">русскоязычная вики</a> еще в процессе наполнения).
       </p>
 
       <h2 id="download">Загрузить</h2>
@@ -102,13 +102,11 @@ net.createServer(function (socket) {
 
       <p>
         Цель проекта Node - предоставить лёгкий способ построения масштабируемых
-        сетевых программ. In the "hello world" web server example above, many
-        client connections can be handled concurrently.  Node tells the
-        operating system (through <code>epoll</code>, <code>kqueue</code>,
-        <code class="sh_none">/dev/poll</code>, or <code>select</code>)
-        that it should be notified when a new connection is made, and 
-        then it goes to sleep. If someone new connects, then it executes
-        the callback. Each connection is only a small heap allocation.
+        сетевых программ. В примере с веб-сервером "hello world" может обслуживаться много одновременных клиентских запросов.  Node сообщает операционной системе (через <code>epoll</code>, <code>kqueue</code>,
+        <code class="sh_none">/dev/poll</code>, или <code>select</code>)
+        что её нужно оповещать при создании нового подключения, и 
+        потом переходит в спящий режим. Если кто нибудь подключается, запускается
+        обработчик. Для каждого соединения выделяется небольшой объём памяти в куче.
       </p>
 
       <p>
