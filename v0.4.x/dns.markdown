@@ -27,13 +27,10 @@
 
 ### dns.lookup(domain, family=null, callback)
 
-Resolves a domain (e.g. `'google.com'`) into the first found A (IPv4) or
-AAAA (IPv6) record.
+Разрешает домен (например `'google.com'`) в первую найденную A (для IPv4) или
+AAAA (для IPv6) запись.
 
-The callback has arguments `(err, address, family)`.  The `address` argument
-is a string representation of a IP v4 or v6 address. The `family` argument
-is either the integer 4 or 6 and denotes the family of `address` (not
-neccessarily the value initially passed to `lookup`).
+Обработчик принимает аргументы `(err, address, family)`.  Аргумент `address` это строка, содержащая представление адреса в формате IPv4 или IPv6. Аргумент `family` это число 4 или 6 и обозначает семейство `address` (необязательно совпадает со значением, изначально переданным в `lookup`).
 
 
 ### dns.resolve(domain, rrtype='A', callback)
@@ -73,7 +70,7 @@ neccessarily the value initially passed to `lookup`).
 
 ### dns.resolveSrv(domain, callback)
 
-То же, что `dns.resolve()`, но только для service records (записей `SRV`).
+То же, что `dns.resolve()`, но только для сервисных записей (записей типа `SRV`).
 `addresses` это массив SRV записей, доступных для домена `domain`.
 Свойства SRV записей: `priority`, `weight`, `port`, и `name`
 (например, `[{'priority': 10, {'weight': 5, 'port': 21223, 'name': 'service.example.com'}, ...]`).
