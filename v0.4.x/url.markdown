@@ -42,14 +42,21 @@
 
 Модуль URL предоставляет следующие методы:
 
-### url.parse(urlStr, parseQueryString=false)
+### url.parse(urlStr, parseQueryString=false, slashesDenoteHost=false)
 
-Получает строку URL и возвращает объект. Передайте `true` вторым аргументом
-чтобы одновременно разобрать строку запроса модулем `querystring`.
+Получает строку URL и возвращает объект.
+
+Передайте `true` вторым аргументом, чтобы одновременно
+разобрать строку запроса модулем `querystring`.
+
+Передайте `true` третьим аргументом, чтоы строка `//foo/bar` разрешалась как
+`{ host: 'foo', pathname: '/bar' }` вместо `{ pathname: '//foo/bar' }`.
+
 
 ### url.format(urlObj)
 
 Получает объект URL и возвращает отформатированный URL в виде строки.
+
 
 ### url.resolve(from, to)
 

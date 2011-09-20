@@ -57,6 +57,8 @@ hash, hmac, cipher, decipher, sign и verify.
 Вычисляет хеш от всех поступивших данных.
 Параметр `encoding` может равняться `'hex'`, `'binary'` или `'base64'`.
 
+Замечание: объект `hash` нельзя использовать после того, как будет вызван метод `digest()`.
+
 
 ### crypto.createHmac(algorithm, key)
 
@@ -75,16 +77,30 @@ hash, hmac, cipher, decipher, sign и verify.
 Вычисляет хеш от всех поступивших данных.
 Параметр encoding может равняться `'hex'`, `'binary'` или `'base64'`.
 
+Замечание: объект `hmac` нельзя использовать после того, как будет вызван метод `digest()`.
 
-### crypto.createCipher(algorithm, key)
+
+### crypto.createCipher(algorithm, password)
 
 Создает и возвращает объект `cipher`, который может быть использован
-для шифрования по заданному алгоритму и ключу.
+для шифрования по заданному алгоритму и паролю.
 
 Возможные значения для `algorithm` зависят от доступных алгоритмах в той версии OpenSSL,
 которая у вас установлена. Например, это может быть `'aes192'`, `'blowfish'` и т.д.
 В последней версии OpenSSL список поддерживаемых алгоритмов можно было узнать
 с помощью команды `openssl list-cipher-algorithms`.
+
+`password` используется для получения информации о ключе и IV, и должен быть строкой,
+закодированной с использованием кодировки `'binary'` (см. [Buffers](buffers.html)).
+
+### crypto.createCipheriv(algorithm, key, iv)
+
+Создает и возвращает объект `cipher`, который может быть использован
+для шифрования по заданному алгоритму, ключу и IV.
+
+`algorithm` может иметь такие же значения, что и для метода `createCipher()`. `key` является ключём,
+используемым в этом алгоритме. `iv` задаёт вектор инициализации. `key` и `iv` должны быть строками,
+закодированными с использованием кодировки `'binary'` (см. [Buffers](buffers.html)).
 
 ### cipher.update(data, input_encoding='binary', output_encoding='binary')
 
@@ -99,10 +115,20 @@ hash, hmac, cipher, decipher, sign и verify.
 Возвращает все оставшиеся зашифрованного содержимого в кодировке `output_encoding`,
 которая может равняться `'binary'`, `'ascii'` или `'utf8'`.
 
-### crypto.createDecipher(algorithm, key)
+Замечание: объект `cipher` не может быть использован после вызова метода `final()`.
+
+
+### crypto.createDecipher(algorithm, password)
 
 Создает и возвращает объект `decipher`, который может быть использован
-для дешифрования по заданному алгоритму и ключу. Это объект-близнец для объекта `cipher`.
+для дешифрования по заданному алгоритму и паролю.
+Это метод-близнец для [createCipher()](#crypto.createCipher)`, описанному выше.
+
+### crypto.createDecipheriv(algorithm, key, iv)
+
+Создает и возвращает объект `decipher`, который может быть использован
+для дешифрования по заданному алгоритму, ключу и IV.
+Это метод-близнец для [createCipheriv()](#crypto.createCipheriv), описанному выше.
 
 ### decipher.update(data, input_encoding='binary', output_encoding='binary')
 
@@ -114,6 +140,8 @@ hash, hmac, cipher, decipher, sign и verify.
 
 Возвращает все оставшиеся разшифрованного содержимого в виде простого текста.
 Значение аргументо output_encoding объяснено выше.
+
+Замечание: объект `decipher` не может быть использован после вызова метода `final()`.
 
 
 ### crypto.createSign(algorithm)
@@ -131,6 +159,8 @@ hash, hmac, cipher, decipher, sign и verify.
 
 Возвращает подпись в формате `output_format`, который может равняться `'binary'`, `'hex'` или `'base64'`.
 
+Замечание: объект `signer` не может быть использован после вызова метода `sign()`.
+
 
 ### crypto.createVerify(algorithm)
 
@@ -147,4 +177,6 @@ hash, hmac, cipher, decipher, sign и verify.
 `signature` формата `signature_format` (может равняться `'binary'`, `'hex'` или `'base64'`.
 
 Возвращает `true` или `false` в зависимости от действительности подписи и публичного ключа.
+
+Замечание: объект `verifier` не может быть использован после вызова метода `verify()`.
 
