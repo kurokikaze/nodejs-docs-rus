@@ -1,4 +1,3 @@
-* Translate 'about' section in index.htm
 * Translate small part of module.markdown and dns.markdown
 * Translate readline.markdown
 * diff -up ./api_v0.4.9 ./api_v0.4.12:

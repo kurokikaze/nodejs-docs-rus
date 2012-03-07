@@ -107,7 +107,8 @@ net.createServer(function (socket) {
 
       <p>
         Цель проекта Node - предоставить лёгкий способ построения масштабируемых
-        сетевых программ. В примере с веб-сервером "hello world" может обслуживаться много одновременных клиентских запросов.  Node сообщает операционной системе (через <code>epoll</code>, <code>kqueue</code>,
+        сетевых программ. В примере с веб-сервером "hello world" может обслуживаться много одновременных клиентских запросов.
+        Node сообщает операционной системе (через <code>epoll</code>, <code>kqueue</code>,
         <code class="sh_none">/dev/poll</code>, или <code>select</code>)
         что её нужно оповещать при создании нового подключения, и 
         потом переходит в спящий режим. Если кто нибудь подключается, запускается
@@ -115,61 +116,54 @@ net.createServer(function (socket) {
       </p>
 
       <p>
-        This is in contrast to today's more common concurrency model where
-        OS threads are employed. Thread-based networking is relatively 
-        inefficient and very difficult to use.  See:
-        <a href="http://www.kegel.com/c10k.html">this</a> and 
-        <a href="http://bulk.fefe.de/scalable-networking.pdf">this.</a>
+        Это поведение отличается от часто используемого подхода с использованием потоков ОС.
+        Потоки относительно неэффективны при использовании в сетевых приложениях.
+        Подробнее об этом можно прочитать <a href="http://www.kegel.com/c10k.html">здесь</a> и 
+        <a href="http://bulk.fefe.de/scalable-networking.pdf">здесь</a>.
 
-        Node will show much better memory efficiency under high-loads
-        <!-- TODO benchmark -->
-        than systems which allocate 2mb thread stacks for each connection.
+        Node показывает меньший расход памяти в высоконагруженных системах,
+        чем подход с созданием потока в стеке, каждый из которых занимает 2Мб.
 
-        Furthermore, users of Node are free from worries of dead-locking
-        the process &mdash; there are no locks.  Almost no function in Node
-        directly performs I/O, so the process never blocks. Because
-        nothing blocks, less-than-expert programmers are able to develop
-        fast systems.
+        Кроме того, пользователи Node застрахованы от возможных dead-locks
+        &mdash; в его коде нет блокировок. Почти ни одна функция в Node
+        не производит прямого ввода/вывода, так что процесс никогда не блокируется.
+        Из-за этой особенности даже совсем-не-эксперты могут разработатьт быстрые приложения.
       </p>
 
       <p>
-        Node is similar in design to and influenced by systems like Ruby's <a
-        href="http://rubyeventmachine.com/">Event Machine</a> or Python's <a
-        href="http://twistedmatrix.com/">Twisted</a>.  Node takes the event
-        model a bit further &mdash; it presents the event loop as a language
-        construct instead of as a library. In other systems there is always
-        a blocking call to start the event-loop.  Typically one defines
-        behavior through callbacks at the beginning of a script and at the
-        end starts a server through a blocking call like
-        <code>EventMachine::run()</code>. In Node there is no such
-        start-the-event-loop call.  Node simply enters the event loop after
-        executing the input script. Node exits the event loop when there are
-        no more callbacks to perform.  This behavior is like browser
-        javascript &mdash; the event loop is hidden from the user.
+        Node похожа по дизайну и написана под влянием таких систем, как <a
+        href="http://rubyeventmachine.com/">Event Machine</a> для Ruby и <a
+        href="http://twistedmatrix.com/">Twisted</a>для Python. Node также
+        расширяет границы событийной модели &mdash; он делает цикл событий частью языка,
+        а не встраивает с помощью библиотеки. В остальных системах всегда есть
+        блокирующий вызов для запуска цикла событий. Обычно необходимо описать
+        поведение с использованием функций обратного вызова и после этого
+        запустить сервер с помощью вызова похожего на <code>EventMachine::run()</code>.
+        В Node нет подобного вызова, запускающего цикл событий. Node самостоятельно
+        входит в цикл после выполнения заданного скрипта. Node выходит из цикла в случае,
+        если больше не осталось функци обратного вызова, которые могу быть вызваны.
+        Это поведение подобно поведению Javascript в браузерах &mdash; цикл событий скрыт от пользователя.
       </p>
 
       <p>
-        HTTP is a first class protocol in Node.  Node's HTTP library has
-        grown out of the author's experiences developing and working with
-        web servers. For example, streaming data through most web frameworks
-        is impossible.  Node attempts to correct these problems in its HTTP
-        <a href="http://github.com/ry/http-parser/tree/master">parser</a>
-        and API. Coupled with Node's purely evented infrastructure, it makes
-        a good foundation for web libraries or frameworks.
+        HTTP является первостепенным протоколом в Node. Библиотек HTTP в Node
+        основана на опыте автора в разработке Web серверов. Например,
+        потоковая передача данных невозможно в большинстве Web фреймворков.
+        Node старается исправить подобные проблемы в <a href="http://github.com/ry/http-parser/tree/master">своей реализации парсера HTTP</a>
+        и API. В совокупности с инфраструктурой, построенной на событиях, это даёт хорошую основу для различных Web библиотек и фреймворков.
       </p>
 
       <p>
         <i>
-        But what about multiple-processor concurrency? Aren't threads
-        necessary to scale programs to multi-core computers?
+        Но что насчёт многопроцессорного параллелизма?
+        Являются ли потоки необходимыми для масштабирования на многоядерные компьютеры?
         </i>
-        Processes are necessary to scale to multi-core computers, not
-        memory-sharing threads. The fundamentals of scalable systems are
-        fast networking and non-blocking design &mdash; the rest is message
-        passing.  In future versions, Node will be able to fork new
-        processes (using the <a
-        href="http://www.whatwg.org/specs/web-workers/current-work/"> Web
-        Workers API </a>) which fits well into the current design.
+        Процессы необходимы для масштабирования на многопроцессорные компьютеры, а не потоки, использующие общую прамять.
+        Основой масштабируемых систем являются быстрое сетевое взаимодействие и неблокирующий дизайн &mdash;
+        остальное должно быть реализовано с помощью передачи сообщений. Возможно,
+        в будущих версиях Node будет возможность создавать процессы (с помощью  <a
+        href="http://www.whatwg.org/specs/web-workers/current-work/">Web
+        Workers API </a>), которые будут хорошо вписываться в текущий дизайн.
       </p>
 
       <p>
