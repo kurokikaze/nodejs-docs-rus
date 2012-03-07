@@ -1,7 +1,7 @@
 Документация по Node.js, русская версия
 =======================================
 
-На данный момент переведена документация для v0.2.6 и v0.4.8.
+На данный момент практически полностью переведена документация для v0.2.6 и v0.4.12, ведётся работа над документацией к версии v0.6.12.
 
 Русская версия документации доступна на сайте [nodejs.ru](http://nodejs.ru/).
 
@@ -10,7 +10,7 @@
 Node.js API documentation in Russian
 ====================================
 
-We translated v0.2.6 and v0.4.8 docs for this moment.
+We mostly translated v0.2.6 and v0.4.12 documentation for this moment and working on v0.6.12 documentation.
 
 Russian translation lives at [nodejs.ru](http://nodejs.ru/) site.
 
