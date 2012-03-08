@@ -1,17 +1,17 @@
 # Zlib
 
-You can access this module with:
+Что бы получить доступ к этому модулю воспользуйтесь:
 
     var zlib = require('zlib');
 
-This provides bindings to Gzip/Gunzip, Deflate/Inflate, and
-DeflateRaw/InflateRaw classes.  Each class takes the same options, and
-is a readable/writable Stream.
+Это привязка к Gzip/Gunzip, Deflate/Inflate, и
+DeflateRaw/InflateRaw классам. Каждый класс имеет набор опций,
+а также является потоком чтения/записи.
 
-## Examples
+## Примеры
 
-Compressing or decompressing a file can be done by piping an
-fs.ReadStream into a zlib stream, then into an fs.WriteStream.
+Сжатие или распаковка файлов может быть выполнена путем передачи
+потока fs.ReadStream в поток zlib, а затем в fs.WriteStream.
 
     var gzip = zlib.createGzip();
     var fs = require('fs');
@@ -20,8 +20,8 @@ fs.ReadStream into a zlib stream, then into an fs.WriteStream.
 
     inp.pipe(gzip).pipe(out);
 
-Compressing or decompressing data in one step can be done by using
-the convenience methods.
+Выполнить сжатие или распаковку в один шаг можно с помощью 
+методов.
 
     var input = '.................................';
     zlib.deflate(input, function(err, buffer) {
@@ -37,19 +37,20 @@ the convenience methods.
       }
     });
 
-To use this module in an HTTP client or server, use the
+Для испоьзования этого модуля в HTTP клиенте/сервере, воспользуйтесь установкой
+заголовков, 
 [accept-encoding](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3)
-on requests, and the
+для запросов, и
 [content-encoding](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11)
-header on responses.
+ответов.
 
-**Note: these examples are drastically simplified to show
-the basic concept.**  Zlib encoding can be expensive, and the results
-ought to be cached.  See [Memory Usage Tuning](#memory_Usage_Tuning)
+**Примечание: эти примеры очень сильно упрощены для того что бы 
+показать основную идею.** Zlib операции могут быть дорогими, результаты
+должны сохраняться в кеш.  See [Memory Usage Tuning](#memory_Usage_Tuning)
 below for more information on the speed/memory/compression
 tradeoffs involved in zlib usage.
 
-    // client request example
+    //пример клиентского запроса
     var zlib = require('zlib');
     var http = require('http');
     var fs = require('fs');
@@ -61,7 +62,8 @@ tradeoffs involved in zlib usage.
       var output = fs.createWriteStream('izs.me_index.html');
 
       switch (response.headers['content-encoding']) {
-        // or, just use zlib.createUnzip() to handle both cases
+		// или просто используйте zlib.createUnzip(), для 
+		// обработки обоих случаев
         case 'gzip':
           response.pipe(zlib.createGunzip()).pipe(output);
           break;
@@ -74,9 +76,9 @@ tradeoffs involved in zlib usage.
       }
     });
 
-    // server example
-    // Running a gzip operation on every request is quite expensive.
-    // It would be much more efficient to cache the compressed buffer.
+    // пример сервера
+	// Выполнение gzip операций на каждый запрос стоит достаточно дорого.
+	// Исспользование кеширования будет очень эффективным.
     var zlib = require('zlib');
     var http = require('http');
     var fs = require('fs');
@@ -87,8 +89,8 @@ tradeoffs involved in zlib usage.
         acceptEncoding = '';
       }
 
-      // Note: this is not a conformant accept-encoding parser.
-      // See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3
+      // Примечание: это не совместимый accept-encoding парсер.
+      // Смотри http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3
       if (acceptEncoding.match(/\bdeflate\b/)) {
         response.writeHead(200, { 'content-encoding': 'deflate' });
         raw.pipe(zlib.createDeflate()).pipe(response);
@@ -101,72 +103,72 @@ tradeoffs involved in zlib usage.
       }
     }).listen(1337);
 
-## Constants
+## Константы
 
 <!--type=misc-->
 
-All of the constants defined in zlib.h are also defined on
-`require('zlib')`.  They are described in more detail in the zlib
-documentation.  See <http://zlib.net/manual.html#Constants>
-for more details.
+Все константы определенные в  zlib.h также определены в 
+`require('zlib')`. Они подробно описаны в документации Zlib.
+Смотри <http://zlib.net/manual.html#Constants> для получения
+подробной информации.
 
-## zlib.createGzip([options])
+## zlib.createGzip([параметры])
 
-Returns a new [Gzip](#zlib.Gzip) object with an [options](#options).
+Возвращает новый [Gzip](#zlib.Gzip) объект с [параметрами](#options).
 
-## zlib.createGunzip([options])
+## zlib.createGunzip([параметры])
 
-Returns a new [Gunzip](#zlib.Gunzip) object with an [options](#options).
+Возвращает новый [Gunzip](#zlib.Gunzip) объект с [параметрами](#options).
 
-## zlib.createDeflate([options])
+## zlib.createDeflate([параметры])
 
-Returns a new [Deflate](#zlib.Deflate) object with an [options](#options).
+Возвращает новый [Deflate](#zlib.Deflate) объект с [параметрами](#options).
 
-## zlib.createInflate([options])
+## zlib.createInflate([параметры])
 
-Returns a new [Inflate](#zlib.Inflate) object with an [options](#options).
+Возвращает новый [Inflate](#zlib.Inflate) объект с [параметрами](#options).
 
-## zlib.createDeflateRaw([options])
+## zlib.createDeflateRaw([параметры])
 
-Returns a new [DeflateRaw](#zlib.DeflateRaw) object with an [options](#options).
+Возвращает новый [DeflateRaw](#zlib.DeflateRaw) объект с [параметрами](#options).
 
-## zlib.createInflateRaw([options])
+## zlib.createInflateRaw([параметры])
 
-Returns a new [InflateRaw](#zlib.InflateRaw) object with an [options](#options).
+Возвращает новый [InflateRaw](#zlib.InflateRaw) объект с [параметрами](#options).
 
-## zlib.createUnzip([options])
+## zlib.createUnzip([параметры])
 
-Returns a new [Unzip](#zlib.Unzip) object with an [options](#options).
+Возвращает новый [Unzip](#zlib.Unzip) объект с [параметрами](#options).
 
 
-## Class: zlib.Gzip
+## Класс: zlib.Gzip
 
-Compress data using gzip.
+Сжатие данных используя gzip.
 
-## Class: zlib.Gunzip
+## Класс: zlib.Gunzip
 
-Decompress a gzip stream.
+Расспаковка gzip потока.
 
-## Class: zlib.Deflate
+## Класс: zlib.Deflate
 
-Compress data using deflate.
+Сжатие данных используя deflate.
 
-## Class: zlib.Inflate
+## Класс: zlib.Inflate
 
-Decompress a deflate stream.
+Расспаковка deflate потока.
 
-## Class: zlib.DeflateRaw
+## Класс: zlib.DeflateRaw
 
-Compress data using deflate, and do not append a zlib header.
+Сжатие данных используя deflate, без установки zlib заголовка.
 
-## Class: zlib.InflateRaw
+## Класс: zlib.InflateRaw
 
-Decompress a raw deflate stream.
+Расспаковка raw deflate потока.
 
-## Class: zlib.Unzip
+## Класс: zlib.Unzip
 
-Decompress either a Gzip- or Deflate-compressed stream by auto-detecting
-the header.
+Расспаковка либо Gzip-, либо Deflate-сжатого потока с 
+автоматическим определением заголовка.
 
 ## Convenience Methods
 
