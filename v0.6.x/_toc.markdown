@@ -1,5 +1,4 @@
-## Содержание
-
+* [О документации](documentation.html)
 * [Краткий обзор](synopsis.html)
 * [Глобальные объекты](globals.html)
 * [Стандартный ввод/вывод](stdio.html)
@@ -9,8 +8,8 @@
 * [Процесс](process.html)
 * [Утилиты](util.html)
 * [События](events.html)
-* [Буферы](buffer.html)
-* [Потоки](stream.html)
+* [Буфер](buffer.html)
+* [Поток](stream.html)
 * [Модуль криптографии](crypto.html)
 * [TLS/SSL](tls.html)
 * [String Decoder](string_decoder.html)
@@ -29,9 +28,10 @@
 * [Дочерние процессы](child_process.html)
 * [Тестирование (asserts)](assert.html)
 * [Текстовый терминал](tty.html)
+* [Сжатие данных](zlib.html)
 * [Операционная система](os.html)
 * [Встроенный отладчик](debugger.html)
+* [Кластеризация](cluster.html)
 * Приложения
   * [Приложение 1: Рекомендуемые сторонние модули](appendix_1.html)
-  * [Приложение 2: Устаревшее API](appendix_2.html)
 
