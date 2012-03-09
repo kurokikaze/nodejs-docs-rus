@@ -1,8 +1,28 @@
-## UDP / Датаграммы
+# UDP / Датаграммы
 
-Сокеты для датаграмм доступны при включении `require('dgram')`. Датаграммы
-чаще всего обрабатываются как сообщения IP/UDP, но они могут быть использованы
-и с доменными сокетами Unix.
+<!-- name=dgram -->
+
+Сокеты для датаграмм доступны при включении `require('dgram')`.
+
+## dgram.createSocket(type, [callback])
+
+* `type` String. Может принимать значения 'udp4' или 'udp6'
+* `callback` Function. Функция назвачается обработчиков события `message` сокета. Необязательный параметр
+* Возвращает: Объект сокета
+
+Создаёт сокет для датаграмм заданного типа. Доступные типы: `udp4`, `udp6`.
+
+Call `socket.bind` if you want to receive datagrams. `socket.bind()` will bind
+to the "all interfaces" address on a random port (it does the right thing for
+both `udp4` and `udp6` sockets). You can then retrieve the address and port
+with `socket.address().address` and `socket.address().port`.
+
+Принимает необязательную функцию, которая добавляется обработчиком событий `message`.
+
+## Класс: Socket
+
+Класс сокета датаграмм инкапсулирует всю функциональность, которая для них доступна.
+Должен быть инстанцирован с помощью метода `dgram.createSocket(type, [callback])`.
 
 ### Событие: 'message'
 
@@ -25,11 +45,6 @@
 Генерируется когда сокет закрывается с помощью `close()`.
 События `message` на этом сокете больше не будут генерироваться.
 
-### dgram.createSocket(type, [callback])
-
-Создаёт сокет для датаграмм заданного типа. Доступные типы: `udp4`, `udp6` и `unix_dgram`.
-
-Принимает необязательную функцию, которая добавляется обработчиком событий `message`.
 
 ### dgram.send(buf, offset, length, path, [callback])
 

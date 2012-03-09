@@ -31,8 +31,6 @@
 @include zlib
 @include os
 @include debugger
-
-# Приложения
 @include cluster
 @include appendix_1
 
