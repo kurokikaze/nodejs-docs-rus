@@ -95,15 +95,15 @@ the recently built module:
 В качестве примера вы можете просмотреть код <https://github.com/pietern/hiredis-node>.
 
 
-## Addon patterns
+## Фрагменты кода дополнений
 
-Below are some addon patterns to help you get started. Consult the online
-[v8 reference](http://izs.me/v8-docs/main.html) for help with the various v8
-calls, and v8's [Embedder's Guide](http://code.google.com/apis/v8/embed.html)
-for an explanation of several concepts used such as handles, scopes,
-function templates, etc.
+Ниже приведены некоторые фрагменты кода дополнений, которые часто используются
+и помогут вам начать писать свои бинарные дополнения для Node.js. Для более подробной информации по бибилиотеке v8
+вы можете воспользоваться [справкой](http://izs.me/v8-docs/main.html),
+а также [v8 Embedder's Guide](http://code.google.com/apis/v8/embed.html), в котором описаны некоторые концепции библиотеки,
+такие handle, замыкание, шаблон функции и т.д.
 
-To compile these examples, create the `wscript` file below and run
+Чтобы скомпилировать приведённые примеры, создаёте простой `wscript` и выполните в консоли команду
 `node-waf configure build`:
 
     srcdir = '.'
@@ -122,17 +122,15 @@ To compile these examples, create the `wscript` file below and run
       obj.target = 'addon'
       obj.source = ['addon.cc']
 
-In cases where there is more than one `.cc` file, simply add the file name to the
-`obj.source` array, e.g.:
+Если дополнение требует более одного файла `.cc`, просто добавьте его в массив `obj.source`:
 
     obj.source = ['addon.cc', 'myexample.cc']
 
 
-### Function arguments
+### Передача аргументов в функции
 
-The following pattern illustrates how to read arguments from JavaScript
-function calls and return a result. This is the main and only needed source
-`addon.cc`:
+Этот пример показывает, как прочитать переданные из JavaScript аргументы функции и вернуть результат выполнения.
+Для этого потребует только один исходный файл `addon.cc`:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -164,17 +162,17 @@ function calls and return a result. This is the main and only needed source
 
     NODE_MODULE(addon, Init)
 
-You can test it with the following JavaScript snippet:
+Вы можете проверить работоспособность дополнения с помощью следующего JavaScript кода:
 
     var addon = require('./build/Release/addon');
 
     console.log( 'This should be eight:', addon.add(3,5) );
 
 
-### Callbacks
+### Функции обратного вызова
 
-You can pass JavaScript functions to a C++ function and execute them from
-there. Here's `addon.cc`:
+Вы можете передать JavaScript функции в дополнение для вызова её оттуда.
+Пример `addon.cc`:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -199,7 +197,7 @@ there. Here's `addon.cc`:
 
     NODE_MODULE(addon, Init)
 
-To test it run the following JavaScript snippet:
+Проверяем работоспособность дополнения:
 
     var addon = require('./build/Release/addon');
 
@@ -208,11 +206,10 @@ To test it run the following JavaScript snippet:
     });
 
 
-### Object factory
+### Фабрика объектов
 
-You can create and return new objects from within a C++ function with this
-`addon.cc` pattern, which returns an object with property `msg` that echoes
-the string passed to `createObject()`:
+В этом примере мы создадим функцию `createObject()`, которая будект возвращать объект со свойством `msg`,
+содержащим переданный в функцию текст:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -235,7 +232,7 @@ the string passed to `createObject()`:
 
     NODE_MODULE(addon, Init)
 
-To test it in JavaScript:
+Проверяем работоспособность дополнения:
 
     var addon = require('./build/Release/addon');
 
@@ -244,10 +241,9 @@ To test it in JavaScript:
     console.log(obj1.msg+' '+obj2.msg); // 'hello world'
 
 
-### Function factory
+### Фабрика функций
 
-This pattern illustrates how to create and return a JavaScript function that
-wraps a C++ function:
+Этот пример показывает, как создать и вернуть из C++ кода Javascript функцию, связанную с другой C++ функцией:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -277,7 +273,7 @@ wraps a C++ function:
     NODE_MODULE(addon, Init)
 
 
-To test:
+Для проверки выполняем:
 
     var addon = require('./build/Release/addon');
 
@@ -285,11 +281,10 @@ To test:
     console.log(fn()); // 'hello world'
 
 
-### Wrapping C++ objects
+### Обертка C++ объектов
 
-Here we will create a wrapper for a C++ object/class `MyObject` that can be
-instantiated in JavaScript through the `new` operator. First prepare the main
-module `addon.cc`:
+Вы также можете создавать Javascript обёртки для C++ объектов/классов. В данном случае `MyObject` может быть
+инстанцирован в JavaScript с помощью оператора `new`. Для начала напишем основной файл дополнения, `addon.cc`:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -303,7 +298,7 @@ module `addon.cc`:
 
     NODE_MODULE(addon, InitAll)
 
-Then in `myobject.h` make your wrapper inherit from `node::ObjectWrap`:
+В файле `myobject.h` унаследуем нашу обёртку от `node::ObjectWrap`:
 
     #ifndef MYOBJECT_H
     #define MYOBJECT_H
@@ -325,9 +320,8 @@ Then in `myobject.h` make your wrapper inherit from `node::ObjectWrap`:
 
     #endif
 
-And in `myobject.cc` implement the various methods that you want to expose.
-Here we expose the method `plusOne` by adding it to the constructor's
-prototype:
+А в файл `myobject.cc` поместим реализацию некоторых методов класса, которые мы хотим сделать видимыми в Javascrip.
+Для этого мы должны добавить метод `plusOne` в прототип конструктора объекта:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -370,7 +364,7 @@ prototype:
       return scope.Close(Number::New(obj->counter_));
     }
 
-Test it with:
+Для проверки выполняем:
 
     var addon = require('./build/Release/addon');
 
@@ -380,16 +374,15 @@ Test it with:
     console.log( obj.plusOne() ); // 13
 
 
-### Factory of wrapped objects
+### Фабрика обёрток объектов
 
-This is useful when you want to be able to create native objects without
-explicitly instantiating them with the `new` operator in JavaScript, e.g.
+Бывает полезным создание объектов без использования оператора `new` в JavaScript, например.
 
     var obj = addon.createObject();
     // instead of:
     // var obj = new addon.Object();
 
-Let's register our `createObject` method in `addon.cc`:
+Для этого создадим метод `createObject` в `addon.cc`:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -411,8 +404,8 @@ Let's register our `createObject` method in `addon.cc`:
 
     NODE_MODULE(addon, InitAll)
 
-In `myobject.h` we now introduce the static method `NewInstance` that takes
-care of instantiating the object (i.e. it does the job of `new` in JavaScript):
+Теперь нам необходимо объявить в `myobject.h` статический метод `NewInstance`, который будет инстанцировать объект
+(т.е. выполнять функцию `new` в JavaScript):
 
     #define BUILDING_NODE_EXTENSION
     #ifndef MYOBJECT_H
@@ -437,7 +430,7 @@ care of instantiating the object (i.e. it does the job of `new` in JavaScript):
 
     #endif
 
-The implementation is similar to the above in `myobject.cc`:
+Реализация `myobject.cc` похожа на описанную выше:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -491,7 +484,7 @@ The implementation is similar to the above in `myobject.cc`:
       return scope.Close(Number::New(obj->counter_));
     }
 
-Test it with:
+Для проверки выполняем:
 
     var addon = require('./build/Release/addon');
 
@@ -506,12 +499,11 @@ Test it with:
     console.log( obj2.plusOne() ); // 23
 
 
-### Passing wrapped objects around
+### Использование обёрнутых объектов в C++ коде
 
-In addition to wrapping and returning C++ objects, you can pass them around
-by unwrapping them with Node's `node::ObjectWrap::Unwrap` helper function.
-In the following `addon.cc` we introduce a function `add()` that can take on two
-`MyObject` objects:
+Кроме того, что C++ объекты можно обёртывать и возвращать в Javascript код, их также можно передавать обратно,
+разворачивать и использовать в C++ коде как обычные C++ объекты. Для этого используется функция `node::ObjectWrap::Unwrap`.
+Добавим в `addon.cc` функцию `add()`, которая принимает два объекта класса `MyObject`:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -548,8 +540,7 @@ In the following `addon.cc` we introduce a function `add()` that can take on two
 
     NODE_MODULE(addon, InitAll)
 
-To make things interesting we introduce a public method in `myobject.h` so we
-can probe private values after unwrapping the object:
+Для получения значения приватной переменной `val_` напишем дополнительную функцию прямо в `myobject.h`:
 
     #define BUILDING_NODE_EXTENSION
     #ifndef MYOBJECT_H
@@ -574,7 +565,7 @@ can probe private values after unwrapping the object:
 
     #endif
 
-The implementation of `myobject.cc` is similar as before:
+Реализация `myobject.cc` не изменилась:
 
     #define BUILDING_NODE_EXTENSION
     #include <node.h>
@@ -616,7 +607,7 @@ The implementation of `myobject.cc` is similar as before:
       return scope.Close(instance);
     }
 
-Test it with:
+Для проверки выполняем:
 
     var addon = require('./build/Release/addon');
 
