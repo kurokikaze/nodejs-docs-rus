@@ -1,13 +1,14 @@
 apidoc_markdown = $(wildcard ./*.markdown)
-apidoc_html = $(apidoc_markdown:.markdown=.html)
+apidoc_html = $(apidoc_markdown:.markdown=.html) all.html
+apidoc_json = $(apidoc_markdown:.markdown=.json)
 
-all: $(apidoc_html)
+all: $(apidoc_html) $(apidoc_json)
 
-%.html: %.markdown ./doctool/doctool.js ./doctool/template.html
-	node ./doctool/doctool.js ./doctool/template.html $< > $@
+%.html: %.markdown ./doctool/generate.js ./doctool/template.html
+	node ./doctool/generate.js --format=html --template=./doctool/template.html $< > $@
 
-all.html: $(apidoc_markdown) ./doctool/doctool.js ./doctool/template.html
-	node ./doctool/doctool.js ./doctool/template.html all.markdown > all.html
+%.json: %.markdown ./doctool/generate.js ./doctool/template.html
+	node ./doctool/generate.js --format=json $< > $@
 
 clean:
 	rm -f ./*.html
