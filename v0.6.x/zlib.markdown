@@ -21,7 +21,7 @@ DeflateRaw/InflateRaw классам. Каждый класс имеет наб�
     inp.pipe(gzip).pipe(out);
 
 Выполнить сжатие или распаковку в один шаг можно с помощью 
-методов.
+удобных методов.
 
     var input = '.................................';
     zlib.deflate(input, function(err, buffer) {
@@ -42,13 +42,13 @@ DeflateRaw/InflateRaw классам. Каждый класс имеет наб�
 [accept-encoding](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3)
 для запросов, и
 [content-encoding](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11)
-ответов.
+для ответов.
 
 **Примечание: эти примеры очень сильно упрощены для того что бы 
 показать основную идею.** Zlib операции могут быть дорогими, результаты
-должны сохраняться в кеш.  See [Memory Usage Tuning](#memory_Usage_Tuning)
-below for more information on the speed/memory/compression
-tradeoffs involved in zlib usage.
+должны сохраняться в кеш.  Смотри [настройки исспользования памяти](#memory_Usage_Tuning)
+ниже для получения информации о скорости/памяти/компресии
+влияющие на исспользование zlib.
 
     //пример клиентского запроса
     var zlib = require('zlib');
@@ -170,53 +170,53 @@ tradeoffs involved in zlib usage.
 Расспаковка либо Gzip-, либо Deflate-сжатого потока с 
 автоматическим определением заголовка.
 
-## Convenience Methods
+## Удобные методы
 
 <!--type=misc-->
 
-All of these take a string or buffer as the first argument, and call the
-supplied callback with `callback(error, result)`.  The
-compression/decompression engine is created using the default settings
-in all convenience methods.  To supply different options, use the
-zlib classes directly.
+Все удобные методы в качестве первого аргумента принимают строки или буферы,
+и возвращают результат вызывая функцию обратного вызова 
+с параметрами `callback(error, result)`. Движки компрессии/декомпрессии создаются
+с настройками по умолчанию. Для использования различных настроек пользуйтесь
+Zlib классами напрямую.
 
 ## zlib.deflate(buf, callback)
 
-Compress a string with Deflate.
+Сжатие строки используя Deflate.
 
 ## zlib.deflateRaw(buf, callback)
 
-Compress a string with DeflateRaw.
+Сжатие строки используя DeflateRaw.
 
 ## zlib.gzip(buf, callback)
 
-Compress a string with Gzip.
+Сжатие строки используя Gzip.
 
 ## zlib.gunzip(buf, callback)
 
-Decompress a raw Buffer with Gunzip.
+Распаковка raw Buffer используя Gunzip.
 
 ## zlib.inflate(buf, callback)
 
-Decompress a raw Buffer with Inflate.
+Распаковка raw Buffer используя Inflate.
 
 ## zlib.inflateRaw(buf, callback)
 
-Decompress a raw Buffer with InflateRaw.
+Распаковка raw Buffer используя InflateRaw.
 
 ## zlib.unzip(buf, callback)
 
-Decompress a raw Buffer with Unzip.
+Распаковка raw Buffer используя Unzip.
 
-## Options
+## Опции
 
 <!--type=misc-->
 
-Each class takes an options object.  All options are optional.  (The
-convenience methods use the default settings for all options.)
+Каждый класс может принимать объект с параметрами. Все параметры являются 
+опциональными. (Удобные методы использую настройки по умолчанию для всех опций).
 
-Note that some options are only
-relevant when compressing, and are ignored by the decompression classes.
+Обратите внимание что часть опций доступна только для сжатия, и игнорируются
+классами распаковщиками.
 
 * chunkSize (default: 16*1024)
 * windowBits
@@ -224,45 +224,44 @@ relevant when compressing, and are ignored by the decompression classes.
 * memLevel (compression only)
 * strategy (compression only)
 
-See the description of `deflateInit2` and `inflateInit2` at
-<http://zlib.net/manual.html#Advanced> for more information on these.
+Смотри описание о `deflateInit2` и `inflateInit2` на
+<http://zlib.net/manual.html#Advanced> для большей информации о них.
 
-## Memory Usage Tuning
+## Настройки использования памяти
 
 <!--type=misc-->
 
-From `zlib/zconf.h`, modified to node's usage:
+Файл `zlib/zconf.h`, изменен для использования nodejs:
 
-The memory requirements for deflate are (in bytes):
+Требования к памяти для deflate (в байтах):
 
     (1 << (windowBits+2)) +  (1 << (memLevel+9))
 
-that is: 128K for windowBits=15  +  128K for memLevel = 8
-(default values) plus a few kilobytes for small objects.
+это: 128K для windowBits=15  +  128K для memLevel = 8
+(по умолчанию) плюс несколько килобайт для небольших объектов.
 
-For example, if you want to reduce
-the default memory requirements from 256K to 128K, set the options to:
+Например, если вы хотите уменьшить требования к памяти по умолчанию
+с 256K до 128K, установите параметры:
 
     { windowBits: 14, memLevel: 7 }
 
-Of course this will generally degrade compression (there's no free lunch).
+Конечно это как правило ухудшает сжатие (there's no free lunch).
 
-The memory requirements for inflate are (in bytes)
+Требования памяти при inflate (в байтах)
 
     1 << windowBits
 
-that is, 32K for windowBits=15 (default value) plus a few kilobytes
-for small objects.
+это, 32K для windowBits=15 (по умолчанию) плюс несколько килобайт
+для небольших объектов.
 
 This is in addition to a single internal output slab buffer of size
 `chunkSize`, which defaults to 16K.
 
-The speed of zlib compression is affected most dramatically by the
-`level` setting.  A higher level will result in better compression, but
-will take longer to complete.  A lower level will result in less
-compression, but will be much faster.
+На скорость сжатия Zlib существенно влияет настройки `уровня сжатия`. 
+Высокий уровень дает лучшее сжатие, но занимает больше времени. Низкий
+уровень дает меньше сжатие, но может быть намного быстрее.
 
-In general, greater memory usage options will mean that node has to make
-fewer calls to zlib, since it'll be able to process more data in a
-single `write` operation.  So, this is another factor that affects the
-speed, at the cost of memory usage.
+В общем, варианты настройек с большим расходом памяти означают, что node 
+может делать меньше вызовов zlib, и значит сможет обработать больше данных
+за одину операцию `записи`. Так что, это еще один фактор влияющим на
+скорость, за счет увеличения использования памяти.
