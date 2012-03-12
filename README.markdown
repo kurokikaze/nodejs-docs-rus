@@ -5,7 +5,7 @@
 
 Русская версия документации доступна на сайте [nodejs.ru](http://nodejs.ru/).
 
-Оригинальную английскую документацию можно прочесть [на сайте Node.js](http://nodejs.org/api.html) или скачать с [GitHub](http://github.com/ry/node/tree/master/doc/).
+Оригинальную английскую документацию можно прочесть [на сайте Node.js](http://nodejs.org/api.html) или скачать с [GitHub](https://github.com/ry/node/tree/master/doc/).
 
 Node.js API documentation in Russian
 ====================================
@@ -14,7 +14,7 @@ We mostly translated v0.2.6 and v0.4.12 documentation for this moment and workin
 
 Russian translation lives at [nodejs.ru](http://nodejs.ru/) site.
 
-Original English documentation lives at [nodejs.org/api.html](http://nodejs.org/api.html) and in [GitHub repo](http://github.com/ry/node/tree/master/doc/).
+Original English documentation lives at [nodejs.org/api.html](http://nodejs.org/api.html) and in [GitHub repo](https://github.com/ry/node/tree/master/doc/).
 
 
 About Node.js
@@ -29,10 +29,12 @@ Website: <http://nodejs.org>.
 Russian translation contributors
 ================================
 
-* [Serge Shirokov](http://github.com/kurokikaze)
+* [Serge Shirokov](https://github.com/kurokikaze)
 
-* [Kirill Nikitin](http://github.com/Locke23rus)
+* [Kirill Nikitin](https://github.com/Locke23rus)
 
-* [Ivan Egorov](http://github.com/egorich239)
+* [Ivan Egorov](https://github.com/egorich239)
 
-* [Oleg Efimov](http://github.com/Sannis)
+* [Oleg Efimov](https://github.com/Sannis)
+
+* [Evgeny Reznichenko](https://github.com/zxcabs)
