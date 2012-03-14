@@ -1,4 +1,6 @@
-## Cобытия
+# Cобытия
+
+<!--type=module-->
 
 Множество объектов в Node генерируют события: `net.Server` вызывает событие
 при каждом поступающем запросе, `fs.readStream` вызывает событие при открытии файла.
@@ -13,7 +15,7 @@
 при генерации события. Эти функции называются _обработчиками_ (_listeners_).
 
 
-### events.EventEmitter
+## Класс: events.EventEmitter
 
 Класс `EventEmitter` находится в модуле `'events'`: `require(events').EventEmitter`.
 
@@ -24,8 +26,8 @@
 Все источники событий генерируют событие `'newListener'`,
 когда к ним добавляются новые обработчики.
 
-#### emitter.addListener(event, listener)
-#### emitter.on(event, listener)
+### emitter.addListener(event, listener)
+### emitter.on(event, listener)
 
 Добавляет обработчик в конец массива обработчиков указанного события.
 
@@ -33,7 +35,7 @@
       console.log('someone connected!');
     });
 
-#### emitter.once(event, listener)
+### emitter.once(event, listener)
 
 Добавляет **однократный** обработчик указанного события. Обработчик вызываетя
 один раз при первом наступлении события, после чего удаляется.
@@ -42,7 +44,7 @@
       console.log('Ah, we have our first user!');
     });
 
-#### emitter.removeListener(event, listener)
+### emitter.removeListener(event, listener)
 
 Удаляет обработчик из массива обработчиков указанного события.
 **Внимание:** изменяет индексы в массиве обработчиков после указанного обработчика.
@@ -55,12 +57,12 @@
     server.removeListener('connection', callback);
 
 
-#### emitter.removeAllListeners(event)
+### emitter.removeAllListeners([event])
 
-Удаляет все обработчики из массива обработчиков для указанного события.
+Удаляет все обработчики из массива обработчиков, либо только обработчики переданного события.
 
 
-#### emitter.setMaxListeners(n)
+### emitter.setMaxListeners(n)
 
 По умолчаню `EventEmitter` выводит предупреждение, если к нему подключено
 больше 10-ти обработчиков. Это полезно для поиска утечек памяти.
@@ -69,7 +71,7 @@
 то предупреждение не будет выводиться при любом числе обработчиков.
 
 
-#### emitter.listeners(event)
+### emitter.listeners(event)
 
 Возвращает массив обработчиков для указанного события. Этот массив может быть
 использован, например, для удаления обработчиков.
@@ -77,15 +79,15 @@
     server.on('connection', function (stream) {
       console.log('someone connected!');
     });
-    console.log(util.inspect(server.listeners('connection')); // [ [Function] ]
+    console.log(util.inspect(server.listeners('connection'))); // [ [Function] ]
 
-#### emitter.emit(event, [arg1], [arg2], [...])
+### emitter.emit(event, [arg1], [arg2], [...])
 
 Выполнит все обработчики события по порядку с указанными аргументами.
 
-#### Событие: 'newListener'
+### Событие: 'newListener'
 
-`function (event, listener) { }`
+* `event` {String} Имя события
+* `listener` {Function} Новая функция-обработчик
 
 Это событие вызывается каждый раз при добавлении обработчика события.
-
