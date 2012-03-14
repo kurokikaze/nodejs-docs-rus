@@ -282,71 +282,69 @@ See `child_process.fork()` for details.
 
 ## child_process.fork(modulePath, [args], [options])
 
-* `modulePath` {String} The module to run in the child
-* `args` {Array} List of string arguments
+* `modulePath` {String} Модуль который будет запущен как потомок
+* `args` {Array} Список строк-аргументов
 * `options` {Object}
-  * `cwd` {String} Current working directory of the child process
-  * `customFds` {Array} **Deprecated** File descriptors for the child to use
-    for stdio.  (See below)
-  * `env` {Object} Environment key-value pairs
+  * `cwd` {String} Рабочая директория дочернего процесса
+  * `customFds` {Array} **Устарело** Файловые дескрипторы для использования дочерним процессом, см. ниже
+  * `env` {Object} Переменные окружение дочернего процесса, пары имя-значение
   * `setsid` {Boolean}
-  * `encoding` {String} (Default: 'utf8')
-  * `timeout` {Number} (Default: 0)
-* `callback` {Function} called with the output when process terminates
-  * `code` {Integer} Exit code
+  * `encoding` {String} (По умолчанию: 'utf8')
+  * `timeout` {Number} (По умолчанию: 0)
+* `callback` {Function} Функция обратного вызова, принимающая вывод процесса после его завершения
+  * `code` {Integer} Код выхода
   * `stdout` {Buffer}
   * `stderr` {Buffer}
-* Return: ChildProcess object
+* Возвращает: ChildProcess object
 
-This is a special case of the `spawn()` functionality for spawning Node
-processes. In addition to having all the methods in a normal ChildProcess
-instance, the returned object has a communication channel built-in. The
-channel is written to with `child.send(message, [sendHandle])` and messages
-are received by a `'message'` event on the child.
+Это частный случай `spawn()` для запуска Node процессов. В возвращаемый объект, который
+имеет все методы стандартного дочернего объекта, добавляется канал для обмена сообщениями.
+Запись в канал осуществляется методом `child.send(message, [sendHandle])`, а получение
+сообщения с помощью события `'message'` дочернего процесса.
 
-For example:
+Для примера:
 
     var cp = require('child_process');
 
     var n = cp.fork(__dirname + '/sub.js');
 
     n.on('message', function(m) {
-      console.log('PARENT got message:', m);
+      console.log('РОДИТЕЛЬ получил сообщение:', m);
     });
 
     n.send({ hello: 'world' });
 
-And then the child script, `'sub.js'` might look like this:
+Скрипт дочеренго процесса, `'sub.js'` может выглядеть так:
 
     process.on('message', function(m) {
-      console.log('CHILD got message:', m);
+      console.log('РЕБЕНОК получил сообщение:', m);
     });
 
     process.send({ foo: 'bar' });
 
-In the child the `process` object will have a `send()` method, and `process`
-will emit objects each time it receives a message on its channel.
+В дочеренем процессе объект `process` будет иметь метод `send()`, и `process`
+будет сообщать о полученых объектах при получении сообщения на канал.
 
-By default the spawned Node process will have the stdin, stdout, stderr
-associated with the parent's.
+По умолчанию дочерний процесс Node имеет потоки stdin, stdout, stderr
+связанные с родительским процессом.
 
-These child Nodes are still whole new instances of V8. Assume at least 30ms
-startup and 10mb memory for each new Node. That is, you cannot create many
-thousands of them.
+Дочернии процессы все еще являются новыми экземплярами V8. Каждый процесс Node
+стартует минимум за 30ms и потребляет минимум 10mb памяти. Это значит что вы 
+не можете создавать много дочерних процессов.
 
-The `sendHandle` option to `child.send()` is for sending a handle object to
-another process. Child will receive the handle as as second argument to the
-`message` event. Here is an example of sending a handle:
+Параметр `sendHandle` в `child.send()` служит для передачи обработчика в дочерний
+процесс. Дочерний процесс получит обработчик как второй аргумент в событии `message`.
+
+Пример передачи обработчика.
 
     var server = require('net').createServer();
     var child = require('child_process').fork(__dirname + '/child.js');
-    // Open up the server object and send the handle.
+    // Запустить сервер и передать отбработчик в дочерний процесс.
     server.listen(1337, function() {
       child.send({ server: true }, server._handle);
     });
 
-Here is an example of receiving the server handle and sharing it between
-processes:
+Пример получения обработчика и совместного использования его между процессами.
 
     process.on('message', function(m, serverHandle) {
       if (serverHandle) {
