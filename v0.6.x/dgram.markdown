@@ -12,10 +12,10 @@
 
 Создаёт сокет для датаграмм заданного типа. Доступные типы: `udp4`, `udp6`.
 
-Call `socket.bind` if you want to receive datagrams. `socket.bind()` will bind
-to the "all interfaces" address on a random port (it does the right thing for
-both `udp4` and `udp6` sockets). You can then retrieve the address and port
-with `socket.address().address` and `socket.address().port`.
+Если вы хотите иметь возможнорсть получать датаграммы, необходимо вызвать `socket.bind`.
+Вызов `socket.bind()` без параметров назначит прослушивание всех интерфейсов на случайном порту
+(что будет верно работать для `udp4` и `udp6` сокетов). Вы можете узнать назначенный адрес и порт с помощью
+`socket.address().address` и `socket.address().port`.
 
 Принимает необязательную функцию, которая добавляется обработчиком событий `message`.
 
@@ -26,46 +26,27 @@ with `socket.address().address` and `socket.address().port`.
 
 ### Событие: 'message'
 
-`function (msg, rinfo) { }`
+* `msg` Объект буффера. Передаваемое сообщение
+* `rinfo` Объект. Информация об адресе отправителя
 
 Генерируется когда новая датаграмма доступна на сокете. `msg` это `Buffer`,
 а `rinfo` это объект с информацией об адресе отправителя и количестве байт в датаграмме.
 
 ### Событие: 'listening'
 
-`function () { }`
-
 Генеритуется когда сокет начинает приём датаграмм. Для UDP-сокета это происходит
-при создании. Сокеты Unix не начинают приём до вызова для них `bind()`.
+при создании.
 
 ### Событие: 'close'
-
-`function () { }`
 
 Генерируется когда сокет закрывается с помощью `close()`.
 События `message` на этом сокете больше не будут генерироваться.
 
+### Событие: 'error'
 
-### dgram.send(buf, offset, length, path, [callback])
+* `exception` Объект ошибки
 
-Для датаграмм на Unix-сокетах адрес назначения это путь в файловой системе.
-Принимает необязательную функцию, которая будет вызвана после завершения
-вызова `sendto` операционной системой. Пока идёт вызов, повторное использование
-буфера `buf` небезопасно. Заметьте, что если сокет не привязан к пути в файловой
-системе с помощью `bind()`, на нём невозможно получать сообщения.
-
-Пример отправки сообщения демону syslogd в OSX через Unix-сокет `/var/run/syslog`:
-
-    var dgram = require('dgram');
-    var message = new Buffer("A message to log.");
-    var client = dgram.createSocket("unix_dgram");
-    client.send(message, 0, message.length, "/var/run/syslog",
-      function (err, bytes) {
-        if (err) {
-          throw err;
-        }
-        console.log("Wrote " + bytes + " bytes to socket.");
-    });
+Генерируется в случае возникновения ошибки.
 
 ### dgram.send(buf, offset, length, port, address, [callback])
 
@@ -74,7 +55,7 @@ with `socket.address().address` and `socket.address().port`.
 с помощью DNS. Принимает необязательную функцию, которая будет вызвана после
 завершения разрешения DNS имени и когда буфер можно будет использовать заново.
 Следует иметь в виду, что DNS запросы требуют времени, по крайне мере
-до следующего витка цикола событий. Единственный способ узнать, что отправка
+до следующего витка цикла событий. Единственный способ узнать, что отправка
 состоялась — использовать callback.
 
 Пример отправки UDP-пакета на произвольный порт `localhost`:
@@ -82,54 +63,40 @@ with `socket.address().address` and `socket.address().port`.
     var dgram = require('dgram');
     var message = new Buffer("Some bytes");
     var client = dgram.createSocket("udp4");
-    client.send(message, 0, message.length, 41234, "localhost");
-    client.close();
-
-
-### dgram.bind(path)
-
-Для Unix-сокета задаёт путь `path`. Имейте в виду, что клиент может вызывать
-`send()` перед `bind()`, но данные не будут отправлены до вызова `bind()`.
-
-Пример сервера на Unix-сокете, который отправляет обратно поступающие сообщения:
-
-    var dgram = require("dgram");
-    var serverPath = "/tmp/dgram_server_sock";
-    var server = dgram.createSocket("unix_dgram");
-
-    server.on("message", function (msg, rinfo) {
-      console.log("got: " + msg + " from " + rinfo.address);
-      server.send(msg, 0, msg.length, rinfo.address);
+    client.send(message, 0, message.length, 41234, "localhost", function(err, bytes) {
+      client.close();
     });
 
-    server.on("listening", function () {
-      console.log("server listening " + server.address().address);
-    })
+**Примечания насчёт размера UDP сообщения**
 
-    server.bind(serverPath);
+Максимальный размер `IPv4/v6` датаграм зависит от занчения полей `MTU` (_Maximum Transmission Unit_)
+и `Payload Length`.
 
-Пример клиента на Unix-сокете, обращающегося к серверу:
+- The `Payload Length` field is `16 bits` wide, which means that a normal payload
+  cannot be larger than 64K octets including internet header and data
+  (65,507 bytes = 65,535 − 8 bytes UDP header − 20 bytes IP header);
+  this is generally true for loopback interfaces, but such long datagrams
+  are impractical for most hosts and networks.
 
-    var dgram = require("dgram");
-    var serverPath = "/tmp/dgram_server_sock";
-    var clientPath = "/tmp/dgram_client_sock";
+- The `MTU` is the largest size a given link layer technology can support for datagrams.
+  For any link, `IPv4` mandates a minimum `MTU` of `68` octets, while the recommended `MTU`
+  for IPv4 is `576` (typically recommended as the `MTU` for dial-up type applications),
+  whether they arrive whole or in fragments.
 
-    var message = new Buffer("A message at " + (new Date()));
+  For `IPv6`, the minimum `MTU` is `1280` octets, however, the mandatory minimum
+  fragment reassembly buffer size is `1500` octets.
+  The value of `68` octets is very small, since most current link layer technologies have
+  a minimum `MTU` of `1500` (like Ethernet).
 
-    var client = dgram.createSocket("unix_dgram");
-
-    client.on("message", function (msg, rinfo) {
-      console.log("got: " + msg + " from " + rinfo.address);
-    });
-
-    client.on("listening", function () {
-      console.log("client listening " + client.address().address);
-      client.send(message, 0, message.length, serverPath);
-    });
-
-    client.bind(clientPath);
+Note that it's impossible to know in advance the MTU of each link through which
+a packet might travel, and that generally sending a datagram greater than
+the (receiver) `MTU` won't work (the packet gets silently dropped, without
+informing the source that the data did not reach its intended recipient).
 
 ### dgram.bind(port, [address])
+
+* `port` Integer
+* `address` String, необязательный параметр
 
 Для UDP сокетов задаёт порт `port` и необязательный адрес `address`
 для прослушивания. Если `address` не задан, то будет предпринята попытка
@@ -163,15 +130,18 @@ with `socket.address().address` and `socket.address().port`.
 ### dgram.address()
 
 Возвращает объект с информацией об адресе, на который настроен сокет. Для UDP
-сокетов этот объект содержит свойства `address` и `port`, а для Unix-сокетов
-только свойство `address`.
+сокетов этот объект содержит свойства `address` и `port`.
 
 ### dgram.setBroadcast(flag)
+
+* `flag` Boolean
 
 Устанавливает или сбрасывает опцию `SO_BROADCAST` сокета. если эта опция установлена,
 то UDP пакеты могут оправляться по широковещательному адресу локального интерфейса.
 
 ### dgram.setTTL(ttl)
+
+* `ttl` Integer
 
 Устанавливает опуцию `IP_TTL` сокета.  TTL означает "время жизни", и его значение
 определяет количество IP, сквозь которые может быть передан пакет. Каждый роутер
@@ -183,6 +153,8 @@ with `socket.address().address` and `socket.address().port`.
 
 ### dgram.setMulticastTTL(ttl)
 
+* `ttl` Integer
+
 Устанавливает опцию `IP_MULTICAST_TTL` сокета.  TTL означает "время жизни",
 и его значение определяет количество IP, сквозь которые может быть передан пакет,
 в данном случае при широковещательной рассылке. Каждый роутер или шлюз на пути пакета
@@ -193,10 +165,15 @@ with `socket.address().address` and `socket.address().port`.
 
 ### dgram.setMulticastLoopback(flag)
 
+* `flag` Boolean
+
 Устанавливает или очищает опцию `IP_MULTICAST_LOOP` сокета. Если эта опция установлена,
 то широковещательные пакеты также будут получены на локальных сетевых интерфейсах.
 
 ### dgram.addMembership(multicastAddress, [multicastInterface])
+
+* `multicastAddress` String
+* `multicastInterface` String, необязательный параметр
 
 Указывает ядру вступить в широковещательную группу используя опцию `IP_ADD_MEMBERSHIP` сокета.
 
@@ -205,6 +182,9 @@ with `socket.address().address` and `socket.address().port`.
 
 ### dgram.dropMembership(multicastAddress, [multicastInterface])
 
+* `multicastAddress` String
+* `multicastInterface` String, необязательный параметр
+
 Противоположность `addMembership` &mdash; указывает ядру покинуть широковещательную
 группу используя опцию `IP_DROP_MEMBERSHIP` сокета. В большинстве приложений
 не обязательно вызывать эту функцию, так как ОС сделает это автоматически
@@ -212,4 +192,3 @@ with `socket.address().address` and `socket.address().port`.
 
 Если `multicastInterface` не указан, то ОС будет пытаться покинуть группу,
 используя каждый доступный сетевой интерфейс.
-
