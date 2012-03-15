@@ -14,7 +14,7 @@
 * [TLS/SSL](tls.html)
 * [String Decoder](string_decoder.html)
 * [Файловая система](fs.html)
-* [Работа с путями](path.html)
+* [Работа с файловыми путями](path.html)
 * [TCP/Сеть](net.html)
 * [UDP/Датаграммы](dgram.html)
 * [DNS](dns.html)

@@ -73,7 +73,7 @@
 
 ## util.isArray(object)
 
-Returns `true` if the given "object" is an `Array`. `false` otherwise.
+Возвращает `true` если переданный `object` является экземпляром `Array` и `false` в противном случае.
 
     var util = require('util');
 
@@ -87,7 +87,7 @@ Returns `true` if the given "object" is an `Array`. `false` otherwise.
 
 ## util.isRegExp(object)
 
-Returns `true` if the given "object" is a `RegExp`. `false` otherwise.
+Возвращает `true` если переданный `object` является экземпляром `RegExp` и `false` в противном случае.
 
     var util = require('util');
 
@@ -101,7 +101,7 @@ Returns `true` if the given "object" is a `RegExp`. `false` otherwise.
 
 ## util.isDate(object)
 
-Returns `true` if the given "object" is a `Date`. `false` otherwise.
+Возвращает `true` если переданный `object` является экземпляром `Date` и `false` в противном случае.
 
     var util = require('util');
 
@@ -115,7 +115,7 @@ Returns `true` if the given "object" is a `Date`. `false` otherwise.
 
 ## util.isError(object)
 
-Returns `true` if the given "object" is an `Error`. `false` otherwise.
+Возвращает `true` если переданный `object` является экземпляром `Error` и `false` в противном случае.
 
     var util = require('util');
 
