@@ -1,5 +1,8 @@
 # console
 
+    Стабильность: 4 - API заморожено
+
+
 * {Object}
 
 <!--type=global-->
