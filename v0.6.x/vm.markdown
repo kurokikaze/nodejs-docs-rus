@@ -1,4 +1,6 @@
-## Выполнение JavaScript
+# Выполнение JavaScript
+
+<!--name=vm-->
 
 Для доступа к модулю используйте:
 
@@ -7,12 +9,11 @@
 JavaScript-код может быть скомпилирован и исполнен немедленно,
 либо сохранён для последующего запуска.
 
+## vm.runInThisContext(code, [filename])
 
-### vm.runInThisContext(code, [filename])
-
-`vm.runInThisContext()` компилирует `code` как будто он загружен из файла `filename`,
-выполняет его и возвращает результат выполнения. Запускаемый код не имеет доступа
-к локальной области видимости. `filename` не является обязательным аргументом.
+`vm.runInThisContext()` компилирует `code`, выполняет его и возвращает результат выполнения.
+Запускаемый код не имеет доступа к локальной области видимости.
+`filename` не является обязательным аргументом, и используется только при выводе стека выполнения.
 
 Пример использования `vm.runInThisContext` и `eval` для выполнения одинакового кода:
 
@@ -38,14 +39,14 @@ JavaScript-код может быть скомпилирован и исполн
 В случае синтаксической ошибке в `code`, `vm.runInThisContext` выводит ошибку
 на stderr и бросает исключение.
 
-
-### vm.runInNewContext(code, [sandbox], [filename])
+## vm.runInNewContext(code, [sandbox], [filename])
 
 `vm.runInNewContext` компилирует `code` для запуска в области видимости
-`sandbox` как будто он загружен из файла `filename`, выполняет его и возвращает
-результат выполнения. Запускаемый код не имеет доступа к локальной области
-видимости, и использует объект `sandbox` в качестве глобального объекта.
-`sandbox` и `filename` не являются обязательными аргументами.
+`sandbox`, выполняет его и возвращает результат выполнения.
+Запускаемый код не имеет доступа к локальной области видимости,
+и использует объект `sandbox` в качестве глобального объекта.
+`sandbox` и `filename` не являются обязательными аргументами,
+а `filename` используется только при выводе стека выполнения.
 
 Пример: компиляция и выполнение кода, который увеличивает глобальную переменную
 юи создаёт новую. Эти глобальные переменные становятся доступными в `sandbox`.
@@ -69,15 +70,56 @@ JavaScript-код может быть скомпилирован и исполн
 В случае синтаксической ошибке в `code`, `vm.runInNewContext` выводит ошибку
 на stderr и бросает исключение.
 
+## vm.runInContext(code, context, [filename])
 
-### vm.createScript(code, [filename])
+`vm.runInContext` compiles `code`, then runs it in `context` and returns the
+result. A (V8) context comprises a global object, together with a set of
+built-in objects and functions. Running code does not have access to local scope
+and the global object held within `context` will be used as the global object
+for `code`.
+`filename` is optional, it's used only in stack traces.
+
+Example: compile and execute code in a existing context.
+
+    var util = require('util'),
+        vm = require('vm'),
+        initSandbox = {
+          animal: 'cat',
+          count: 2
+        },
+        context = vm.createContext(initSandbox);
+
+    vm.runInContext('count += 1; name = "CATT"', context, 'myfile.vm');
+    console.log(util.inspect(context));
+
+    // { animal: 'cat', count: 3, name: 'CATT' }
+
+Note that `createContext` will perform a shallow clone of the supplied sandbox object in order to
+initialise the global object of the freshly constructed context.
+
+Note that running untrusted code is a tricky business requiring great care.  To prevent accidental
+global variable leakage, `vm.runInContext` is quite useful, but safely running untrusted code
+requires a separate process.
+
+In case of syntax error in `code`, `vm.runInContext` emits the syntax error to stderr
+and throws an exception.
+
+## vm.createContext([initSandbox])
+
+`vm.createContext` создаёт новый контекст, который может быть использован
+в качестве второго аргумента в вызове `vm.runInContext`.
+A (V8) context comprises a global object together with a set of
+build-in objects and functions. The optional argument `initSandbox` will be shallow-copied
+to seed the initial contents of the global object used by the context.
+
+## vm.createScript(code, [filename])
 
 `createScript` компилирует `code` как будто он загружен из файла `filename`,
 но нен выполняет его. Эта функция возвращает объект `vm.Script`, представляющий
 гдаоткомпилированный кода. Этот код может быть запущель позже с помощью описанных
 ниже методов. Возвращаемый скрипт не связан с каким-лтбо глобальным объектом,
 это связаванеи происходит при каждом выполнение. `filename` не является
-обязательным аргументом.
+обязательным аргументом, и используется только при выводе стека выполнения..
 
 В случае синтаксической ошибке в `code`, `vm.createScript` выводит ошибку
 на stderr и бросает исключение.
@@ -110,7 +152,6 @@ JavaScript-код может быть скомпилирован и исполн
 
     // 1000
 
-
 ### script.runInNewContext([sandbox])
 
 Тоже самое, что и `vm.runInNewContext`, но для предварительно скомпилированного
@@ -140,4 +181,3 @@ JavaScript-код может быть скомпилирован и исполн
 Имейте в виду, что исполнение непроверенного кода довольно опасно. Для предотвращения
 изменения таким кодом глобальных переменных можно использовать `script.runInNewContext`,
 но лучше всего выполнять такой код в отдельном процессе.
-

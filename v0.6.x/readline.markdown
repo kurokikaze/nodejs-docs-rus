@@ -1,4 +1,4 @@
-## Readline
+# Readline
 
 To use this module, do `require('readline')`. Readline allows reading of a
 stream (such as STDIN) on a line-by-line basis.
@@ -9,7 +9,7 @@ to allow your program to gracefully terminate:
 
     var rl = require('readline');
 
-    var i = rl.createInterface(process.sdtin, process.stdout, null);
+    var i = rl.createInterface(process.stdin, process.stdout, null);
     i.question("What do you think of node.js?", function(answer) {
       // TODO: Log the answer in a database
       console.log("Thank you for your valuable feedback.");
@@ -20,17 +20,28 @@ to allow your program to gracefully terminate:
       process.stdin.destroy();
     });
 
-### rl.createInterface(input, output, completer)
+## rl.createInterface(input, output, completer)
 
 Takes two streams and creates a readline interface. The `completer` function
 is used for autocompletion. When given a substring, it returns `[[substr1,
 substr2, ...], originalsubstring]`.
+
+Also `completer` can be run in async mode if it accepts two arguments:
+
+  function completer(linePartial, callback) {
+    callback(null, [['123'], linePartial]);
+  }
 
 `createInterface` is commonly used with `process.stdin` and
 `process.stdout` in order to accept user input:
 
     var readline = require('readline'),
       rl = readline.createInterface(process.stdin, process.stdout);
+
+## Class: Interface
+
+The class that represents a readline interface with a stdin and stdout
+stream.
 
 ### rl.setPrompt(prompt, length)
 
@@ -41,8 +52,6 @@ Sets the prompt, for example when you run `node` on the command line, you see
 
 Readies readline for input from the user, putting the current `setPrompt`
 options on a new line, giving the user a new spot to write.
-
-<!-- ### rl.getColumns() Not available? -->
 
 ### rl.question(query, callback)
 
@@ -129,5 +138,5 @@ line interface:
 
 Take a look at this slightly more complicated
 [example](https://gist.github.com/901104), and
-[http-console](http://github.com/cloudhead/http-console) for a real-life use
+[http-console](https://github.com/cloudhead/http-console) for a real-life use
 case.
