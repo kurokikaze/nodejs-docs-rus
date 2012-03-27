@@ -168,7 +168,9 @@ code.pre {
 
 #container {
   position: relative;
+  margin: 0 auto;
   padding: 6em;
+  padding-top: 0;
   max-width: 50em;
   text-align: left;
 }

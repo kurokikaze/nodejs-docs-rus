@@ -1,20 +1,30 @@
 Документация по Node.js, русская версия
 =======================================
 
-На данный момент переведена документация для v0.2.6 и v0.4.8.
+На данный момент практически полностью переведена документация для v0.2.6 и v0.4.12, ведётся работа над документацией к версии v0.6.12.
 
 Русская версия документации доступна на сайте [nodejs.ru](http://nodejs.ru/).
 
-Оригинальную английскую документацию можно прочесть [на сайте Node.js](http://nodejs.org/api.html) или скачать с [GitHub](http://github.com/ry/node/tree/master/doc/).
+Оригинальную английскую документацию можно прочесть [на сайте Node.js](http://nodejs.org/api.html) или скачать с [GitHub](https://github.com/ry/node/tree/master/doc/).
+
+Как я могу помочь с переводом?
+==============================
+
+Работа над переводом происходит итеративно: до тех пор пока не переведена какая-либо версия (с точностью до патч-версии),
+работа над следующей версией документации не начинается.
+Исключением может быть только случай, если если есть несколько файлов, полностью не переведённых.
+Статус перевода отдельных файлов документации можно посмотреть в файле TODO.markdown.
+Вы можете перевести какую-либо часть документации (доперевести или полностью перевести какой-нибудь файл),
+внести изменения в TODO.* и отправить pull-request в родительский репозиторий.
 
 Node.js API documentation in Russian
 ====================================
 
-We translated v0.2.6 and v0.4.8 docs for this moment.
+We mostly translated v0.2.6 and v0.4.12 documentation for this moment and working on v0.6.12 documentation.
 
 Russian translation lives at [nodejs.ru](http://nodejs.ru/) site.
 
-Original English documentation lives at [nodejs.org/api.html](http://nodejs.org/api.html) and in [GitHub repo](http://github.com/ry/node/tree/master/doc/).
+Original English documentation lives at [nodejs.org/api.html](http://nodejs.org/api.html) and in [GitHub repo](https://github.com/ry/node/tree/master/doc/).
 
 
 About Node.js
@@ -29,10 +39,12 @@ Website: <http://nodejs.org>.
 Russian translation contributors
 ================================
 
-* [Serge Shirokov](http://github.com/kurokikaze)
+* [Serge Shirokov](https://github.com/kurokikaze)
 
-* [Kirill Nikitin](http://github.com/Locke23rus)
+* [Kirill Nikitin](https://github.com/Locke23rus)
 
-* [Ivan Egorov](http://github.com/egorich239)
+* [Ivan Egorov](https://github.com/egorich239)
 
-* [Oleg Efimov](http://github.com/Sannis)
+* [Oleg Efimov](https://github.com/Sannis)
+
+* [Evgeny Reznichenko](https://github.com/zxcabs)
