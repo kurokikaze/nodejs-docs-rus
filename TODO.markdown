@@ -21,5 +21,4 @@ Current version: v0.6.x
 * https.markdown
 * modules.markdown
 * net.markdown
-* repl.markdown
 * tls.markdown
