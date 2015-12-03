@@ -25,7 +25,7 @@
       console.log('successfully deleted /tmp/hello');
     });
 
-Пример использования асинхронной версии:
+Пример использования синхронной версии:
 
     var fs = require('fs');
 
